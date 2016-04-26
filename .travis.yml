@@ -1,6 +1,9 @@
 
 sudo: required
 
+services:
+    - docker
+
 language: c
 compiler:
     - gcc
@@ -25,8 +28,15 @@ script:
     - cat ./wireshark/plugins/Makefile.am
     - ls ./wireshark/plugins/doip
     - make -C ./wireshark/plugins/doip
-
-
+    
+   # Build a docker image
+   # - docker/build
+     # Login to dockerhub and push the image built into the dockerhub
+    - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    - docker pull osrgroup/amos-downloader-base-image
+    - docker build -t jufuch/amos-ss16-proj3 docker/
+    #push the image built 
+    - docker push jufuch/amos-ss16-proj3
 
 
 
