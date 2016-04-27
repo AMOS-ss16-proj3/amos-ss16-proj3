@@ -33,10 +33,10 @@ script:
    # - docker/build
      # Login to dockerhub and push the image built into the dockerhub
     - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-    - docker pull jufuch/amos-ss16-proj3:1.0
-    - docker build -t jufuch/amos-ss16-proj3:1.0 docker/
+    - docker pull jufuch/amos-ss16-proj3
+    - docker build -t jufuch/amos-ss16-proj3 docker/
     #push the image built 
-    - docker push jufuch/amos-ss16-proj3:1.0
+    - docker push jufuch/amos-ss16-proj3
 
 
 
