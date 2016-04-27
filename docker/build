@@ -21,4 +21,4 @@ set -ue
 
 rm -rf ./docker/assets
 mkdir -p ./docker/assets
-cp -v ./platforms/android/build/outputs/apk/demo-app-debug.apk ./docker/assets/
+#cp -v ./platforms/android/build/outputs/apk/demo-app-debug.apk ./docker/assets/
