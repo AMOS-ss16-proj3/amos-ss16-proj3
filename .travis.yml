@@ -31,9 +31,11 @@ script:
     
    # Build a docker image
    # - docker/build
+
+    docker pull osrgroup/amos-downloader-base-image:1.0
      # Login to dockerhub and push the image built into the dockerhub
     - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-    - docker pull jufuch/amos-ss16-proj3
+ 
     - docker build -t jufuch/amos-ss16-proj3 docker/
     #push the image built 
     - docker push jufuch/amos-ss16-proj3
