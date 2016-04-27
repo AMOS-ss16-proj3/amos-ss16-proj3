@@ -1,0 +1,22 @@
+---=== Linux Build and Run howto ===---
+
+This is the documentation how to build the wirewhark plugin with and for Linux.
+
+
+---= build =---
+
+(the dependencies which must be installed before the build are tested on a plain Debian 8.4 system)
+- install libwireshark-dev + wireshark-dev + libtool-bin + bison + flex
+- get wirewhark sources or check them out with e.g. git (e.g. wget https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2 )
+- copy the content of the plugin to the extracted source under wireshark/plugins (e.g.  cp -R ./src/plugins/* ./wireshark/plugins/)
+- go to the wireshark directory
+- run ./autogen.sh
+- run ./configure (or ./configure --enable-wireshark=no to configure to build without wireshark gui)
+- build the plugin using make -c wireshark/plugins/doip
+
+
+---= run =---
+
+- copy the wireshark/plugins/doip/.libs/doip.so to /usr/lib/x86_64-linux-gnu/wireshark/plugins/1.12.1 (or the corresponding installation directory and version of wireshark)
+- wireshark must be restarted to recognize the plugin (is there another possibility?)
+- run wireshark and check running plugin under Help - About Wireshark - Plugins 

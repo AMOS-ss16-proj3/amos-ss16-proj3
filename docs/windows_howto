@@ -1,0 +1,53 @@
+---=== Windows Build and Run howto ===---
+
+This is the documentation how to build the wirewhark plugin with and for Windows.
+
+
+
+---= Windows =---
+
+--- build ---
+
+# Edit the files and create a packet-file.c just like in scr/plugin on github
+# In Addition you have to add your plugin name to the 'PLUGIN_SRC_DIRS' in the 'CMakeLists.txt' in the root folder of the Wireshark Sources.
+# FOR COMPILING WIRESHARK + PLUGINS IN WINDOWS DO THE FOLLOWING:
+
+1. Install Microsoft C compliler and SDK
+2. Install Qt
+3. Install Cygwin
+4. Install Python V 2.7 (Do not use V 3.0 or above)
+5. Install Git and clone the source files
+6. Install CMake
+7. Open VS Command Prompt:
+
+> set CYGWIN=nodosfilewarning
+> set WIRESHARK_BASE_DIR=..\WiresharkSource
+> set WIRESHARK_TARGET_PLATFORM=win64 (or 32)
+> set QT5_BASE_DIR=..\Qt\5.6\msvc2013_64
+> set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
+
+8. (Optional) If your Cygwin installation path is not automatically detected by CMake, you can explicitly specify it with the following environment variable:
+
+> set WIRESHARK_CYGWIN_INSTALL_PATH=..\cygwin64
+
+9. Create and change to the correct build directory:
+
+> mkdir ..\WiresharkSource\wsbuild64
+> cd ..WiresharkSource\wsbuild64
+
+10. Generate Build Files:
+
+> cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" ..\WiresharkSource\wireshark
+
+11. Build Wireshark and plugins:
+> msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
+
+12. (Optional) CleanUp:
+> msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln /t:Clean
+
+
+--- run ---
+
+- copy doip.ddl and doip.pdb (TODO: really needed?) to C:\Program Files\Wireshark\plugins\2.0.2\ (or the corresponding installation directory and version of wireshark)
+- wireshark must be restarted to recognize the plugin (is there another possibility?)
+- run wireshark and check running plugin under Help - About Wireshark - Plugins
