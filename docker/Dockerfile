@@ -15,7 +15,8 @@
 # limitations under the License.
 #
 # Pull the base image 
-FROM osrgroup/amos-downloader-base-image:1.0
+FROM hannesd/amos-downloader-image:1.0
+MAINTAINER hannes.dohrn@fau.de
 
 ENV HTML_INDEX_FILE demo-app-debug.apk
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
