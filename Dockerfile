@@ -5,8 +5,9 @@ RUN apt-get update && apt-get install -yq wireshark
 
 ENV HOME /home/wireshark
 
-RUN useradd --create-home --homedir $HOME wireshark
-RUN chown -R wireshark: wireshark $HOME
+RUN useradd --create-home --home-dir $HOME wireshark
+
+RUN chown -R wireshark:wireshark $HOME
 
 USER wireshark
 
