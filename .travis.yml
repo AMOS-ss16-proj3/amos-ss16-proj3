@@ -1,6 +1,9 @@
 
 sudo: required
 
+service:
+    - docker
+
 language: c
 compiler:
     - gcc
