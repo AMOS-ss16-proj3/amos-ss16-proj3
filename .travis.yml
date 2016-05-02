@@ -9,20 +9,10 @@ before_install:
     - sudo apt-get -qy update
 
 install: 
-    - sudo apt-get -qy install libwireshark-dev wireshark-dev
-    - wget https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
-    - tar xf wireshark-2.0.2.tar.bz2
-    - mv wireshark-2.0.2 wireshark
-    - cp -R ./src/plugins/doip ./wireshark/plugins/doip/ 
-    - cp -R ./src/plugins/Custom.* ./wireshark/plugins/
-    - cd ./wireshark && bash ./autogen.sh && cd ~-
-    - cd ./wireshark && ./configure --enable-wireshark=no && cd ~-
+    - bash build/prepare_env.sh
 
 script: 
-    - ls ./wireshark/plugins/
-    - cat ./wireshark/plugins/Makefile.am
-    - ls ./wireshark/plugins/doip
-    - make -C ./wireshark/plugins/doip
+    - bash build/plugin.sh
 
 
 
