@@ -7,8 +7,6 @@ compiler:
 
 before_install:
     - sudo apt-get -qy update
-    # wireshark.pc location: http://packages.ubuntu.com/tr/trusty/amd64/libwireshark-dev/filelist
-    #somehow doesn't work: - export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/:${PKG_CONFIG_PATH}"
 
 install: 
     - sudo apt-get -qy install libwireshark-dev wireshark-dev
@@ -18,7 +16,7 @@ install:
     - cp -R ./src/plugins/doip ./wireshark/plugins/doip/ 
     - cp -R ./src/plugins/Custom.* ./wireshark/plugins/
     - cd ./wireshark && bash ./autogen.sh && cd ~-
-    - cd ./wireshark && ./configure --enable-wireshark=no && cd ~-
+    - ./wireshark/configure --src-dir=wireshark --enable-wireshark=no 
 
 script: 
     - ls ./wireshark/plugins/
