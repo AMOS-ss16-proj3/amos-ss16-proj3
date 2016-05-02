@@ -19,7 +19,7 @@ script:
     # create docker image
     - docker build -t jufuch/wiretest .
     # upload image to wireshark
-    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="DOCKER_EMAIL"
+    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="$DOCKER_EMAIL"
     - docker push jufuch/wiretest
     - docker logout
 
