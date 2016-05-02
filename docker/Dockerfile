@@ -13,7 +13,7 @@ USER wireshark
 
 WORKDIR wireshark
 
-ADD ./wireshark/plugins ${HOME}/.wireshark/plugins
+ADD ./plugins ${HOME}/.wireshark/plugins
 
 ENTRYPOINT ["wireshark"]
 
