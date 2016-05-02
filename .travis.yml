@@ -16,7 +16,7 @@ install:
     - cp -R ./src/plugins/doip ./wireshark/plugins/doip/ 
     - cp -R ./src/plugins/Custom.* ./wireshark/plugins/
     - cd ./wireshark && bash ./autogen.sh && cd ~-
-    - ./wireshark/configure --src-dir=wireshark --enable-wireshark=no 
+    - ./wireshark/configure --srcdir=wireshark --enable-wireshark=no 
 
 script: 
     - ls ./wireshark/plugins/
