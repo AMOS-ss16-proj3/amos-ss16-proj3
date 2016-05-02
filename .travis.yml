@@ -17,6 +17,7 @@ install:
 script: 
     - bash build/plugin.sh
     # create docker image
+    - bash build/prepare_docker.sh
     - docker build -t jufuch/wiretest .
     # upload image to wireshark
     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="$DOCKER_EMAIL"
