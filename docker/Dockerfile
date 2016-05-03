@@ -1,5 +1,5 @@
 
-FROM ubuntu:14.04
+FROM osrgroup/amos-build-base-image:1.0
 
 RUN apt-get update
 RUN apt-get install -y software-properties-common --no-install-recommends
