@@ -14,13 +14,18 @@ ENV HOME /home/wireshark
 
 RUN useradd --create-home --home-dir $HOME wireshark
 
+RUN mkdir -p ${HOME}/.wireshark
+RUN touch ${HOME}/.wireshark/recent
+RUN touch ${HOME}/.wireshark/recent_common
+
 RUN chown -R wireshark:wireshark $HOME
 
 USER wireshark
 
-WORKDIR wireshark
+WORKDIR $HOME
 
 ADD ./plugins ${HOME}/.wireshark/plugins
+
 
 ENTRYPOINT ["wireshark"]
 
