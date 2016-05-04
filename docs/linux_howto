@@ -12,7 +12,7 @@ This is the documentation how to build the wirewhark plugin with and for Linux.
 - go to the wireshark directory
 - run ./autogen.sh
 - run ./configure (or ./configure --enable-wireshark=no to configure to build without wireshark gui)
-- build the plugin using make -c wireshark/plugins/doip
+- build the plugin using make -C wireshark/plugins/doip
 
 
 ---= run =---
