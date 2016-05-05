@@ -3,12 +3,13 @@
 
 #include <epan/packet.h>
 
+static const char *DOIP_FULL_NAME = "Diagnostic over IP";
+static const char *DOIP_SHORTNAME = "DoIP";
+static const char *DOIP_ABBREV = "doip";
 
-#define DOIP_PORT 13400
-
-#define DOIP_FULLNAME "Diagnostic over IP"
-#define DOIP_SHORTNAME "DoIP"
-#define DOIP_ABBREV "doip"
+static const guint32 TCP_DATA_PORT = 13400;
+static const guint32 UDP_DISCOVERY_PORT = 13400;
+static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
 static int proto_doip = -1;
 
@@ -44,7 +45,8 @@ proto_reg_handoff_doip(void)
     static dissector_handle_t doip_handle;
 
     doip_handle = create_dissector_handle(dissect_doip, proto_doip);
-    dissector_add_uint("tcp.port", DOIP_PORT, doip_handle);
+    dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_handle);
+    dissector_add_uint("udp.port", UDP_DISCOVERY_PORT, doip_handle);
 }
 
 
