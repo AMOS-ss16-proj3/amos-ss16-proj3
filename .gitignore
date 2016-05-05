@@ -1,0 +1,9 @@
+
+*.swp
+
+traces
+wireshark
+
+docker/plugins/*
+
+
