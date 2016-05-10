@@ -2,15 +2,22 @@
 set -ue
 
 echo "preparing build environment"
-sudo apt-get -qy install wireshark-dev
+if  ! command -v wireshark > /dev/null
+then
+    sudo apt-get -qy install wireshark-dev
+fi
 
 echo "preparing latest Wireshark soucecode"
-wget https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
-tar xf wireshark-2.0.2.tar.bz2
-mv wireshark-2.0.2 wireshark
+if [ ! -d wireshark ]
+then
+    wget https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
+    tar xf wireshark-2.0.2.tar.bz2
+    rm wireshark-2.0.2.tar.bz2
+    mv wireshark-2.0.2 wireshark
+fi
 
 echo "copying plugin-source to wireshark directory"
-cp -R ./src/plugins/doip ./wireshark/plugins/doip/ 
+cp -R ./src/plugins/doip/ ./wireshark/plugins/
 
 echo "configuring wireshark environment"
 cp -R ./src/plugins/Custom.* ./wireshark/plugins/
