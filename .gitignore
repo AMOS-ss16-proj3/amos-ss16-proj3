@@ -1,9 +1,14 @@
 
+# temporary file created by vim-editor
 *.swp
 
+# directory where wireshark-traces can be stored
 traces
+
+# directory with wireshark source-code 
 wireshark
 
+# directory for building docker-images
 docker/plugins/*
 
 
