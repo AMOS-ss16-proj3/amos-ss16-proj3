@@ -18,7 +18,7 @@ script:
     - bash build/plugin.sh
     # create docker image
     - bash build/prepare_docker.sh
-    - docker build -t jufuch/wiretest ./docker
+    - docker build -t jufuch/amos-ss16-proj3 ./docker
     # upload image to wireshark
     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="$DOCKER_EMAIL"
     - docker push jufuch/wiretest:latest
