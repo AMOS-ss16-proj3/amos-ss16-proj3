@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{6ABC55EB-1783-3871-ADE5-59BAA9DB4F1C}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>doipwin</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\run\Debug\plugins\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">doipwin.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">doipwin</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\run\Release\plugins\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">doipwin.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">doipwin</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\run\MinSizeRel\plugins\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">doipwin.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">doipwin</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\run\RelWithDebInfo\plugins\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">doipwin.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">doipwin</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</GenerateManifest>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions> /Zo /w34295 /w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsC</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR="Debug";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR=\"Debug\";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 setargv.obj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\..\run\Debug\wireshark.lib;..\..\run\Debug\wiretap-2.1.0-YourExtraVersionInfo.lib;..\..\run\Debug\wsutil.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gmodule-2.0.lib;..\..\run\Debug\zlibd.lib;wsock32.lib;ws2_32.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Lib\x64\wpcap.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\lib\libcares-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\lib\krb5_64.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\lib\libGeoIP-1.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgcrypt-20.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgpg-error6-0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgnutls-28.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\lib\libsmi-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\lua52.lib;psapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Michael/WiresharkSource/wsbuild64/run/Debug/doipwin.lib</ImportLibrary>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ProgramDataBaseFile>C:/Users/Michael/WiresharkSource/wsbuild64/run/Debug/plugins/doipwin.pdb</ProgramDataBaseFile>
+      <SetChecksum>true</SetChecksum>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions> /Zo /w34295 /w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR="Release";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR=\"Release\";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 setargv.obj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\..\run\Release\wireshark.lib;..\..\run\Release\wiretap-2.1.0-YourExtraVersionInfo.lib;..\..\run\Release\wsutil.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gmodule-2.0.lib;..\..\run\Release\zlib.lib;wsock32.lib;ws2_32.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Lib\x64\wpcap.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\lib\libcares-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\lib\krb5_64.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\lib\libGeoIP-1.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgcrypt-20.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgpg-error6-0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgnutls-28.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\lib\libsmi-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\lua52.lib;psapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Michael/WiresharkSource/wsbuild64/run/Release/doipwin.lib</ImportLibrary>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ProgramDataBaseFile>C:/Users/Michael/WiresharkSource/wsbuild64/run/Release/plugins/doipwin.pdb</ProgramDataBaseFile>
+      <SetChecksum>true</SetChecksum>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalOptions> /Zo /w34295 /w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR="MinSizeRel";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR=\"MinSizeRel\";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 setargv.obj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\..\run\MinSizeRel\wireshark.lib;..\..\run\MinSizeRel\wiretap-2.1.0-YourExtraVersionInfo.lib;..\..\run\MinSizeRel\wsutil.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gmodule-2.0.lib;..\..\run\MinSizeRel\zlib.lib;wsock32.lib;ws2_32.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Lib\x64\wpcap.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\lib\libcares-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\lib\krb5_64.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\lib\libGeoIP-1.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgcrypt-20.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgpg-error6-0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgnutls-28.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\lib\libsmi-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\lua52.lib;psapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Michael/WiresharkSource/wsbuild64/run/MinSizeRel/doipwin.lib</ImportLibrary>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ProgramDataBaseFile>C:/Users/Michael/WiresharkSource/wsbuild64/run/MinSizeRel/plugins/doipwin.pdb</ProgramDataBaseFile>
+      <SetChecksum>true</SetChecksum>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalOptions> /Zo /w34295 /w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR="RelWithDebInfo";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WIN32_LEAN_AND_MEAN;MSC_VER_REQUIRED=1800;_CRT_SECURE_NO_DEPRECATE;NOMINMAX;PSAPI_VERSION=1;BUILD_WINDOWS;_ALLOW_KEYWORD_MACROS;WINPCAP_VERSION=4_1_3;CMAKE_INTDIR=\"RelWithDebInfo\";doipwin_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Michael\WiresharkSource\wsbuild64\zlib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\zlib-1.2.8-ws;C:\Users\Michael\WiresharkSource\wsbuild64;C:\Users\Michael\WiresharkSource\wireshark;C:\Users\Michael\WiresharkSource\wireshark\epan;C:\Users\Michael\WiresharkSource\wireshark\tools\lemon;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\AirPcap_Devpack_4_1_0_1622\Airpcap_Devpack\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\glib-2.0\glib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gtk-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\freetype2;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\atk-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\gdk-pixbuf-2.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\cairo;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\include\pango-1.0;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gtk-2.0\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libssh-0.7.2-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\common;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\portaudio_v19_2\src\os\win;C:\Qt\5.6\msvc2013_64\include;C:\Qt\5.6\msvc2013_64\include\QtCore;C:\Qt\5.6\msvc2013_64\.\mkspecs\win32-msvc2013;C:\Qt\5.6\msvc2013_64\include\QtMultimedia;C:\Qt\5.6\msvc2013_64\include\QtNetwork;C:\Qt\5.6\msvc2013_64\include\QtGui;C:\Qt\5.6\msvc2013_64\include\QtPrintSupport;C:\Qt\5.6\msvc2013_64\include\QtWidgets;C:\Qt\5.6\msvc2013_64\include\QtSvg;C:\Qt\5.6\msvc2013_64\include\QtWinExtras;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\include;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WinSparkle-0.3-44-g2c8d9d3-win64ws;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 setargv.obj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\..\run\RelWithDebInfo\wireshark.lib;..\..\run\RelWithDebInfo\wiretap-2.1.0-YourExtraVersionInfo.lib;..\..\run\RelWithDebInfo\wsutil.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\gmodule-2.0.lib;..\..\run\RelWithDebInfo\zlib.lib;wsock32.lib;ws2_32.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gtk2\lib\glib-2.0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\WpdPack\Lib\x64\wpcap.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\c-ares-1.9.1-1-win64ws\lib\libcares-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\kfw-3-2-2-x64-ws\lib\krb5_64.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\GeoIP-1.6.6-win64ws\lib\libGeoIP-1.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgcrypt-20.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgpg-error6-0.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\gnutls-3.2.15-2.9-win64ws\bin\libgnutls-28.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\libsmi-svn-40773-win64ws\lib\libsmi-2.lib;C:\Users\Michael\WiresharkSource\wireshark-win64-libs\lua5.2.3\lua52.lib;psapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Michael/WiresharkSource/wsbuild64/run/RelWithDebInfo/doipwin.lib</ImportLibrary>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ProgramDataBaseFile>C:/Users/Michael/WiresharkSource/wsbuild64/run/RelWithDebInfo/plugins/doipwin.pdb</ProgramDataBaseFile>
+      <SetChecksum>true</SetChecksum>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Michael/WiresharkSource/wireshark -BC:/Users/Michael/WiresharkSource/wsbuild64 --check-stamp-file C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\WiresharkPlugin.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\plugin.rc.in;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\LocatePythonModule.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPythonInterp.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Michael/WiresharkSource/wireshark -BC:/Users/Michael/WiresharkSource/wsbuild64 --check-stamp-file C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\WiresharkPlugin.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\plugin.rc.in;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\LocatePythonModule.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPythonInterp.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Michael/WiresharkSource/wireshark -BC:/Users/Michael/WiresharkSource/wsbuild64 --check-stamp-file C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\WiresharkPlugin.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\plugin.rc.in;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\LocatePythonModule.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPythonInterp.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Michael/WiresharkSource/wireshark -BC:/Users/Michael/WiresharkSource/wsbuild64 --check-stamp-file C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\WiresharkPlugin.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\plugin.rc.in;C:\Users\Michael\WiresharkSource\wireshark\cmake\modules\LocatePythonModule.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPythonInterp.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Michael\WiresharkSource\wsbuild64\CMakeFiles\75b10376970efdf6709c858f191f93e8\plugin.c.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating plugin.c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Python27\python.exe C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin plugin packet-doipwin.c
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/Michael/WiresharkSource/wsbuild64/CMakeFiles/75b10376970efdf6709c858f191f93e8/plugin.c.rule;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\packet-doipwin.c;C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\plugin.c</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating plugin.c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+C:\Python27\python.exe C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin plugin packet-doipwin.c
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/Michael/WiresharkSource/wsbuild64/CMakeFiles/75b10376970efdf6709c858f191f93e8/plugin.c.rule;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\packet-doipwin.c;C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\plugin.c</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Generating plugin.c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+C:\Python27\python.exe C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin plugin packet-doipwin.c
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/Michael/WiresharkSource/wsbuild64/CMakeFiles/75b10376970efdf6709c858f191f93e8/plugin.c.rule;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\packet-doipwin.c;C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\plugin.c</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Generating plugin.c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+C:\Python27\python.exe C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin plugin packet-doipwin.c
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/Michael/WiresharkSource/wsbuild64/CMakeFiles/75b10376970efdf6709c858f191f93e8/plugin.c.rule;C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\packet-doipwin.c;C:\Users\Michael\WiresharkSource\wireshark\tools\make-dissector-reg.py;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\plugin.c</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\plugin.c"  />
+    <ClCompile Include="C:\Users\Michael\WiresharkSource\wireshark\plugins\doipwin\packet-doipwin.c"  />
+    <ResourceCompile Include="C:\Users\Michael\WiresharkSource\wsbuild64\plugins\doipwin\plugin.rc"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:/Users/Michael/WiresharkSource/wsbuild64/ZERO_CHECK.vcxproj">
+      <Project>04AE9735-28D7-3AEB-9CB0-D78269A71D1C</Project>
+    </ProjectReference>
+    <ProjectReference Include="C:/Users/Michael/WiresharkSource/wsbuild64/epan/epan.vcxproj">
+      <Project>DC9697BA-4B17-3CF1-A870-A481B76056C0</Project>
+    </ProjectReference>
+    <ProjectReference Include="C:/Users/Michael/WiresharkSource/wsbuild64/wiretap/wiretap.vcxproj">
+      <Project>89512041-8068-3A73-979D-5E403681381E</Project>
+    </ProjectReference>
+    <ProjectReference Include="C:/Users/Michael/WiresharkSource/wsbuild64/wsutil/wsutil.vcxproj">
+      <Project>E00EDD45-5439-3744-BC5D-13FB4CB74227</Project>
+    </ProjectReference>
+    <ProjectReference Include="C:/Users/Michael/WiresharkSource/wsbuild64/zlib/zlib.vcxproj">
+      <Project>D2B19DDB-3D22-320A-AE8C-DA8DB77905B1</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
