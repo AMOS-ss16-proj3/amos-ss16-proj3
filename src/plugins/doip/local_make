@@ -1,0 +1,10 @@
+
+CC = gcc
+CFLAGS = `pkg-config --cflags wireshark` `pkg-config --cflags glib-2.0` -Wall -Werror
+
+
+all: ; \
+    $(CC) -c $(CFLAGS) packet-doip.c 
+
+
+
