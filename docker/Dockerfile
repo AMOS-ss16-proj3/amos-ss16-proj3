@@ -1,5 +1,5 @@
 
-FROM hannesd/amos-downloader-image:1.0
+FROM osrgroup/amos-downloader-base-image:latest
 
 ENV HTML_INDEX_FILE doip.so
 
