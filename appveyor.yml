@@ -1,0 +1,33 @@
+version: '0.0.1-{build}'
+
+clone_folder: c:\projects\ws-plugin
+
+#environment:
+#  var: value
+
+# script after cloning repo:
+install:
+  - echo Install Script now!
+  - git clone 'https://github.com/wireshark/wireshark.git' 'C:\wireshark'
+  - dir 'C:\wireshark'
+  - cmd set CYGWIN=nodosfilewarning
+  - cmd set WIRESHARK_BASE_DIR='C:\wireshark'
+  - cmd set WIRESHARK_TARGET_PLATFORM=win64
+  - cmd set QT5_BASE_DIR='C:\Qt\5.6\msvc2013_64'
+  - cmd set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
+  - cmd xcopy /E 'c:\projects\ws-plugin\source\plugins' 'C:\wireshark\wireshark\plugins'
+
+platform:
+  - x64
+
+build_script:
+  - echo Build Script now!
+  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" 'C:\wireshark\wireshark'
+  - msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
+
+after_build:
+  - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\
+
+artifacts:
+  - path: myapp.zip
+    name: MyApp
