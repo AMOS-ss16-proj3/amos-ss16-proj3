@@ -9,7 +9,7 @@ clone_folder: c:\projects\ws-plugin
 install:
   - echo Install Script now!
   - mkdir c:\projects\wireshark
-  - git clone 'https://github.com/wireshark/wireshark.git' 'c:\projects\wireshark'
+  - git clone https://github.com/wireshark/wireshark.git c:\projects\wireshark
   - dir 'c:\projects\wireshark'
   - cmd set CYGWIN=nodosfilewarning
   - cmd set WIRESHARK_BASE_DIR='c:\projects\wireshark'
