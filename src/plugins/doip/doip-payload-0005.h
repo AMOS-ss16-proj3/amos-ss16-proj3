@@ -15,12 +15,14 @@
 * limitations under the License.
 */
 
-#ifndef __PACKET_DOIP_H
-#define __PACKET_DOIP_H
+#ifndef __DOIP_PAYLOAD_0005_H
+#define __DOIP_PAYLOAD_0005_H
 
-#include "config.h"
+#include "doip-header.h"
 
-#include <epan/packet.h>
+void
+dissect_payload_0005(doip_header *, packet_info *, proto_tree *);
+
+#endif /* __DOIP_PAYLOAD_0005_H */
 
 
-#endif /* __PACKET_DOIP_H */

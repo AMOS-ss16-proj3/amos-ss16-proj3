@@ -1,0 +1,54 @@
+
+# basic packet-dissector.c architecture:
+
+
+## doip-header.c
+
+struct doip-header
+{
+    version
+    payload_type
+    payload_length
+    payload_data
+}
+
+create-header(tvbuff *) : doip-header *
+
+destroy-header(doip-header *) : void
+
+
+## doip-payload-handler.c:
+
+typedef void (*payload_handler)(doip_header *, packet_info *, proto_tree *);
+
+find_matching_payload_handler(doip-header *) :  payload_handler
+
+pseudo (find_matching_payload_handler):
+
+payload_handler find_matching_payload_handler(doip-header * header)
+{
+    switch(header->payload_type)
+    {
+        case 0x0000:
+            return (payload_handler) analyze_payload_type_0000;
+        case ...:
+
+        default:
+            /* responsible for ranges */
+            if(header-> payload_type >= 0x15  && header->payload_type < 0xFF)
+            {
+                return payload_handler x;
+            }
+
+    }
+
+}
+
+
+## doip-payload-0000.c
+
+analyze-payload-type-0000(doip-header *) : void
+
+
+
+
