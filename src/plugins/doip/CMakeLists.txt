@@ -35,6 +35,9 @@ set(PLUGIN_FILES
 
 set(CLEAN_FILES
 	${PLUGIN_FILES}
+    doip-header.c
+    doip-payload-0000.c
+    doip-payload-handler.c
 )
 
 if (WERROR)

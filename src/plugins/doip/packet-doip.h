@@ -15,4 +15,5 @@ dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *);
 static void
 register_udp_test_equipment_messages(proto_tree *);
 
-#endif // __PACKET_DOIP_H
+
+#endif /* __PACKET_DOIP_H */

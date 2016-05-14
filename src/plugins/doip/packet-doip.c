@@ -1,4 +1,9 @@
 
+#include <epan/tvbuff.h>
+#include <stdlib.h>
+
+#include "doip-header.h"
+#include "doip-payload-handler.h"
 #include "packet-doip.h"
 
 static const char *DOIP_FULLNAME = "Diagnostic over IP";
@@ -14,6 +19,9 @@ static int proto_doip = -1;
 static void
 dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
+    payload_handler handler;
+    doip_header *header;
+
     /* suppress warning for unused variables */
     if(tvb) {
         tvb = NULL;
@@ -24,6 +32,18 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
     col_clear(pinfo->cinfo, COL_INFO);
+
+
+    header = create_doip_header(tvb);
+    if(header)
+    {
+        handler = find_matching_payload_handler(header);
+        if(handler)
+        {
+            handler(header, pinfo, tree);
+        }
+        destroy_doip_header(header);
+    }
 }
 
 static void
@@ -46,13 +66,16 @@ dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 static void
 register_udp_test_equipment_messages(proto_tree *tree)
 {
+    if(tree)
+    {
+        tree = NULL;
+    }
     /* TODO by dust */
     /*
     gboolean has_non_default_port_communication;
     proto_item *udp_package;
     */
 }
-
 
 void
 proto_register_doip(void)
