@@ -382,6 +382,8 @@ else()
 		# The Qt headers generate a ton of shortening errors on 64-bit systems
 		# so only enable this for C for now.
 		-Wshorten-64-to-32
+		# Clang only
+		-Wc99-extensions
 	)
 
 	set(WIRESHARK_CXX_ONLY_FLAGS
@@ -1017,6 +1019,15 @@ test_big_endian(WORDS_BIGENDIAN)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# The top level checkAPIs target, add before subdirectory calls so it's avaiable to all
+add_custom_target(checkAPI)
+set_target_properties(checkAPI
+	PROPERTIES
+		FOLDER "Auxiliary"
+		EXCLUDE_FROM_ALL True
+		EXCLUDE_FROM_DEFAULT_BUILD True
+)
+
 add_subdirectory( capchild )
 add_subdirectory( caputils )
 add_subdirectory( codecs )
@@ -1097,7 +1108,7 @@ if(ENABLE_PLUGINS)
 	endif()
 	set(PLUGIN_SRC_DIRS
 		plugins/docsis
-		plugins/doipwin
+		plugins/doip
 		plugins/ethercat
 		plugins/gryphon
 		plugins/irda
@@ -1494,26 +1505,35 @@ if(WIN32)
 			COMMAND ${CMAKE_COMMAND} -E make_directory
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/mibs/iana"
+				"${SMI_SHARE_DIR}/mibs/iana"
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/mibs/ietf"
+				"${SMI_SHARE_DIR}/mibs/ietf"
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/mibs/irtf"
+				"${SMI_SHARE_DIR}/mibs/irtf"
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/mibs/site"
+				"${SMI_SHARE_DIR}/mibs/site"
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/mibs/tubs"
+				"${SMI_SHARE_DIR}/mibs/tubs"
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/pibs"
+				"${SMI_SHARE_DIR}/pibs"
 				"${_dll_output_dir}/snmp/mibs"
 			COMMAND ${CMAKE_COMMAND} -E copy_directory
-				"${SMI_SHARE_DIR}/${SMI_DLL}/yang"
+				"${SMI_SHARE_DIR}/yang"
 				"${_dll_output_dir}/snmp/mibs"
+			#remove the extra directories copied (shallow copying the above would remove the need for this)
+			COMMAND ${CMAKE_COMMAND} -E remove_directory
+				"${_dll_output_dir}/snmp/mibs/iana"
+			COMMAND ${CMAKE_COMMAND} -E remove_directory
+				"${_dll_output_dir}/snmp/mibs/ietf"
+			COMMAND ${CMAKE_COMMAND} -E remove_directory
+				"${_dll_output_dir}/snmp/mibs/site"
+			COMMAND ${CMAKE_COMMAND} -E remove_directory
+				"${_dll_output_dir}/snmp/mibs/tubs"
 		)
 	endif(SMI_FOUND)
 	if (WINSPARKLE_FOUND)
@@ -2167,10 +2187,10 @@ if(BUILD_text2pcap)
 		${text2pcap_CLEAN_FILES}
 		${CMAKE_BINARY_DIR}/image/text2pcap.rc
 	)
-	add_lex_files(text2pcap_FILES
+	add_lex_files(text2pcap_LEX_FILES text2pcap_GENERATED_FILES
 		text2pcap-scanner.l
 	)
-	add_executable(text2pcap ${text2pcap_FILES})
+	add_executable(text2pcap ${text2pcap_FILES} ${text2pcap_GENERATED_FILES})
 	add_dependencies(text2pcap version)
 	set_extra_executable_properties(text2pcap "Executables")
 	target_link_libraries(text2pcap ${text2pcap_LIBS})
@@ -2333,6 +2353,13 @@ if (WIN32)
 		ADD_NSIS_PACKAGE_TARGET()
 	endif()
 
+	find_package( WiX )
+
+	if (NOT "${WIX_CANDLE_EXECUTABLE}" STREQUAL "WIX_CANDLE_EXECUTABLE-NOTFOUND")
+		add_subdirectory( packaging/wix EXCLUDE_FROM_ALL )
+		ADD_WIX_PACKAGE_TARGET()
+	endif()
+
 	find_package( PortableApps )
 	if (
 		NOT "${PORTABLEAPPS_LAUNCHER_GENERATOR_EXECUTABLE}" STREQUAL "PORTABLEAPPS_LAUNCHER_GENERATOR_EXECUTABLE-NOTFOUND"
@@ -2381,7 +2408,7 @@ if(ENABLE_EXTCAP AND BUILD_sshdump AND LIBSSH_FOUND)
 		${LIBSSH_LIBRARIES}
 	)
 	if (WIN32)
-	        set(sshdump_LIBS wsutil ${sshdump_LIBS})
+		set(sshdump_LIBS wsutil ${sshdump_LIBS})
 	endif()
 	set(sshdump_FILES
 		extcap/sshdump.c
@@ -2407,7 +2434,7 @@ if(ENABLE_EXTCAP AND BUILD_ciscodump AND LIBSSH_FOUND)
 		${LIBSSH_LIBRARIES}
 	)
 	if (WIN32)
-	        set(ciscodump_LIBS wsutil ${ciscodump_LIBS})
+		set(ciscodump_LIBS wsutil ${ciscodump_LIBS})
 	endif()
 	set(ciscodump_FILES
 		extcap/ciscodump.c
@@ -2554,12 +2581,6 @@ install(
 	PATTERN "faq.py" EXCLUDE
 )
 
-include( UseCheckAPI )
-CHECKAPI(
-	${TSHARK_TAP_SRC}
-	${WIRESHARK_SRC}
-)
-
 set(CMAKE_INSTALL_MODULES_DIR ${CMAKE_INSTALL_LIBDIR}/${CPACK_PACKAGE_NAME})
 configure_file("${CMAKE_MODULE_PATH}/WiresharkConfig.cmake.in" "${CMAKE_BINARY_DIR}/WiresharkConfig.cmake" @ONLY)
 configure_file("${CMAKE_MODULE_PATH}/WiresharkConfigVersion.cmake.in" "${CMAKE_BINARY_DIR}/WiresharkConfigVersion.cmake" @ONLY)
@@ -2660,6 +2681,17 @@ else ()
 		)
 	endif()
 endif()
+
+include( UseCheckAPI )
+CHECKAPI(
+	NAME
+	  main
+	SWITCHES
+	  -build
+	SOURCES
+	  ${WIRESHARK_SRC}
+	  ${TSHARK_TAP_SRC}
+)
 
 #
 # Editor modelines  -  http://www.wireshark.org/tools/modelines.html
