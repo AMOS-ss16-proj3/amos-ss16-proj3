@@ -1,9 +1,13 @@
 
+
 #include <epan/tvbuff.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "doip-header.h"
+/*
 #include "doip-payload-handler.h"
+*/
 #include "packet-doip.h"
 
 static const char *DOIP_FULLNAME = "Diagnostic over IP";
@@ -16,16 +20,33 @@ static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
 static int proto_doip = -1;
 
+
+
+/* function declaration */
 static void
-dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_doip(tvbuff_t *, packet_info *, proto_tree *);
+
+static void
+dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *);
+
+static void
+dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *);
+
+static void
+register_udp_test_equipment_messages(proto_tree *);
+
+
+/* function implementation */
+
+static void
+dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    payload_handler handler;
     doip_header *header;
+    /*
+    payload_handler handler;
+    */
 
     /* suppress warning for unused variables */
-    if(tvb) {
-        tvb = NULL;
-    }
     if(tree) {
         tree = NULL;
     }
@@ -37,6 +58,11 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     header = create_doip_header(tvb);
     if(header)
     {
+        print_doip_header(stdout, header);
+    }
+    /*
+    if(header)
+    {
         handler = find_matching_payload_handler(header);
         if(handler)
         {
@@ -44,23 +70,22 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         }
         destroy_doip_header(header);
     }
+    */    
+
+}
+
+static void
+dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+{
+    dissect_doip(tvb, pinfo, tree);
 }
 
 static void
 dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    /* suppress warning for unused variables */
-    if(tvb) {
-        tvb = NULL;
-    }
-    if(tree) {
-        tree = NULL;
-    }
-
-    col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
-    col_clear(pinfo->cinfo, COL_INFO);
-
     register_udp_test_equipment_messages(tree);
+
+    dissect_doip(tvb, pinfo, tree);
 }
 
 static void

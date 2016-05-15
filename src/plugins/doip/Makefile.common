@@ -29,13 +29,22 @@ PLUGIN_NAME = doip
 NONGENERATED_REGISTER_C_FILES = \
 	packet-doip.c
 
+# header file
+DISSECTOR_INCLUDES = \
+    packet-doip.h
+
+
 # Non-generated sources
 NONGENERATED_C_FILES = \
-	$(NONGENERATED_REGISTER_C_FILES)
+	$(NONGENERATED_REGISTER_C_FILES) \
+    test.c \
+    doip-header.c
 
 # Headers.
 CLEAN_HEADER_FILES = \
-	packet-doip.h
+	packet-doip.h \
+    test.h \
+    doip-header.h
 
 HEADER_FILES = \
 	$(CLEAN_HEADER_FILES)

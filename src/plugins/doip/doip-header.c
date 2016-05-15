@@ -2,37 +2,67 @@
 
 #include "config.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <epan/packet.h>
 #include <epan/tvbuff.h>
 
 #include "doip-header.h"
 
+
+static gboolean
+insert_proto_version(doip_header *, tvbuff_t *);
+
+static gboolean
+insert_proto_version(doip_header *, tvbuff_t *);
+
+static inline gboolean
+insert_inverse_proto_version(doip_header *, tvbuff_t *);
+
+static inline gboolean
+insert_payload_type(doip_header *, tvbuff_t *);
+
+static inline gboolean
+insert_payload_length(doip_header *, tvbuff_t *);
+
+static inline gboolean
+insert_payload_content(doip_header *, tvbuff_t *);
+
+static gboolean
+validate_doip_header(doip_header *);
+
+static inline gboolean
+validate_doip_version(guint8 version, guint8 inverse_version);
+
+
+
 doip_header *
 create_doip_header(tvbuff_t *tvb)
 {
+    doip_header *header = NULL;;
 
-    doip_header *header;
-
-    header = (doip_header *) malloc(sizeof(doip_header));
-
-    if(header)
+    if(tvb)
     {
+        header = (doip_header *) malloc(sizeof(doip_header));
 
-        insert_proto_version(header, tvb);
-
-        insert_inverse_proto_version(header, tvb);
-
-        insert_payload_type(header, tvb);
-
-        insert_payload_length(header, tvb);
-
-        insert_payload_content(header, tvb);
-
-
-        if(!validate_doip_header(header))
+        if(header)
         {
-            destroy_doip_header(header);
-            header = NULL;
+            insert_proto_version(header, tvb);
+
+            insert_inverse_proto_version(header, tvb);
+
+            insert_payload_type(header, tvb);
+
+            insert_payload_length(header, tvb);
+
+            /*
+            insert_payload_content(header, tvb);
+
+            if(!validate_doip_header(header))
+            {
+                destroy_doip_header(header);
+                header = NULL;
+            }
+            */
         }
     }
 
@@ -52,7 +82,19 @@ destroy_doip_header(doip_header *header)
     }
 }
 
-inline gboolean
+void
+print_doip_header(FILE *stream, doip_header *header)
+{
+    fprintf(
+        stream,
+        "doip-header:\n\tversion: %d\n\tpayload type: %d\n\tpayload length: %d\n",
+        header->proto_version,
+        header->payload_type,
+        header->payload_length
+    );
+}
+
+static inline gboolean
 insert_proto_version(doip_header *header, tvbuff_t *tvb)
 {
     const gint offset = 0;
@@ -63,7 +105,7 @@ insert_proto_version(doip_header *header, tvbuff_t *tvb)
     return header != NULL;
 }
 
-inline gboolean
+static inline gboolean
 insert_inverse_proto_version(doip_header *header, tvbuff_t *tvb)
 {
     const gint offset = 1;
@@ -75,7 +117,7 @@ insert_inverse_proto_version(doip_header *header, tvbuff_t *tvb)
 }
 
 
-inline gboolean
+static inline gboolean
 insert_payload_type(doip_header *header, tvbuff_t *tvb)
 {
     const gint offset = 3;
@@ -94,7 +136,7 @@ insert_payload_type(doip_header *header, tvbuff_t *tvb)
 
 }
 
-inline gboolean
+static inline gboolean
 insert_payload_length(doip_header *header, tvbuff_t *tvb)
 {
     const gint offset = 5;
@@ -113,7 +155,7 @@ insert_payload_length(doip_header *header, tvbuff_t *tvb)
     return header != NULL;
 }
 
-inline gboolean
+static inline gboolean
 insert_payload_content(doip_header *header, tvbuff_t *tvb)
 {
     const gint offset = 9;
@@ -127,24 +169,20 @@ insert_payload_content(doip_header *header, tvbuff_t *tvb)
     return header != NULL;
 }
 
-inline gboolean
+static inline gboolean
 validate_doip_header(doip_header *header)
 {
     gboolean valid_version;
 
     valid_version = validate_doip_version(header->proto_version, header->inverse_proto_version);
 
-    /* TODO:
-        - more checks
-    */
-
     return valid_version;
 }
 
-inline gboolean
+static inline gboolean
 validate_doip_version(guint8 version, guint8 inverse_version)
 {
-    const gint8 inverter = 0xff;
-    return (version == (inverse_version ^ inverter));
+    const guint8 inverter = 0xff;
+    return inverter == (version ^ inverse_version);
 }
 
