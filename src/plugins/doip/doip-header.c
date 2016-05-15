@@ -54,7 +54,6 @@ create_doip_header(tvbuff_t *tvb)
 
             insert_payload_length(header, tvb);
 
-            /*
             insert_payload_content(header, tvb);
 
             if(!validate_doip_header(header))
@@ -62,7 +61,6 @@ create_doip_header(tvbuff_t *tvb)
                 destroy_doip_header(header);
                 header = NULL;
             }
-            */
         }
     }
 
@@ -87,7 +85,7 @@ print_doip_header(FILE *stream, doip_header *header)
 {
     fprintf(
         stream,
-        "doip-header:\n\tversion: %d\n\tpayload type: %d\n\tpayload length: %d\n",
+        "doip-header:\n\tversion: %x\n\tpayload type: %x\n\tpayload length: %d\n",
         header->proto_version,
         header->payload_type,
         header->payload_length
@@ -120,7 +118,7 @@ insert_inverse_proto_version(doip_header *header, tvbuff_t *tvb)
 static inline gboolean
 insert_payload_type(doip_header *header, tvbuff_t *tvb)
 {
-    const gint offset = 3;
+    const gint offset = 2;
     gint payload_type = 0;
     gint byte_offset = 0;
     
@@ -139,7 +137,7 @@ insert_payload_type(doip_header *header, tvbuff_t *tvb)
 static inline gboolean
 insert_payload_length(doip_header *header, tvbuff_t *tvb)
 {
-    const gint offset = 5;
+    const gint offset = 4;
     guint32 payload_length = 0;
     gint byte_offset = 0;
     if(header)
@@ -158,15 +156,35 @@ insert_payload_length(doip_header *header, tvbuff_t *tvb)
 static inline gboolean
 insert_payload_content(doip_header *header, tvbuff_t *tvb)
 {
-    const gint offset = 9;
-    if(header)
+    const gint offset = 8;
+    gboolean success;
+    size_t required_bytes;
+
+    if(header && header->payload_length)
     {
+        required_bytes = sizeof(guint8) * header->payload_length;
 
-        header->payload_content = (guint8 **) malloc(sizeof(guint8) * header->payload_length);
+        header->payload_content = (guint8 *) malloc(required_bytes);
 
-        tvb_memcpy(tvb, *(header->payload_content), offset, header->payload_length);
+        if(header->payload_content)
+        {
+            /* TODO
+                consider using tvb_memdump
+                tvb_memdump may not require an additional malloc()/free()
+            */
+            tvb_memcpy(
+                tvb, 
+                header->payload_content,
+                offset,
+                header->payload_length
+            );
+        }
     }
-    return header != NULL;
+
+    success = header->payload_content == 0
+        ? TRUE
+        : header->payload_content != NULL;
+    return success;
 }
 
 static inline gboolean

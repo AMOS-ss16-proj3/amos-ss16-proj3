@@ -10,6 +10,11 @@
 */
 #include "packet-doip.h"
 
+/* debug variables */
+#define DEBUG_OUTPUT stdout
+/* end debug variables */
+
+
 static const char *DOIP_FULLNAME = "Diagnostic over IP";
 static const char *DOIP_SHORTNAME = "DoIP";
 static const char *DOIP_ABBREV = "doip";
@@ -54,11 +59,14 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
     col_clear(pinfo->cinfo, COL_INFO);
 
-
     header = create_doip_header(tvb);
     if(header)
     {
-        print_doip_header(stdout, header);
+        print_doip_header(DEBUG_OUTPUT, header);
+    }
+    else
+    {
+        fprintf(DEBUG_OUTPUT, "header is null");
     }
     /*
     if(header)

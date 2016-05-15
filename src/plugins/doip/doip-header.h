@@ -15,7 +15,7 @@ typedef struct doip_header
 
     guint16 payload_type;
     guint32 payload_length;
-    guint8 **payload_content;
+    guint8 *payload_content;
 } doip_header;
 
 doip_header *
