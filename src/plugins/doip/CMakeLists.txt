@@ -29,7 +29,6 @@ set(DISSECTOR_SRC
 )
 
 set(DISSECTOR_SUPPORT_SRC 
-    test.c
     doip-header.c
 )
 

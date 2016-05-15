@@ -37,13 +37,11 @@ DISSECTOR_INCLUDES = \
 # Non-generated sources
 NONGENERATED_C_FILES = \
 	$(NONGENERATED_REGISTER_C_FILES) \
-    test.c \
     doip-header.c
 
 # Headers.
 CLEAN_HEADER_FILES = \
 	packet-doip.h \
-    test.h \
     doip-header.h
 
 HEADER_FILES = \
