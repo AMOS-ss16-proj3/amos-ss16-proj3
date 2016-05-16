@@ -8,6 +8,12 @@ clone_folder: c:\projects\ws-plugin
 # script after cloning repo:
 install:
   - echo Install Script now!
+
+platform:
+  - x64
+  
+before_build:
+  - echo before_build Script now!
   - mkdir c:\projects\wireshark
   - git clone https://github.com/wireshark/wireshark.git c:\projects\wireshark
   - dir 'c:\projects\wireshark'
@@ -17,9 +23,6 @@ install:
   - cmd set QT5_BASE_DIR='c:\Qt\5.6\msvc2013_64'
   - cmd set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
   - cmd xcopy /E 'c:\projects\ws-plugin\source\plugins' 'c:\projects\wireshark\wireshark\plugins'
-
-platform:
-  - x64
 
 build_script:
   - echo Build Script now!
