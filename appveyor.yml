@@ -25,7 +25,7 @@ before_build:
   - cmd: set QT5_BASE_DIR=c:\Qt\5.6\msvc2013_64
   - cmd: set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
   - echo xcopy now
-  - cmd: xcopy /E c:\projects\ws-plugin\source\plugins c:\projects\wireshark\plugins
+  - cmd: xcopy /E c:\projects\ws-plugin\src\plugins c:\projects\wireshark\plugins
   - echo nach xcopy
 
 build_script:
