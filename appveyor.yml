@@ -49,4 +49,4 @@ artifacts:
     
 on_failure:
   - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\
-  - appveyor PushArtifact mzapp.zip
+  - appveyor PushArtifact myapp.zip
