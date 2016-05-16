@@ -16,6 +16,7 @@ For further details see below
 
 ### Compiling
 Execute following scripts in this order:
+
 1. clone the project
 2. enter the project directory
 3. execute *bash build/prepare_env.sh*
