@@ -47,6 +47,6 @@ artifacts:
   - path: myapp.zip
     name: MyApp
     
-build_failure:
+on_failure:
   - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\
   - appveyor PushArtifact mzapp.zip
