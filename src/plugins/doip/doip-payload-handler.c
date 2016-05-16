@@ -15,6 +15,7 @@ find_matching_payload_handler(doip_header *header)
         {
             case 0x0000:
                 handler = dissect_payload_0000;
+                break;
             case 0x0005:
                 handler = dissect_payload_0005;
                 break;
