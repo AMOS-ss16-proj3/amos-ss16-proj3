@@ -16,17 +16,17 @@ before_build:
   - echo before_build Script now!
   - mkdir c:\projects\wireshark
   - git clone https://github.com/wireshark/wireshark.git c:\projects\wireshark
-  - dir 'c:\projects\wireshark'
+  - dir c:\projects\wireshark
   - cmd set CYGWIN=nodosfilewarning
-  - cmd set WIRESHARK_BASE_DIR='c:\projects\wireshark'
+  - cmd set WIRESHARK_BASE_DIR=c:\projects\wireshark
   - cmd set WIRESHARK_TARGET_PLATFORM=win64
-  - cmd set QT5_BASE_DIR='c:\Qt\5.6\msvc2013_64'
+  - cmd set QT5_BASE_DIR=c:\Qt\5.6\msvc2013_64
   - cmd set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
-  - cmd xcopy /E 'c:\projects\ws-plugin\source\plugins' 'c:\projects\wireshark\wireshark\plugins'
+  - cmd xcopy /E c:\projects\ws-plugin\source\plugins c:\projects\wireshark\wireshark\plugins
 
 build_script:
   - echo Build Script now!
-  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" 'c:\projects\wireshark\wireshark'
+  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark\wireshark
   - msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
 
 after_build:
