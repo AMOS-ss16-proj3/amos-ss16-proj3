@@ -25,12 +25,12 @@ before_build:
   - cmd: set QT5_BASE_DIR=c:\Qt\5.6\msvc2013_64
   - cmd: set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
   - echo xcopy now
-  - cmd: xcopy /E c:\projects\ws-plugin\source\plugins c:\projects\wireshark\wireshark\plugins
+  - cmd: xcopy /E c:\projects\ws-plugin\source\plugins c:\projects\wireshark\plugins
   - echo nach xcopy
 
 build_script:
   - echo Build Script now!
-  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark\wireshark
+  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
   - msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
 
 after_build:
