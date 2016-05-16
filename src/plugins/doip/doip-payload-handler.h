@@ -14,7 +14,6 @@ payload_handler
 find_matching_payload_handler(doip_header *);
 
 
-
 #endif /* __DOIP_PAYLOAD_HANDLER_H */
 
 

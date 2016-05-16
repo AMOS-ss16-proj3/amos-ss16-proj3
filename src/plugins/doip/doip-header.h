@@ -6,6 +6,7 @@
 #include "config.h"
 #include <epan/packet.h>
 #include <epan/tvbuff.h>
+#include <stdio.h>
 
 
 typedef struct doip_header 

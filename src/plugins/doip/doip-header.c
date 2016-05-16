@@ -72,7 +72,7 @@ destroy_doip_header(doip_header *header)
 {
     if(header)
     {
-        if(header->payload_length > 0)
+        if(header->payload_length)
         {
             free(header->payload_content);
         }
@@ -85,7 +85,7 @@ print_doip_header(FILE *stream, doip_header *header)
 {
     fprintf(
         stream,
-        "doip-header:\n\tversion: %x\n\tpayload type: %x\n\tpayload length: %d\n",
+        "doip-header:\n\tversion: 0x%x\n\tpayload type: %x\n\tpayload length: %d\n",
         header->proto_version,
         header->payload_type,
         header->payload_length
