@@ -10,7 +10,7 @@ dissect_payload_0000(doip_header *header, packet_info *pinfo, proto_tree *tree)
     }
     if(pinfo)
     {
-        col_set_str(pinfo->cinfo, COL_INFO, "HUGE SUCCESS!");
+        col_set_str(pinfo->cinfo, COL_INFO, "payload type 0x0000");
         pinfo = NULL;
     }
     if(tree)
