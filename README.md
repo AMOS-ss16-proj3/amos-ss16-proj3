@@ -11,8 +11,6 @@ For further details see below
 
 ## Linux
 
-
-
 ### Requirements
 - [apt](https://en.wikipedia.org/wiki/Advanced_Packaging_Tool) (if not available, the scripts in section _Compiling_ have to be adapted)
 
@@ -20,15 +18,13 @@ For further details see below
 Execute following scripts in this order:
 1. clone the project
 2. enter the project directory
-1. execute *bash build/prepare_env.sh*
-2. execute *bash build/plugin.sh*
+3. execute *bash build/prepare_env.sh*
+4. execute *bash build/plugin.sh*
 
 As a result there will be a shared-object file as ./wireshark/plugins/doip/.libs.
 
 ### Install
 Copy ./wireshark/plugins/doip/.libs/doip.so to your wireshark plugin directory (e.g. ~/.wireshark/plugins)
-
-
 
 ## Windows
 
