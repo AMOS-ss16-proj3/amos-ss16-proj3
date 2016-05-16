@@ -15,7 +15,19 @@
 * limitations under the License.
 */
 
+
+#include <epan/tvbuff.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "doip-header.h"
+#include "doip-payload-handler.h"
 #include "packet-doip.h"
+
+/* debug variables */
+#define DEBUG_OUTPUT stdout
+/* end debug variables */
+
 
 static const char *DOIP_FULLNAME = "Diagnostic over IP";
 static const char *DOIP_SHORTNAME = "DoIP";
@@ -27,48 +39,76 @@ static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
 static int proto_doip = -1;
 
+
+
+/* function declaration */
 static void
-dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_doip(tvbuff_t *, packet_info *, proto_tree *);
+
+static void
+dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *);
+
+static void
+dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *);
+
+static void
+register_udp_test_equipment_messages(proto_tree *);
+
+
+/* function implementation */
+
+static void
+dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    /* suppress warning for unused variables */
-    if(tvb) {
-        tvb = NULL;
-    }
-    if(tree) {
-        tree = NULL;
-    }
+    doip_header *header;
+    payload_handler handler;
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
     col_clear(pinfo->cinfo, COL_INFO);
+
+    header = create_doip_header(tvb);
+    if(header)
+    {
+        print_doip_header(DEBUG_OUTPUT, header);
+
+        handler = find_matching_payload_handler(header);
+
+        if(handler)
+        {
+            handler(header, pinfo, tree);
+        }
+
+        destroy_doip_header(header);
+    }
+}
+
+static void
+dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+{
+    dissect_doip(tvb, pinfo, tree);
 }
 
 static void
 dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    /* suppress warning for unused variables */
-    if(tvb) {
-        tvb = NULL;
-    }
-    if(tree) {
-        tree = NULL;
-    }
-
-    col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
-    col_clear(pinfo->cinfo, COL_INFO);
-
     register_udp_test_equipment_messages(tree);
+
+    dissect_doip(tvb, pinfo, tree);
 }
 
 static void
 register_udp_test_equipment_messages(proto_tree *tree)
 {
+    if(tree)
+    {
+        tree = NULL;
+    }
     /* TODO by dust */
     /*
     gboolean has_non_default_port_communication;
     proto_item *udp_package;
     */
 }
-
 
 void
 proto_register_doip(void)

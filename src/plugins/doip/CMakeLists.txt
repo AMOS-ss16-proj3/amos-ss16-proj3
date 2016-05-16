@@ -25,12 +25,20 @@ include(WiresharkPlugin)
 set_module_info(doip 0 0 1 0)
 
 set(DISSECTOR_SRC
-	packet-doip.c
+    packet-doip.c
+)
+
+set(DISSECTOR_SUPPORT_SRC 
+    doip-header.c
+    doip-payload-handler.c
+    doip-payload-0000.c
+    doip-payload-0005.c
 )
 
 set(PLUGIN_FILES
-	plugin.c
-	${DISSECTOR_SRC}
+    plugin.c
+    ${DISSECTOR_SRC}
+    ${DISSECTOR_SUPPORT_SRC}
 )
 
 set(CLEAN_FILES
@@ -50,6 +58,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 register_dissector_files(plugin.c
 	plugin
 	${DISSECTOR_SRC}
+    ${DISSECTOR_SUPPORT_SRC}
 )
 
 add_plugin_library(doip)
