@@ -1,9 +1,11 @@
 
-#include "doip-payload-handler.h"
 
 #include "doip-header.h"
+
 #include "doip-payload-0000.h"
 #include "doip-payload-0005.h"
+
+#include "doip-payload-handler.h"
 
 payload_handler
 find_matching_payload_handler(doip_header *header)
