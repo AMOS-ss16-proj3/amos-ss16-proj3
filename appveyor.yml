@@ -27,11 +27,18 @@ before_build:
   - echo xcopy now
   - cmd: xcopy /E c:\projects\ws-plugin\src\plugins c:\projects\wireshark\plugins
   - echo nach xcopy
+  - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
+  - mkdir c:\projects\cyg-packages
+  - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex
 
 build_script:
   - echo Build Script now!
+  - cd  c:\projects\wireshark
   - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
+  - dir
   - msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
+  - dir
+  - dir plugins\doip
 
 after_build:
   - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\
