@@ -48,5 +48,5 @@ artifacts:
     name: MyApp
     
 on_failure:
-  - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\
+  - 7z a myapp.zip c:\projects\
   - appveyor PushArtifact myapp.zip
