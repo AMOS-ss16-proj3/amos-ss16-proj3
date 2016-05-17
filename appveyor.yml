@@ -24,6 +24,10 @@ before_build:
   - echo before_build Script now!
   - mkdir c:\projects\wireshark
   - git clone https://github.com/wireshark/wireshark.git c:\projects\wireshark
+  #- ps: Invoke-WebRequest -Uri https://2.na.dl.wireshark.org/src/wireshark-2.0.3.tar.bz2 -OutFile c:\projects\wireshark-2.0.3.tar.bz2
+  #- cd c:\projects\ ..... TOTO manual download if needed
+  #- 7z x wireshark-2.0.3.tar.bz2
+  #7z x wireshark-2.0.3.tar
   - dir c:\projects\wireshark
   - echo nach dir
   - cmd: set CYGWIN=nodosfilewarning
@@ -48,8 +52,8 @@ build_script:
   - echo Build Script now!
   - cd  c:\projects\wireshark\build
   - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
-  - dir
-  - msbuild /verbosity:diag .\plugins\doip\doip.vcxproj
+  - dir c:\projects\wireshark\build\plugins\doip\
+  - msbuild /verbosity:diag c:\projects\wireshark\build\plugins\doip\doip.vcxproj
   #- msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
   - dir
   - dir plugins\doip
@@ -62,6 +66,6 @@ artifacts:
     name: MyApp
     
 on_failure:
-  - dir "C:\Program Files (x86)\"
+  - dir c:\projects\wireshark\build\plugins\
   - 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
   - appveyor PushArtifact myapp.zip
