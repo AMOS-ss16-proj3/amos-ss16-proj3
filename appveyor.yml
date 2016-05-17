@@ -42,7 +42,6 @@ before_build:
   - dir C:\cygwin64\bin
   - cmd: '%CYG_ROOT%/bin/flex -V'
   - cmd: '%CYG_ROOT%/bin/bison --version'
-  - mkdir c:\projects\wireshark\build
   
 
 build_script:
