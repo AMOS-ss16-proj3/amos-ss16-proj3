@@ -23,23 +23,21 @@
 #include <epan/tvbuff.h>
 #include <stdio.h>
 
-
-typedef struct doip_payload
-{
-    guint16 type;
-    guint32 length;
-
-    tvbuff_t *tvb;
-    guint32 tvb_offset;
-
-} doip_payload;
-
 typedef struct doip_header 
 {
     guint8 proto_version;
     guint8 inverse_proto_version;
 
-    doip_payload payload;
+    struct doip_payload
+    {
+        guint16 type;
+        guint32 length;
+
+        tvbuff_t *tvb;
+        guint32 tvb_offset;
+
+    } payload;
+
 } doip_header;
 
 
