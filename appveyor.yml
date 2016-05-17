@@ -38,7 +38,7 @@ before_build:
   - cmd: set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
   - echo xcopy now
   - cmd: xcopy /E c:\projects\ws-plugin\src\plugins c:\projects\wireshark\plugins
-  - cmd: copy /E c:\projects\ws-plugin\CMakeLists.txt c:\projects\wireshark\CMakeLists.txt \Y
+  - cmd: copy /Y c:\projects\ws-plugin\CMakeLists.txt c:\projects\wireshark\CMakeLists.txt
   #- cmd: xcopy /E c:\projects\ws-plugin\CMakeOptions.txt c:\projects\wireshark /Y
   - echo nach xcopy
   - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
