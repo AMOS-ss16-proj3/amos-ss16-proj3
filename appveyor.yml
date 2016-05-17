@@ -50,6 +50,7 @@ before_build:
 
 build_script:
   - echo Build Script now!
+  - mkdir c:\projects\wireshark\build
   - cd  c:\projects\wireshark\build
   - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
   - dir c:\projects\wireshark\build\plugins\doip\
