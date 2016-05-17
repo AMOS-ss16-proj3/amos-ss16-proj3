@@ -9,7 +9,8 @@ environment:
 # script after cloning repo:
 install:
   - echo Install Script now!
-  - choco install winflexbison
+  - cinst winflexbison
+  #- choco install winflexbison
 
 platform:
   - x64
