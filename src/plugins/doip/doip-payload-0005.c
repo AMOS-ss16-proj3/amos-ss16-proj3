@@ -17,23 +17,40 @@
 
 #include "doip-payload-0005.h"
 
+static const char *description = "routing activation request";
+
 void
 dissect_payload_0005(doip_header *header, packet_info *pinfo, proto_tree *tree)
 {
-    if(header)
+    const guint TEST_STR_SIZE = 20;
+    char *test_str;
+    guint32 test;
+
+    test_str = (char *) malloc(sizeof(char) * TEST_STR_SIZE);
+
+
+    if(header && pinfo && tree && test_str)
     {
-        header = NULL;
-    }
-    if(pinfo)
-    {
-        col_set_str(pinfo->cinfo, COL_INFO, "payload type 0x0005");
-        pinfo = NULL;
-    }
-    if(tree)
-    {
-        tree = NULL;
+        if(get_guint32_from_message(header, &test, 0))
+        {
+            snprintf(test_str, TEST_STR_SIZE, "%d", test);
+
+            col_set_str(pinfo->cinfo, COL_INFO, test_str);
+        }
+        else{
+            col_set_str(pinfo->cinfo, COL_INFO, description);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 

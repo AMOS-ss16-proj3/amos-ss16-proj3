@@ -24,24 +24,48 @@
 #include <stdio.h>
 
 
+typedef struct doip_payload
+{
+    guint16 type;
+    guint32 length;
+
+    tvbuff_t *tvb;
+    guint32 tvb_offset;
+
+} doip_payload;
+
 typedef struct doip_header 
 {
     guint8 proto_version;
     guint8 inverse_proto_version;
 
-    guint16 payload_type;
-    guint32 payload_length;
-    guint8 *payload_content;
+    doip_payload payload;
 } doip_header;
+
 
 doip_header *
 create_doip_header(tvbuff_t *);
+
+gboolean
+fill_doip_header(doip_header *, tvbuff_t *);
 
 void
 destroy_doip_header(doip_header *);
 
 void
 print_doip_header(FILE *, doip_header *);
+
+gboolean
+get_guint8_from_message(const doip_header *, guint8 *i, const gint offset);
+
+gboolean
+get_guint16_from_message(const doip_header *, guint16 *i, const gint offset);
+
+gboolean
+get_guint32_from_message(const doip_header *, guint32 *i, const gint offset);
+
+gboolean
+get_guint64_from_message(const doip_header *, guint64 *i, const gint offset);
 
 #endif /* __DOIP_HEADER_H */
 

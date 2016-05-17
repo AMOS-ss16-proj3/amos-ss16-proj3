@@ -60,25 +60,26 @@ register_udp_test_equipment_messages(proto_tree *);
 static void
 dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    doip_header *header;
+    /*doip_header *header;*/
+    doip_header header;
     payload_handler handler;
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
     col_clear(pinfo->cinfo, COL_INFO);
 
-    header = create_doip_header(tvb);
-    if(header)
+    /*header = create_doip_header(tvb);*/
+    if(fill_doip_header(&header, tvb))
     {
-        print_doip_header(DEBUG_OUTPUT, header);
+        print_doip_header(DEBUG_OUTPUT, &header);
 
-        handler = find_matching_payload_handler(header);
+        handler = find_matching_payload_handler(&header);
 
         if(handler)
         {
-            handler(header, pinfo, tree);
+            handler(&header, pinfo, tree);
         }
 
-        destroy_doip_header(header);
+        /*destroy_doip_header(header);*/
     }
 }
 

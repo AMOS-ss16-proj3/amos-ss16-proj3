@@ -26,9 +26,10 @@ payload_handler
 find_matching_payload_handler(doip_header *header)
 {
     payload_handler handler = NULL;
+
     if(header)
     {
-        switch(header->payload_type)
+        switch(header->payload.type)
         {
             case 0x0000:
                 handler = dissect_payload_0000;
