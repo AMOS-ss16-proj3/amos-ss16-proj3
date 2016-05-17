@@ -1097,7 +1097,7 @@ if(ENABLE_PLUGINS)
 	endif()
 	set(PLUGIN_SRC_DIRS
 		plugins/docsis
-		plugins/doipwin
+		plugins/doip
 		plugins/ethercat
 		plugins/gryphon
 		plugins/irda
