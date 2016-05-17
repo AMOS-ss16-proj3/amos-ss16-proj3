@@ -49,7 +49,7 @@ build_script:
   - cd  c:\projects\wireshark\build
   - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
   - dir
-  - msbuild /verbosity:diag c:\projects\wireshark\plugins\doip\doip.vcxproj
+  - msbuild /verbosity:diag .\plugins\doip\doip.vcxproj
   #- msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
   - dir
   - dir plugins\doip
