@@ -16,6 +16,11 @@ platform:
   - x64
   
 before_build:
+  - echo %PATH%
+  - set PATH=%PATH%;C:\cygwin64\bin\
+  - echo %PATH%
+  - set PATH=C:\cygwin64\bin\;%PATH%
+  - echo %PATH%
   - echo before_build Script now!
   - mkdir c:\projects\wireshark
   - git clone https://github.com/wireshark/wireshark.git c:\projects\wireshark
