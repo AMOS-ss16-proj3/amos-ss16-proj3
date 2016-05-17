@@ -2,7 +2,8 @@ version: '0.0.1-{build}'
 
 clone_folder: c:\projects\ws-plugin
 
-#environment:
+environment:
+  CYG_ROOT: C:\cygwin64
 #  var: value
 
 # script after cloning repo:
@@ -29,7 +30,9 @@ before_build:
   - echo nach xcopy
   - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
   - mkdir c:\projects\cyg-packages
-  - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex
+  - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex -P bison
+  - cmd: %CYG_ROOT%/bin/flex -V
+  - cmd: %CYG_ROOT%/bin/bison --version
 
 build_script:
   - echo Build Script now!
@@ -48,5 +51,6 @@ artifacts:
     name: MyApp
     
 on_failure:
-  - 7z a myapp.zip c:\projects\
+  - dir "C:\Program Files (x86)\"
+  - 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
   - appveyor PushArtifact myapp.zip
