@@ -70,5 +70,6 @@ artifacts:
     
 on_failure:
   - dir c:\projects\wiresharkBuild\plugins\
+  - msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
   - 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
   - appveyor PushArtifact myapp.zip
