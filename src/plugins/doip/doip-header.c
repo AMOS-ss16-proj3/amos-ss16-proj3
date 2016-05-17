@@ -26,33 +26,73 @@
 
 
 /* helper methods */
+
+
+
+
+/* converts a byte-offset into a bit-offset
+ *
+ * @param[in] offset
+ * @param[in,out] *i, pointer to variable in
+ *   which the result will be written
+ * @return TRUE, if everything went fine,
+ *  FALSE if an overflow or any other error occured
+ */
 static inline gboolean
 message_byte_offset_to_tvb_bit_offset(guint , guint *);
 
+/* converts a doip_header message offset 
+ * into a tvb_offset which can be used in
+ * methods provided by epan/tvbuff.h
+ *
+ * @param[in] offset
+ * @param[in,out] *i, pointer to variable in
+ *   which the result will be written
+ * @return TRUE, if everything went fine,
+ *  FALSE if an overflow or any other error occured
+ */ 
 static inline gboolean
 message_byte_offset_to_tvb_byte_offset(guint , guint *);
 
+/* reads proto_version from tvbuff_t and 
+ * writes it into doip_header
+ */
 static gboolean
 insert_proto_version(doip_header *, tvbuff_t *);
 
-static gboolean
-insert_proto_version(doip_header *, tvbuff_t *);
-
+/* reads inverse_proto_version from tvbuff_t and 
+ * writes it into doip_header
+ */
 static inline gboolean
 insert_inverse_proto_version(doip_header *, tvbuff_t *);
 
+/* reads payload type from tvbuff_t and 
+ * writes it into doip_header
+ */
 static inline gboolean
 insert_payload_type(doip_header *, tvbuff_t *);
 
+/* reads payload length from tvbuff_t and 
+ * writes it into doip_header
+ */
 static inline gboolean
 insert_payload_length(doip_header *, tvbuff_t *);
 
+/* writes data necessary for reading doip-message
+ * parts into a doip_header
+ * these information will be used by 
+ * get_guint8_from_message(), etc.
+ */
 static inline gboolean
 insert_payload_message(doip_header *, tvbuff_t *);
 
+/* checks whether a doip_header is valid or not
+ */
 static gboolean
 validate_doip_header(doip_header *);
 
+/* checks whether a doip_header version matches its inverse
+ */
 static inline gboolean
 validate_doip_version(guint8 version, guint8 inverse_version);
 
