@@ -47,6 +47,7 @@ before_build:
   - dir c:\projects\wireshark\plugins
   - cmd: '%CYG_ROOT%/bin/flex -V'
   - cmd: '%CYG_ROOT%/bin/bison --version'
+  - cmd: set WIRESHARK_CYGWIN_INSTALL_PATH=C:\cygwin64
   
 
 build_script:
