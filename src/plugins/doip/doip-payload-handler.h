@@ -23,9 +23,19 @@
 
 #include "doip-header.h"
 
+/* payload_handler is a function pointer to
+ * a function which can further dissect a package
+ */
 typedef
 void (*payload_handler)(doip_header *, packet_info *, proto_tree *);
 
+/* Determines a suitable payload_handler based on 
+ * a header's payload type
+ *
+ * @param[in] header, header containing payload type
+ * @return a valid payload_handler if payload type can be handled,
+ *  otherwise NULL
+ */
 payload_handler
 find_matching_payload_handler(doip_header *);
 
