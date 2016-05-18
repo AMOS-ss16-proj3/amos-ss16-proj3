@@ -69,9 +69,9 @@ after_build:
   #- appveyor PushArtifact wiresharkbuild.zip
   #- appveyor PushArtifact appveyor-build-folder.zip
   - dir c:\projects\wiresharkBuild\run
-  - 7z a run_folder.zip c:\projects\wiresharkBuild\run
-  - appveyor PushArtifact run_folder.zip
-  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
+ # - 7z a run_folder.zip c:\projects\wiresharkBuild\run
+  #- appveyor PushArtifact run_folder.zip
+  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll"
 
 artifacts:
   - path: myapp.zip
