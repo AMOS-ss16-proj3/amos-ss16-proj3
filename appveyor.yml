@@ -74,8 +74,10 @@ artifacts:
     name: MyApp
     
 on_failure:
-  - dir c:\projects\wiresharkBuild\plugins
-  - dir c:\projects\wiresharkBuild\plugins\gryphon
-  - msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
-  - 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
-  - appveyor PushArtifact myapp.zip
+  #- dir c:\projects\wiresharkBuild\plugins
+  #- dir c:\projects\wiresharkBuild\plugins\gryphon
+  #- msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
+  - echo FAILURE warum nur.... aber mal versuchen das Plugin zu pushen:
+  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
+  #- 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
+  #- appveyor PushArtifact myapp.zip
