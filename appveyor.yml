@@ -54,8 +54,8 @@ build_script:
   - echo Build Script now!
   - mkdir c:\projects\wiresharkBuild
   - cd  c:\projects\wiresharkBuild
-  #- cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
-  - cmake -G "Visual Studio 12 Win64" c:\projects\wireshark\plugins\doip
+  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
+  #- cmake -G "Visual Studio 12 Win64" c:\projects\wireshark\plugins\doip  ----------------------not working :(
   - dir c:\projects\wiresharkBuild\
   -  msbuild /m /p:Configuration=RelWithDebInfo c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
   #-  msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
@@ -68,6 +68,9 @@ after_build:
   #- 7z a wiresharkbuild.zip "c:\projects\wiresharkBuild"
   #- appveyor PushArtifact wiresharkbuild.zip
   #- appveyor PushArtifact appveyor-build-folder.zip
+  - dir c:\projects\wiresharkBuild\run
+  - 7z a run_folder.zip c:\projects\wiresharkBuild\run
+  - appveyor PushArtifact run_folder.zip
   - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
 
 artifacts:
