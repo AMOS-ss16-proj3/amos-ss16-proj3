@@ -44,7 +44,7 @@ before_build:
   - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
   - mkdir c:\projects\cyg-packages
   - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex -P bison
-  - dir c:\projects\wireshark\plugins
+  #- dir c:\projects\wireshark\plugins
   - cmd: '%CYG_ROOT%/bin/flex -V'
   - cmd: '%CYG_ROOT%/bin/bison --version'
   - cmd: set WIRESHARK_CYGWIN_INSTALL_PATH=C:\cygwin64
