@@ -62,7 +62,10 @@ build_script:
   #- dir plugins\doip
 
 after_build:
-  - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\ "c:\projects\wiresharkBuild"
+  - 7z a appveyor-build-folder.zip %APPVEYOR_BUILD_FOLDER%\
+  - 7z a wiresharkbuild.zip "c:\projects\wiresharkBuild"
+  - appveyor PushArtifact wiresharkbuild.zip
+  - appveyor PushArtifact appveyor-build-folder.zip
 
 artifacts:
   - path: myapp.zip
