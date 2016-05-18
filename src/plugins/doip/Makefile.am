@@ -1,6 +1,6 @@
 # Makefile.am
 # Automake file for doip plugin
-# By amos project (http://fau.de)
+# By amos project (https://osr.cs.fau.de)
 # Copyright 2016 amos project
 #
 # Wireshark - Network traffic analyzer

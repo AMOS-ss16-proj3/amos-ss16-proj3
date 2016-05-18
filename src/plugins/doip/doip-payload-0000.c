@@ -15,12 +15,26 @@
 * limitations under the License.
 */
 
-#ifndef __PACKET_DOIP_H
-#define __PACKET_DOIP_H
+#include "doip-payload-0000.h"
 
-#include "config.h"
+void
+dissect_payload_0000(doip_header *header, packet_info *pinfo, proto_tree *tree)
+{
+    if(header)
+    {
+        header = NULL;
+    }
+    if(pinfo)
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, "payload type 0x0000");
+        pinfo = NULL;
+    }
+    if(tree)
+    {
+        tree = NULL;
+    }
+}
 
-#include <epan/packet.h>
 
 
-#endif /* __PACKET_DOIP_H */
+

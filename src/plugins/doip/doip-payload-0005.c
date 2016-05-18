@@ -15,12 +15,43 @@
 * limitations under the License.
 */
 
-#ifndef __PACKET_DOIP_H
-#define __PACKET_DOIP_H
+#include "doip-payload-0005.h"
 
-#include "config.h"
+static const char *description = "routing activation request";
 
-#include <epan/packet.h>
+void
+dissect_payload_0005(doip_header *header, packet_info *pinfo, proto_tree *tree)
+{
+    const guint TEST_STR_SIZE = 20;
+    char *test_str;
+    guint32 test;
+
+    test_str = (char *) malloc(sizeof(char) * TEST_STR_SIZE);
 
 
-#endif /* __PACKET_DOIP_H */
+    if(header && pinfo && tree && test_str)
+    {
+        if(get_guint32_from_message(header, &test, 0))
+        {
+            snprintf(test_str, TEST_STR_SIZE, "%d", test);
+
+            col_set_str(pinfo->cinfo, COL_INFO, test_str);
+        }
+        else{
+            col_set_str(pinfo->cinfo, COL_INFO, description);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
