@@ -33,9 +33,13 @@ dissect_payload_0005(doip_header *header, packet_info *pinfo, proto_tree *tree)
     {
         if(get_guint32_from_message(header, &test, 0))
         {
+            #ifdef __linux
             snprintf(test_str, TEST_STR_SIZE, "%d", test);
 
             col_set_str(pinfo->cinfo, COL_INFO, test_str);
+            #else
+            col_set_str(pinfo->cinfo, COL_INFO, "Unimplemented in WIN");
+            #endif
         }
         else{
             col_set_str(pinfo->cinfo, COL_INFO, description);
