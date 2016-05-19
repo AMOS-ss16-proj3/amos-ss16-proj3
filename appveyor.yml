@@ -53,7 +53,10 @@ before_build:
   #- ps: Invoke-WebRequest -Uri http://amos.darki2002.bplaced.de/allbuild.zip  -OutFile c:\projects\allbuild.zip 
   - wget http://amos.darki2002.bplaced.de/allbuild.zip
   - 7z e -y allbuild.zip
-  - ps: rm -r c:\projects\wiresharkBuild\plugins\doip
+  - dir
+  - dir c:\projects
+  - dir c:\projects\wiresharkBuild
+  - ps: rm -r wiresharkBuild\plugins\doip
 
 build_script:
   - echo Build Script now!
