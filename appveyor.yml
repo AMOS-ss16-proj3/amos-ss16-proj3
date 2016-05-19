@@ -48,11 +48,14 @@ before_build:
   - cmd: '%CYG_ROOT%/bin/flex -V'
   - cmd: '%CYG_ROOT%/bin/bison --version'
   - cmd: set WIRESHARK_CYGWIN_INSTALL_PATH=C:\cygwin64
-  
+# Testy to check if build is shorther with prebuild wireshark/plugin:
+  - ps: Invoke-WebRequest -Uri http://amos.darki2002.bplaced.de/allbuild.zip  -OutFile c:\projects\allbuild.zip 
+  - 7z e allbuild.zip
+  - ps: rm -r c:\projects\wiresharkBuild\plugins\doip
 
 build_script:
   - echo Build Script now!
-  - mkdir c:\projects\wiresharkBuild
+  #- mkdir c:\projects\wiresharkBuild
   - cd  c:\projects\wiresharkBuild
   - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
   #- cmake -G "Visual Studio 12 Win64" c:\projects\wireshark\plugins\doip  ----------------------not working :(
