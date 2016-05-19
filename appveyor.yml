@@ -10,6 +10,7 @@ environment:
 install:
   - echo Install Script now!
   - cinst winflexbison
+  - cinst wget
   #- choco install winflexbison
 
 platform:
@@ -49,7 +50,8 @@ before_build:
   - cmd: '%CYG_ROOT%/bin/bison --version'
   - cmd: set WIRESHARK_CYGWIN_INSTALL_PATH=C:\cygwin64
 # Testy to check if build is shorther with prebuild wireshark/plugin:
-  - ps: Invoke-WebRequest -Uri http://amos.darki2002.bplaced.de/allbuild.zip  -OutFile c:\projects\allbuild.zip 
+  #- ps: Invoke-WebRequest -Uri http://amos.darki2002.bplaced.de/allbuild.zip  -OutFile c:\projects\allbuild.zip 
+  - wget http://amos.darki2002.bplaced.de/allbuild.zip
   - 7z e allbuild.zip
   - ps: rm -r c:\projects\wiresharkBuild\plugins\doip
 
