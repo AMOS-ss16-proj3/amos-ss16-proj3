@@ -39,13 +39,11 @@ static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
 
 static gint proto_doip = -1;
-/*
+static gint hf_doip_version = -1;
+static gint hf_doip_inverse_version = -1;
+static gint hf_doip_payload_type = -1;
+static gint hf_doip_payload_length = -1;
 static gint ett_doip = -1;
-static gint hf_doip_head = -1;
-*/
-/*
-static gint header_tree = -1;
-*/
 
 
 /* function declaration */
@@ -70,20 +68,30 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     doip_header header;
     payload_handler handler;
     proto_item *ti = NULL;
+    proto_tree *doip_tree = NULL;
     gint doip_length;
 
-    col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
-    col_clear(pinfo->cinfo, COL_INFO);
+    if(pinfo)
+    {
+        col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
+        col_clear(pinfo->cinfo, COL_INFO);
+    }
 
-    if(tvb && pinfo && tree)
+    if(tvb && tree)
     {
         if(fill_doip_header(&header, tvb))
         {
-            doip_length = get_total_doip_package_length(&header);
-            ti = proto_tree_add_item(tree, proto_doip, tvb, 0, doip_length, ENC_NA);
-        
             print_doip_header(DEBUG_OUTPUT, &header);
 
+            doip_length = get_total_doip_package_length(&header);
+
+            ti = proto_tree_add_item(tree, proto_doip, tvb, 0, doip_length, ENC_NA);
+            doip_tree = proto_item_add_subtree(ti, ett_doip);
+            proto_tree_add_item(doip_tree, hf_doip_version, tvb, 0, 1, ENC_BIG_ENDIAN);
+            proto_tree_add_item(doip_tree, hf_doip_inverse_version, tvb, 1, 1, ENC_BIG_ENDIAN);
+            proto_tree_add_item(doip_tree, hf_doip_payload_type, tvb, 2, 2, ENC_BIG_ENDIAN);
+            proto_tree_add_item(doip_tree, hf_doip_payload_length, tvb, 4, 4, ENC_BIG_ENDIAN);
+        
             handler = find_matching_payload_handler(&header);
 
             if(handler)
@@ -122,28 +130,63 @@ register_udp_test_equipment_messages(proto_tree *tree)
     */
 }
 
-
 void
 proto_register_doip(void)
 {
-    /*
-    static gint *ett[] = {
+    static hf_register_info hf[] = 
+    {
+        {
+            &hf_doip_version,
+            {
+                "Version", "doip.version",
+                FT_UINT8, BASE_DEC,
+                NULL, 0x0,
+                NULL, HFILL
+            }
+        },
+        {
+            &hf_doip_inverse_version,
+            {
+                "Inverse Version", "doip.iversion",
+                FT_UINT8, BASE_DEC,
+                NULL, 0x0,
+                NULL, HFILL
+            }
+        },
+        {
+            &hf_doip_payload_type,
+            {
+                "Payload Type", "doip.payload.type",
+                FT_UINT16, BASE_HEX,
+                NULL, 0x0,
+                NULL, HFILL
+            }
+        },
+        {
+            &hf_doip_payload_length,
+            {
+                "Payload Length", "doip.payload.length",
+                FT_UINT32, BASE_DEC,
+                NULL, 0x0,
+                NULL, HFILL
+            }
+        }
+    };
+
+    static gint *ett[] = 
+    {
         &ett_doip
     };
-    */
+
+
     proto_doip = proto_register_protocol (
         DOIP_FULLNAME,
         DOIP_SHORTNAME,
         DOIP_ABBREV
     );
 
-    /*
     proto_register_field_array(proto_doip, hf, array_length(hf));
     proto_register_subtree_array(ett, array_length(ett));
-    */
-    /*
-    proto_register_subtree_array(ett, array_length(ett));
-    */
 }
 
 void
