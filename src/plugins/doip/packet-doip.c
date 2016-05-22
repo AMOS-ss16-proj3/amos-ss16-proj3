@@ -37,8 +37,15 @@ static const guint32 TCP_DATA_PORT = 13400;
 static const guint32 UDP_DISCOVERY_PORT = 13400;
 static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
-static int proto_doip = -1;
 
+static gint proto_doip = -1;
+/*
+static gint ett_doip = -1;
+static gint hf_doip_head = -1;
+*/
+/*
+static gint header_tree = -1;
+*/
 
 
 /* function declaration */
@@ -60,26 +67,30 @@ register_udp_test_equipment_messages(proto_tree *);
 static void
 dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    /*doip_header *header;*/
     doip_header header;
     payload_handler handler;
+    proto_item *ti = NULL;
+    gint doip_length;
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
     col_clear(pinfo->cinfo, COL_INFO);
 
-    /*header = create_doip_header(tvb);*/
-    if(fill_doip_header(&header, tvb))
+    if(tvb && pinfo && tree)
     {
-        print_doip_header(DEBUG_OUTPUT, &header);
-
-        handler = find_matching_payload_handler(&header);
-
-        if(handler)
+        if(fill_doip_header(&header, tvb))
         {
-            handler(&header, pinfo, tree);
-        }
+            doip_length = get_total_doip_package_length(&header);
+            ti = proto_tree_add_item(tree, proto_doip, tvb, 0, doip_length, ENC_NA);
+        
+            print_doip_header(DEBUG_OUTPUT, &header);
 
-        /*destroy_doip_header(header);*/
+            handler = find_matching_payload_handler(&header);
+
+            if(handler)
+            {
+                handler(&header, pinfo, tree);
+            }
+        }
     }
 }
 
@@ -111,14 +122,28 @@ register_udp_test_equipment_messages(proto_tree *tree)
     */
 }
 
+
 void
 proto_register_doip(void)
 {
+    /*
+    static gint *ett[] = {
+        &ett_doip
+    };
+    */
     proto_doip = proto_register_protocol (
         DOIP_FULLNAME,
         DOIP_SHORTNAME,
         DOIP_ABBREV
     );
+
+    /*
+    proto_register_field_array(proto_doip, hf, array_length(hf));
+    proto_register_subtree_array(ett, array_length(ett));
+    */
+    /*
+    proto_register_subtree_array(ett, array_length(ett));
+    */
 }
 
 void

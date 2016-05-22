@@ -157,6 +157,16 @@ print_doip_header(FILE *stream, doip_header *header)
     );
 }
 
+gint
+get_total_doip_package_length(doip_header *header)
+{
+    const gint HEADER_LENGTH = 8; /* as taken from ISO 13400-2 */
+    gint payload_length;
+
+    payload_length = (gint) header->payload.length;
+
+    return HEADER_LENGTH + payload_length;
+}
 
 
 gboolean
