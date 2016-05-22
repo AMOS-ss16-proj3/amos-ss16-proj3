@@ -48,7 +48,6 @@ CLEAN_HEADER_FILES = \
 	packet-doip.h \
     doip-header.h \
     doip-payload-handler.h \
-    visualize-doip-header.h \
     doip-payload-0000.h \
     doip-payload-0005.h 
 
