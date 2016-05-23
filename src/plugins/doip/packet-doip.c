@@ -45,6 +45,35 @@ static gint hf_doip_payload_type = -1;
 static gint hf_doip_payload_length = -1;
 static gint ett_doip = -1;
 
+static const value_string doip_version_names[] = {
+    { 0x00, "Reserved"},
+    { 0x01, "DoIP ISO/DIS 13400-2:2010"},
+    { 0x02, "DoIP ISO 13400-2:2012"},
+    { 0xFF, "Default value for vehicle identification request messages"}
+};
+
+static const value_string packet_type_names[] = {
+    { 0x0000, "Generic DoIP header negative acknowledge" },
+    { 0x0001, "Vehicle identification request message" },
+    { 0x0002, "Vehicle identification request message with EID" },
+    { 0x0003, "Vehicle identification request message with VID" },
+    { 0x0004, "Vehicle announcement message/vehicle identification response message" },
+    { 0x0005, "Routing activation request" },
+    { 0x0006, "Routing activation response" },
+    { 0x0007, "Alive check request" },
+    { 0x0008, "Alive check response" },
+
+    { 0x4001, "DoIP entity status request" },
+    { 0x4002, "DoIP entity status response" },
+    { 0x4003, "Diagnostic power mode activation request" },
+    { 0x4004, "Diagnostic power mode activation response" },
+
+    { 0x8001, "Diagnostic message" },
+    { 0x8002, "Diagnostic message positive acknowledgement" },
+    { 0x8003, "Diagnostic message negative acknowledgement" },
+    { 0, NULL }
+};
+
 
 /* function declaration */
 static void
@@ -140,7 +169,7 @@ proto_register_doip(void)
             {
                 "Version", "doip.version",
                 FT_UINT8, BASE_DEC,
-                NULL, 0x0,
+                VALS(doip_version_names), 0x0,
                 NULL, HFILL
             }
         },
@@ -158,7 +187,7 @@ proto_register_doip(void)
             {
                 "Payload Type", "doip.payload.type",
                 FT_UINT16, BASE_HEX,
-                NULL, 0x0,
+                VALS(packet_type_names), 0x0,
                 NULL, HFILL
             }
         },
