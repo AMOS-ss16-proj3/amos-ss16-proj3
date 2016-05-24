@@ -15,10 +15,10 @@
 * limitations under the License.
 */
 
-/*
+
 #include "config.h"
 #include <epan/proto.h>
-*/
+
 
 #include "doip-header.h"
 #include "visualize-doip-header.h"
