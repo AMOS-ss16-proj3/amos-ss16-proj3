@@ -23,4 +23,4 @@ ENV HTML_INDEX_FILE doip.so
 
 ADD ./plugins/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
 ADD ./insert-win-link.sh /assets/insert-win-link.sh
-RUN bash /assets/insert-windows-link.sh
+RUN bash /assets/insert-win-link.sh
