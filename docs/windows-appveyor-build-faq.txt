@@ -1,0 +1,16 @@
+This file contains information about the automatic windows build of the project via appveyor.
+
+For increasing the speed of the build we use an appveyor premium account in the test phase (which is free for two weeks).
+This account should be switched from time to time because of the limited premium trial.
+
+---- The actual premium will expire at:
+
+01.06.2016
+
+---- The actual account is:
+
+https://ci.appveyor.com/project/tester/amos-ss16-proj3-24y9j
+
+---- The actual dll of the latest working build of the appveyor-deployment (which will be switched later on) can be found (and will be linked in the docker image) at:
+
+https://ci.appveyor.com/api/projects/tester/amos-ss16-proj3/artifacts/doip.dll
