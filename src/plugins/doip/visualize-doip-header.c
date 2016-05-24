@@ -24,7 +24,21 @@
 #include "visualize-doip-header.h"
 
 
+/* constants describing various header-fields */
+static const gint VERSION_POSITION = 0;
+static const gint VERSION_LENGTH = 1;
 
+static const gint INVERSE_VERSION_POSITION = 1;
+static const gint INVERSE_VERSION_LENGTH = 1;
+
+static const gint PAYLOAD_TYPE_POSITION = 2;
+static const gint PAYLOAD_TYPE_LENGTH = 2;
+
+static const gint PAYLOAD_LENGTH_POSITION = 4;
+static const gint PAYLOAD_LENGTH_LENGTH = 4;
+
+
+/* variables required for proto_tree */
 static gint hf_doip_version = -1;
 static gint hf_doip_inverse_version = -1;
 static gint hf_doip_payload_type = -1;
@@ -32,6 +46,7 @@ static gint hf_doip_payload_length = -1;
 static gint ett_doip = -1;
 
 
+/* value_strings which will be displayed for version in proto_tree */
 static const value_string doip_version_names[] = {
     { 0x00, "Reserved"},
     { 0x01, "DoIP ISO/DIS 13400-2:2010"},
@@ -39,6 +54,7 @@ static const value_string doip_version_names[] = {
     { 0xFF, "Default value for vehicle identification request messages"}
 };
 
+/* values which will be displayed for payload type in proto_tree */
 static const value_string packet_type_names[] = {
     { 0x0000, "Generic DoIP header negative acknowledge" },
     { 0x0001, "Vehicle identification request message" },
@@ -66,6 +82,7 @@ register_proto_doip_header(gint proto_doip)
 {
     static hf_register_info hf[] = 
     {
+        /* prepare info for version */
         {
             &hf_doip_version,
             {
@@ -75,6 +92,7 @@ register_proto_doip_header(gint proto_doip)
                 NULL, HFILL
             }
         },
+        /* prepare info for inverse version */
         {
             &hf_doip_inverse_version,
             {
@@ -84,6 +102,7 @@ register_proto_doip_header(gint proto_doip)
                 NULL, HFILL
             }
         },
+        /* prepare info for payload type */
         {
             &hf_doip_payload_type,
             {
@@ -93,6 +112,7 @@ register_proto_doip_header(gint proto_doip)
                 NULL, HFILL
             }
         },
+        /* prepare info for payload length */
         {
             &hf_doip_payload_length,
             {
@@ -115,6 +135,7 @@ register_proto_doip_header(gint proto_doip)
 }
 
 
+
 void
 visualize_doip_header(doip_header *header, proto_tree *tree, gint proto_doip)
 {
@@ -123,6 +144,7 @@ visualize_doip_header(doip_header *header, proto_tree *tree, gint proto_doip)
     proto_item *ti;
     tvbuff_t *tvb;
 
+    /* if tree == null, wireshark only wants to evaluate fixed fields */
     if(header && tree)
     {
         tvb = retrieve_tvbuff(header);
@@ -130,10 +152,10 @@ visualize_doip_header(doip_header *header, proto_tree *tree, gint proto_doip)
 
         ti = proto_tree_add_item(tree, proto_doip, tvb, 0, doip_length, ENC_NA);
         doip_tree = proto_item_add_subtree(ti, ett_doip);
-        proto_tree_add_item(doip_tree, hf_doip_version, tvb, 0, 1, ENC_BIG_ENDIAN);
-        proto_tree_add_item(doip_tree, hf_doip_inverse_version, tvb, 1, 1, ENC_BIG_ENDIAN);
-        proto_tree_add_item(doip_tree, hf_doip_payload_type, tvb, 2, 2, ENC_BIG_ENDIAN);
-        proto_tree_add_item(doip_tree, hf_doip_payload_length, tvb, 4, 4, ENC_BIG_ENDIAN);
+        proto_tree_add_item(doip_tree, hf_doip_version, tvb, VERSION_POSITION, VERSION_LENGTH, ENC_BIG_ENDIAN);
+        proto_tree_add_item(doip_tree, hf_doip_inverse_version, tvb, INVERSE_VERSION_POSITION, INVERSE_VERSION_LENGTH, ENC_BIG_ENDIAN);
+        proto_tree_add_item(doip_tree, hf_doip_payload_type, tvb, PAYLOAD_TYPE_POSITION, PAYLOAD_TYPE_LENGTH, ENC_BIG_ENDIAN);
+        proto_tree_add_item(doip_tree, hf_doip_payload_length, tvb, PAYLOAD_LENGTH_POSITION, PAYLOAD_LENGTH_LENGTH, ENC_BIG_ENDIAN);
     }
 }
 
