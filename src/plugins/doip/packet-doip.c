@@ -75,8 +75,6 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     {
         if(fill_doip_header(&header, tvb))
         {
-            print_doip_header(DEBUG_OUTPUT, &header);
-
             visualize_doip_header(&header, tree, proto_doip);
 
         
