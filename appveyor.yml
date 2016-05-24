@@ -42,29 +42,29 @@ before_build:
   - cmd: copy /Y c:\projects\ws-plugin\CMakeLists.txt c:\projects\wireshark\CMakeLists.txt
   #- cmd: xcopy /E c:\projects\ws-plugin\CMakeOptions.txt c:\projects\wireshark /Y
   - echo nach xcopy
-  - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
+#  - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
   - mkdir c:\projects\cyg-packages
   - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex -P bison
   #- dir c:\projects\wireshark\plugins
-  - cmd: '%CYG_ROOT%/bin/flex -V'
-  - cmd: '%CYG_ROOT%/bin/bison --version'
+ # - cmd: '%CYG_ROOT%/bin/flex -V'
+ # - cmd: '%CYG_ROOT%/bin/bison --version'
   - cmd: set WIRESHARK_CYGWIN_INSTALL_PATH=C:\cygwin64
 # Testy to check if build is shorther with prebuild wireshark/plugin:
   #- ps: Invoke-WebRequest -Uri http://amos.darki2002.bplaced.de/allbuild.zip  -OutFile c:\projects\allbuild.zip 
-  - wget http://amos.darki2002.bplaced.de/allbuild.zip
-  - 7z e -y allbuild.zip
-  - dir
-  - dir c:\projects
-  - dir c:\projects\wiresharkBuild
-  - ps: rm -r wiresharkBuild\plugins\doip
+ # - wget http://amos.darki2002.bplaced.de/allbuild.zip
+ # - 7z e -y allbuild.zip
+ # - dir
+ # - dir c:\projects
+ # - dir c:\projects\wiresharkBuild
+ # - ps: rm -r wiresharkBuild\plugins\doip
 
 build_script:
   - echo Build Script now!
-  #- mkdir c:\projects\wiresharkBuild
-  - cd  c:\projects\wiresharkBuild
+  - mkdir c:\projects\wiresharkBuild
+  #- cd  c:\projects\wiresharkBuild
   - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
   #- cmake -G "Visual Studio 12 Win64" c:\projects\wireshark\plugins\doip  ----------------------not working :(
-  - dir c:\projects\wiresharkBuild\
+  #- dir c:\projects\wiresharkBuild\
   -  msbuild /m /p:Configuration=RelWithDebInfo c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
   #-  msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
   #- msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
@@ -76,16 +76,16 @@ after_build:
   #- 7z a wiresharkbuild.zip "c:\projects\wiresharkBuild"
   #- appveyor PushArtifact wiresharkbuild.zip
   #- appveyor PushArtifact appveyor-build-folder.zip
-  - dir c:\projects\wiresharkBuild\run
-  - dir c:\projects\wiresharkBuild\plugins\doip
+ # - dir c:\projects\wiresharkBuild\run
+ # - dir c:\projects\wiresharkBuild\plugins\doip
  # - 7z a run_folder.zip c:\projects\wiresharkBuild\run
   #- appveyor PushArtifact run_folder.zip
   - appveyor PushArtifact "c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll"
   #- appveyor PushArtifact allbuild.zip
 
-artifacts:
-  - path: myapp.zip
-    name: MyApp
+#artifacts:
+#  - path: myapp.zip
+#    name: MyApp
     
 on_failure:
   #- dir c:\projects\wiresharkBuild\plugins
@@ -94,4 +94,9 @@ on_failure:
   - echo FAILURE warum nur.... aber mal versuchen das Plugin zu pushen:
   - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
   #- 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
-  #- appveyor PushArtifact myapp.zip
+  #- appveyor PushArtifact myapp.zipi
+
+deploy:
+ # maybe we dont need this and can use: https://ci.appveyor.com/api/projects/tester/amos-ss16-proj3/artifacts/doip.dll
+  provider: Environment
+  name: ftp-docker
