@@ -157,6 +157,12 @@ print_doip_header(FILE *stream, doip_header *header)
     );
 }
 
+tvbuff_t *
+retrieve_tvbuff(doip_header *header)
+{
+    return header ? header->payload.tvb : NULL;
+}
+
 gint
 get_total_doip_package_length(doip_header *header)
 {
