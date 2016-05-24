@@ -42,7 +42,7 @@ before_build:
   - cmd: copy /Y c:\projects\ws-plugin\CMakeLists.txt c:\projects\wireshark\CMakeLists.txt
   #- cmd: xcopy /E c:\projects\ws-plugin\CMakeOptions.txt c:\projects\wireshark /Y
   - echo nach xcopy
-#  - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
+  - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
   - mkdir c:\projects\cyg-packages
   - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex -P bison
   #- dir c:\projects\wireshark\plugins
