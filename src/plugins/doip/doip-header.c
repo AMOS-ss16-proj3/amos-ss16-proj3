@@ -160,7 +160,14 @@ print_doip_header(FILE *stream, doip_header *header)
 tvbuff_t *
 retrieve_tvbuff(doip_header *header)
 {
+    /*
     return header ? header->payload.tvb : NULL;
+    */
+    if(header)
+    {
+        return header->payload.tvb;
+    }
+    return NULL;
 }
 
 gint
@@ -372,13 +379,6 @@ insert_payload_length(doip_header *header, tvbuff_t *tvb)
             ENC_LITTLE_ENDIAN
         );
         
-        /*
-        payload_length = ((guint32)tvb_get_guint8(tvb, offset + byte_offset++)) << 24;
-        payload_length ^= ((guint32)tvb_get_guint8(tvb, offset + byte_offset++)) << 16;
-        payload_length ^= ((guint32)tvb_get_guint8(tvb, offset + byte_offset++)) << 8;
-        payload_length ^= ((guint32)tvb_get_guint8(tvb, offset));
-        */
-
         header->payload.length = payload_length;
     }
     return header != NULL;
@@ -389,7 +389,7 @@ insert_payload_message(doip_header *header, tvbuff_t *tvb)
 {
     const gint offset = 8;
 
-    if(header && header->payload.length)
+    if(header)
     {
         header->payload.tvb = tvb;
         header->payload.tvb_offset = offset;
