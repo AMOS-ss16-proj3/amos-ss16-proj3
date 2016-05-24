@@ -12,5 +12,7 @@ wireshark-2.0.2.tar.bz2
 # directory for building docker-images
 docker/plugins/*
 
+# lua example
+lua
 
 
