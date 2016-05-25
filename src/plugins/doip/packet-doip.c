@@ -42,7 +42,6 @@ static const guint32 UDP_TEST_EQUIPMENT = 13400;
 static gint proto_doip = -1;
 
 
-
 /* function declaration */
 static void
 dissect_doip(tvbuff_t *, packet_info *, proto_tree *);
@@ -75,15 +74,17 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     {
         if(fill_doip_header(&header, tvb))
         {
-            visualize_doip_header(&header, tree, proto_doip);
+            /*print_doip_header(DEBUG_OUTPUT, &header);*/
 
-        
+            visualize_doip_header(&header, tree, proto_doip);
             handler = find_matching_payload_handler(&header);
 
             if(handler)
             {
-                handler(&header, pinfo, tree);
+                handler(&header, tree, proto_doip);
             }
+            /*
+            */
         }
     }
 }
@@ -125,7 +126,7 @@ proto_register_doip(void)
         DOIP_ABBREV
     );
 
-    register_proto_doip_header(proto_doip);
+    register_proto_doip_payload(proto_doip);
 }
 
 void
