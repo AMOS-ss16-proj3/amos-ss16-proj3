@@ -15,14 +15,19 @@
 * limitations under the License.
 */
 
-#ifndef __DOIP_PAYLOAD_0000_H
-#define __DOIP_PAYLOAD_0000_H
+#ifndef __VISUALIZE_DOIP_HEADER_H
+#define __VISUALIZE_DOIP_HEADER_H
+
+#include <epan/proto.h>
 
 #include "doip-header.h"
 
 void
-dissect_payload_0000(doip_header *, packet_info *, proto_tree *);
+register_proto_doip_header(gint proto_doip);
 
-#endif /* __DOIP_PAYLOAD_0000_H */
+void
+visualize_doip_header(doip_header *, proto_tree *, gint proto_doip);
+
+#endif /* __VISUALIZE_DOIP_HEADER_H */
 
 
