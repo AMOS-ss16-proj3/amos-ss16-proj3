@@ -40,8 +40,7 @@ NONGENERATED_C_FILES = \
     doip-header.c \
     doip-payload-handler.c \
     visualize-doip-header.c \
-    doip-payload-0001.c \
-    doip-payload-0005.c
+    doip-payload-0001.c
 
 # Headers.
 CLEAN_HEADER_FILES = \
@@ -49,8 +48,7 @@ CLEAN_HEADER_FILES = \
     doip-header.h \
     doip-payload-handler.h \
     visualize-doip-header.h \
-    doip-payload-0001.h \
-    doip-payload-0005.h 
+    doip-payload-0001.h
 
 HEADER_FILES = \
 	$(CLEAN_HEADER_FILES)
