@@ -34,8 +34,8 @@ before_build:
   - cmd: set CYGWIN=nodosfilewarning
   #- echo nach set cygwin
   - cmd: set WIRESHARK_BASE_DIR=c:\projects
-  - cmd: set WIRESHARK_TARGET_PLATFORM=win64
-  - cmd: set QT5_BASE_DIR=c:\Qt\5.6\msvc2013_64
+  - cmd: set WIRESHARK_TARGET_PLATFORM=win32
+  - cmd: set QT5_BASE_DIR=c:\Qt\5.6\msvc2013
   - cmd: set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
   - echo xcopy now
   - cmd: xcopy /E c:\projects\ws-plugin\src\plugins c:\projects\wireshark\plugins
