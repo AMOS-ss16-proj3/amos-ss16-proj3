@@ -66,6 +66,19 @@ destroy_doip_header(doip_header *);
 void
 print_doip_header(FILE *, doip_header *);
 
+/* Returns a tvbuff_t * instancel associated
+ * with this header
+ */
+tvbuff_t *
+retrieve_tvbuff(doip_header *);
+
+
+/* Calculates the total length of a doip-message
+ * in bytes
+ */
+gint
+get_total_doip_package_length(doip_header *);
+
 /* Retrieves eight bits of data from a
  * doip_header's message section
  * @param[in,out] *i, will be used to hold message-part

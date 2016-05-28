@@ -27,7 +27,7 @@
  * a function which can further dissect a package
  */
 typedef
-void (*payload_handler)(doip_header *, packet_info *, proto_tree *);
+void (*payload_handler)(doip_header *, proto_tree *, gint);
 
 /* Determines a suitable payload_handler based on 
  * a header's payload type
@@ -39,6 +39,8 @@ void (*payload_handler)(doip_header *, packet_info *, proto_tree *);
 payload_handler
 find_matching_payload_handler(doip_header *);
 
+void
+register_proto_doip_payload(gint proto_doip);
 
 #endif /* __DOIP_PAYLOAD_HANDLER_H */
 
