@@ -39,7 +39,7 @@ This is the documentation how to build the wirewhark plugin with and for Windows
 
 > cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" ..\WiresharkSource\wireshark
 
-11.1 Build Wireshark and plugins:
+11. Build Wireshark and plugins:
 > msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
 
 11.2 Build Plugin only:

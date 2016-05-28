@@ -1,9 +1,0 @@
-# CMake generation dependency list for this directory.
-C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/CMakeLists.txt
-C:/Users/Michael/WiresharkSource/wireshark/cmake/modules/WiresharkPlugin.cmake
-C:/Users/Michael/WiresharkSource/wireshark/plugins/doipwin/plugin.rc.in
-C:/Users/Michael/WiresharkSource/wireshark/cmake/modules/LocatePythonModule.cmake
-C:/Program Files (x86)/CMake/share/cmake-3.5/Modules/FindPythonInterp.cmake
-C:/Program Files (x86)/CMake/share/cmake-3.5/Modules/FindPackageHandleStandardArgs.cmake
-C:/Program Files (x86)/CMake/share/cmake-3.5/Modules/FindPackageMessage.cmake
-C:/Program Files (x86)/CMake/share/cmake-3.5/Modules/CMakeParseArguments.cmake
