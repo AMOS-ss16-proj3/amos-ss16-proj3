@@ -52,8 +52,12 @@ register_proto_doip_payload(gint proto_doip)
     /* prepare proto entries for header */
     register_proto_doip_header(proto_doip);
 
-    /* prepare proto entries for payload type 0000 */
+    /* prepare proto entries for payload type 0001 */
     register_proto_doip_payload_0001(proto_doip);
+
+    /* prepare proto entries for payload type 0005 */
+    register_proto_doip_payload_0005(proto_doip);
+
     /* TODO not fully implemented yet
     */
 }
