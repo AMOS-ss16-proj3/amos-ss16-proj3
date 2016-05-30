@@ -32,7 +32,7 @@ set(DISSECTOR_SUPPORT_SRC
     doip-header.c
     doip-payload-handler.c
     visualize-doip-header.c
-    doip-payload-0001.c
+    doip-payload-0006.c
 )
 
 set(PLUGIN_FILES
