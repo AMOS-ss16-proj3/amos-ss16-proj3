@@ -19,15 +19,16 @@
 #include <epan/proto.h>
 
 #include "doip-header.h"
+#include "doip-helper.h"
 #include "doip-payload-0005.h"
 
 static const char *description = "routing activation request";
-static gint hf_doip_payload_sa = -1; // Source address
-static gint hf_doip_payload_at = -1; // Activation type
-static gint hf_doip_payload_iso = -1; // Reserved by this part of ISO 13400
-static gint hf_doip_payload_oem = -1; // Reserved for OEM-specific use
+static gint hf_doip_payload_sa = -1; /* Source address */
+static gint hf_doip_payload_at = -1; /* Activation type */
+static gint hf_doip_payload_iso = -1; /* Reserved by this part of ISO 13400 */
+static gint hf_doip_payload_oem = -1; /* Reserved for OEM-specific use */
 
-
+static gint ett_routing_activation_request = -1;
 
 /* values which will be displayed for payload type 0005 in proto_tree */
 void
@@ -89,30 +90,21 @@ register_proto_doip_payload_0005(gint proto_doip)
             }
         }
     };
+
+
+    static gint *ett[] = 
+    {
+        &ett_routing_activation_request 
+    };
+
+    proto_register_field_array(proto_doip, hf, array_length(hf));
+    proto_register_subtree_array(ett, array_length(ett));
 }
 
 void
-dissect_payload_0005(doip_header *header, proto_tree *tree, gint proto_doip)
+dissect_payload_0006(doip_header *header, proto_item *pitem)
 {
-    const guint TEST_STR_SIZE = 20;
-    char *test_str;
-    guint32 test;
 
-    test_str = (char *) malloc(sizeof(char) * TEST_STR_SIZE);
-
-
-    if(header && pinfo && tree && test_str)
-    {
-        if(get_guint32_from_message(header, &test, 0))
-        {
-            snprintf(test_str, TEST_STR_SIZE, "%d", test);
-
-            col_set_str(pinfo->cinfo, COL_INFO, test_str);
-        }
-        else{
-            col_set_str(pinfo->cinfo, COL_INFO, description);
-        }
-    }
 }
 
 
