@@ -55,7 +55,8 @@ static const value_string doip_version_names[] = {
     { 0x00, "Reserved"},
     { 0x01, "DoIP ISO/DIS 13400-2:2010"},
     { 0x02, "DoIP ISO 13400-2:2012"},
-    { 0xFF, "Default value for vehicle identification request messages"}
+    { 0xFF, "Default value for vehicle identification request messages"},
+    { 0x00, NULL}
 };
 
 /* values which will be displayed for payload type in proto_tree */

@@ -46,8 +46,13 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb);
 static const value_string activation_types[] = {  
     { 0x00, "Default"},
     { 0x01, "WWH-OBD"},
+<<<<<<< HEAD
     { 0xE0, "Central Security"}
 	// TO DO: Considering who to add the ranging values of the two missing Values
+=======
+    { 0xE0, "Central Security"},
+    { 0x00, NULL}
+>>>>>>> 31ef625cce6e8ae7b50cf982d2698d2f140a0af0
 };
 
 /* values which will be displayed for payload type 0005 in proto_tree */
