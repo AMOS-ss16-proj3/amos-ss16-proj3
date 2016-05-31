@@ -32,6 +32,16 @@ static gint ett_routing_activation_request = -1;
 static gboolean
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
+
+/** Values are defined in ISO 13400-2:2012(E)
+ * on table 23
+*/
+static const value_string activation_types[] = {
+    { 0x00, "Default"},
+    { 0x01, "WWH-OBD"},
+    { 0xE0, "Central Security"}
+};
+
 /* values which will be displayed for payload type 0005 in proto_tree */
 void
 register_proto_doip_payload_0005(gint proto_doip)
@@ -59,7 +69,7 @@ register_proto_doip_payload_0005(gint proto_doip)
                 "doip.payload.at",
                 FT_UINT8,
                 BASE_HEX,
-                NULL,
+                activation_types,
                 0x0,
                 "Specific type of routing activation that may require different types of authentication and/or confirmation",
                 HFILL
