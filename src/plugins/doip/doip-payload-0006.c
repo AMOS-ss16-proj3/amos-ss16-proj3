@@ -97,7 +97,7 @@ dissect_payload_0006(doip_header *header, proto_tree *tree, gint proto_doip)
 
     if(header && tree && tvb)
     {
-        ti = proto_tree_add_item(tree, proto_doip, tvb, 8, -1, ENC_NA);
+        /*ti = proto_tree_add_item(tree, proto_doip, tvb, 8, -1, ENC_NA);*/
         doip_tree = proto_item_add_subtree(ti, ett_routing_activation_response);
 
         proto_tree_add_item(doip_tree, hf_test_equipment_address, tvb, 8, 2, ENC_BIG_ENDIAN);

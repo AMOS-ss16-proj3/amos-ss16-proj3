@@ -23,6 +23,9 @@
 #include "doip-header.h"
 #include "visualize-doip-header.h"
 
+/* TEST */
+static gint hf_test_equipment_address = -1;
+static gint ett_test_equipment_address = -1;
 
 /* constants describing various header-fields */
 static const gint VERSION_POSITION = 0;
@@ -125,13 +128,46 @@ register_proto_doip_header(gint proto_doip)
         }
     };
 
+
+    static hf_register_info hf2[] = 
+    {
+        /* prepare info for version */
+        {
+            /** Even though ISO 13400-2:2012(E), Table 39
+             * gives a overview over logical addresses 
+             * we will simply display the address value
+             * instead of a string describing who reserved the
+             * corresponding field
+            */
+            &hf_test_equipment_address,
+            {
+                "Logical address of external test equipment",
+                "doip.payload.routing.activation.response",
+                FT_UINT16,
+                BASE_HEX,
+                NULL,
+                0x0,
+                NULL,
+                HFILL
+            }
+        }
+    };
+
     static gint *ett[] = 
     {
         &ett_doip
     };
 
+    static gint *ett2[] = 
+    {
+        &ett_test_equipment_address
+    };
+
     proto_register_field_array(proto_doip, hf, array_length(hf));
     proto_register_subtree_array(ett, array_length(ett));
+
+    proto_register_field_array(proto_doip, hf2, array_length(hf2));
+    proto_register_subtree_array(ett2, array_length(ett2));
 
 }
 
@@ -144,6 +180,7 @@ visualize_doip_header(doip_header *header, proto_tree *tree, gint proto_doip)
     gint doip_length;
     proto_item *ti;
     proto_tree *doip_tree;
+    proto_tree *doip_sub_tree;
 
     tvb = retrieve_tvbuff(header);
     /* if tree == null, wireshark only wants to evaluate fixed fields */
@@ -158,11 +195,19 @@ visualize_doip_header(doip_header *header, proto_tree *tree, gint proto_doip)
 
         ti = proto_tree_add_item(tree, proto_doip, tvb, 0, doip_length, ENC_NA);
         doip_tree = proto_item_add_subtree(ti, ett_doip);
+        doip_sub_tree = proto_item_add_subtree(ti, ett_test_equipment_address);
 
         proto_tree_add_item(doip_tree, hf_doip_version, tvb, VERSION_POSITION, VERSION_LENGTH, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_inverse_version, tvb, INVERSE_VERSION_POSITION, INVERSE_VERSION_LENGTH, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_payload_type, tvb, PAYLOAD_TYPE_POSITION, PAYLOAD_TYPE_LENGTH, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_payload_length, tvb, PAYLOAD_LENGTH_POSITION, PAYLOAD_LENGTH_LENGTH, ENC_BIG_ENDIAN);
+
+        /* Test */
+        if(header->payload.type == 6)
+        {
+
+            proto_tree_add_item(doip_sub_tree, hf_test_equipment_address, tvb, 8, 2, ENC_BIG_ENDIAN);
+        }
     }
 }
 
