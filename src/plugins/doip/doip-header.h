@@ -79,6 +79,14 @@ retrieve_tvbuff(doip_header *);
 gint
 get_total_doip_package_length(doip_header *);
 
+
+/* Calculates the total offset of
+ * a byte in the payload section
+ * by adding the number of header bytes
+ */
+gint
+payload_offset_to_abs_offset(gint payload_offset);
+
 /* Retrieves eight bits of data from a
  * doip_header's message section
  * @param[in,out] *i, will be used to hold message-part

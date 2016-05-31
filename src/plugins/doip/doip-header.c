@@ -28,6 +28,12 @@
 /* helper methods */
 
 
+/* According to ISO 13400-2:2012(E) a doip-header
+ * takes 8 bytes of space
+*/
+const gint DOIP_HEADER_LENGTH = 8;
+   
+
 
 
 /* converts a byte-offset into a bit-offset
@@ -41,6 +47,8 @@
 static inline gboolean
 message_byte_offset_to_tvb_bit_offset(guint , guint *);
 
+
+
 /* converts a doip_header message offset 
  * into a tvb_offset which can be used in
  * methods provided by epan/tvbuff.h
@@ -52,7 +60,7 @@ message_byte_offset_to_tvb_bit_offset(guint , guint *);
  *  FALSE if an overflow or any other error occured
  */ 
 static inline gboolean
-message_byte_offset_to_tvb_byte_offset(guint , guint *);
+message_byte_offset_to_tvb_byte_offset(guint msg_offset, guint *tvb_byte_offset);
 
 /* reads proto_version from tvbuff_t and 
  * writes it into doip_header
@@ -166,14 +174,18 @@ retrieve_tvbuff(doip_header *header)
 gint
 get_total_doip_package_length(doip_header *header)
 {
-    const gint HEADER_LENGTH = 8; /* as taken from ISO 13400-2 */
     gint payload_length;
 
     payload_length = (gint) header->payload.length;
 
-    return HEADER_LENGTH + payload_length;
+    return DOIP_HEADER_LENGTH + payload_length;
 }
 
+gint
+payload_offset_to_abs_offset(gint payload_offset)
+{
+    return DOIP_HEADER_LENGTH + payload_offset;
+}
 
 gboolean
 get_guint8_from_message(const doip_header *header, guint8 *i, gint offset)
@@ -289,15 +301,13 @@ message_byte_offset_to_tvb_bit_offset(guint msg_offset, guint *tvb_bit_offset)
     return FALSE;
 }
 
-static inline gboolean
+gboolean
 message_byte_offset_to_tvb_byte_offset(guint msg_offset, guint *tvb_byte_offset)
 {
-    const guint TVB_MSG_BYTE_OFFSET = 8;
-   
     gboolean overflow;
     guint offset;
 
-    offset = msg_offset + TVB_MSG_BYTE_OFFSET;
+    offset = msg_offset + DOIP_HEADER_LENGTH;
     overflow = offset < msg_offset;
 
     *tvb_byte_offset = offset;
