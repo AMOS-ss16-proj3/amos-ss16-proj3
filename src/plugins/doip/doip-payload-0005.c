@@ -78,7 +78,7 @@ register_proto_doip_payload_0005(gint proto_doip)
         {
             &hf_doip_payload_oem,
             {
-                "Reserved for OEM,
+                "Reserved for OEM",
                 "doip.payload.oem",
                 FT_UINT32,
                 BASE_HEX,
@@ -92,7 +92,7 @@ register_proto_doip_payload_0005(gint proto_doip)
 }
 
 void
-dissect_payload_0005(doip_header *header, packet_info *pinfo, proto_tree *tree)
+dissect_payload_0005(doip_header *header, proto_tree *tree, gint proto_doip)
 {
     const guint TEST_STR_SIZE = 20;
     char *test_str;
