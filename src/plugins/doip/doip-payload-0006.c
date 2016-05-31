@@ -175,17 +175,18 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 
     gboolean error;
 
-    insert_item_to_tree(tree, hf_test_equipment_addr, tvb, REL_TEST_EQUIP_ADDR_POS, TEST_EQUIP_ADDR_LEN, ENC_BIG_ENDIAN);
 
     /* execute everything with a logical OR for
      * stopping evaluation automatically as soon
      * as one of the calls fails
     */
     error = 
-        insert_item_to_tree(tree, hf_doip_entity_addr, tvb, REL_DOIP_ENTITY_ADDR_POS, DOIP_ENTITY_ADDR_LEN, ENC_BIG_ENDIAN)
+        insert_item_to_tree(tree, hf_test_equipment_addr, tvb, REL_TEST_EQUIP_ADDR_POS, TEST_EQUIP_ADDR_LEN, ENC_BIG_ENDIAN)
+        || insert_item_to_tree(tree, hf_doip_entity_addr, tvb, REL_DOIP_ENTITY_ADDR_POS, DOIP_ENTITY_ADDR_LEN, ENC_BIG_ENDIAN)
         || insert_item_to_tree(tree, hf_response_code, tvb, REL_RESPONSE_CODE_POS, RESPONSE_CODE_LEN, ENC_BIG_ENDIAN)
         || insert_item_to_tree(tree, hf_iso_reserved, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA)
-        || insert_item_to_tree(tree, hf_oem_reserved, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_POS, ENC_NA);
+        || insert_item_to_tree(tree, hf_oem_reserved, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_POS, ENC_NA)
+    ;
 
     return error;
 }
