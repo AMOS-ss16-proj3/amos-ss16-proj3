@@ -134,7 +134,6 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_SOURCE_ADDR_POS = 0;
     const gint SOURCE_ADDR_LEN = 2;
 
-    /*
     const gint REL_ACT_TYPE_POS = 2;
     const gint ACT_TYPE_LEN = 1;
 
@@ -143,12 +142,15 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 
     const gint REL_OEM_RESERVED_POS = 7;
     const gint OEM_RESERVED_LEN = 4;
-    */
 
     gboolean error;
 
     error = 
-        insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
+        insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN)
+        || insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN)
+        || insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_BIG_ENDIAN)
+        || insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_BIG_ENDIAN)
+    ;
 
     return error;
 }
