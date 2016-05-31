@@ -19,10 +19,8 @@
 #include <epan/proto.h>
 
 #include "doip-header.h"
-#include "doip-helper.h"
 #include "doip-payload-0005.h"
 
-static const char *description = "routing activation request";
 static gint hf_doip_payload_sa = -1; /* Source address */
 static gint hf_doip_payload_at = -1; /* Activation type */
 static gint hf_doip_payload_iso = -1; /* Reserved by this part of ISO 13400 */
@@ -102,9 +100,11 @@ register_proto_doip_payload_0005(gint proto_doip)
 }
 
 void
-dissect_payload_0006(doip_header *header, proto_item *pitem)
+dissect_payload_0005(doip_header *header, proto_item *pitem)
 {
-
+    if(header && pitem)
+    {
+    }
 }
 
 

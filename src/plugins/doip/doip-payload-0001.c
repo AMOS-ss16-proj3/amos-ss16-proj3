@@ -22,61 +22,36 @@
 #include "doip-header.h"
 #include "doip-payload-0001.h"
 
-static gint hf_doip_payload_eid = -1;
-static gint hf_doip_payload_vin = -1;
-
 /* values which will be displayed for payload type in proto_tree */
 void
 register_proto_doip_payload_0001(gint proto_doip)
 {
-    static hf_register_info hf[] = 
-    {
-        /* prepare info for version */
-        {
-            &hf_doip_payload_eid,
-            {
-                "Entity Id",
-                "doip.payload.eid",
-                FT_BYTES,
-                BASE_NONE,
-                NULL,
-                0x0,
-                "A DoIP entities unique ID (e.g. network interface's MAC address) that shall respond to the vehicle identification request message",
-                HFILL
-            }
-        },
-        {
-            &hf_doip_payload_vin,
-            {
-                "Vehicle identification number",
-                "doip.payload.vin",
-                FT_STRING,
-                BASE_NONE,
-                NULL,
-                0x0,
-                "A vehicle's identification number as specified in ISO 3779. This parameter is only present if the external test equipment intends to identify the DoIP entities of an individual vehicle, the VIN of which is known to the test external test equipment.",
-                HFILL
-            }
-        }
-    };
-           
-    /*
-    static gint *ett[] = 
-    {
-        &ett_doip
-    };
 
-    proto_register_field_array(proto_doip, hf, array_length(hf));
-    proto_register_subtree_array(ett, array_length(ett));
+    /** According to ISO 13400-2:2012(E) payload type 0x0001
+     * does not contain any other data besides the doip-header.
+     * Therefore there is this payload-handler doesn't have to
+     * display anything
     */
+
+    /* suppress compiler warning */
+    if(proto_doip)
+    {
+        proto_doip = 0;
+    }
 }
 
 void
-dissect_payload_0001(doip_header *header, proto_tree *tree, gint proto_doip)
+dissect_payload_0001(doip_header *header, proto_item *pitem)
 {
-    if(header && tree)
-    {
+    /** See comment at register_proto_doip_payload_0001()
+    */
 
+
+    /* suppress compiler warning */
+    if(header && pitem)
+    {
+        header = NULL;
+        pitem = NULL;
     }
 }
 

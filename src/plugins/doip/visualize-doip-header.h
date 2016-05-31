@@ -26,7 +26,7 @@ void
 register_proto_doip_header(gint proto_doip);
 
 void
-visualize_doip_header(doip_header *, proto_tree *, gint proto_doip);
+visualize_doip_header(doip_header *, proto_item*);
 
 #endif /* __VISUALIZE_DOIP_HEADER_H */
 

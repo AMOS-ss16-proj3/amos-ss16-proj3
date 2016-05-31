@@ -64,6 +64,10 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     doip_header header;
     payload_handler handler;
 
+
+    proto_item *ti;
+    /*proto_tree *doip_tree;*/
+
     if(pinfo)
     {
         col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
@@ -76,15 +80,16 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         {
             /*print_doip_header(DEBUG_OUTPUT, &header);*/
 
-            visualize_doip_header(&header, tree, proto_doip);
+            ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
+
+            visualize_doip_header(&header, ti);
+
             handler = find_matching_payload_handler(&header);
 
             if(handler)
             {
-                handler(&header, tree, proto_doip);
+                handler(&header, ti);
             }
-            /*
-            */
         }
     }
 }

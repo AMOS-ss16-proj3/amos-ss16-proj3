@@ -15,17 +15,17 @@
 * limitations under the License.
 */
 
-#ifndef __DOIP_PAYLOAD_0005_H
-#define __DOIP_PAYLOAD_0005_H
+#ifndef __DOIP_PAYLOAD_0006_H
+#define __DOIP_PAYLOAD_0006_H
 
 #include "doip-header.h"
 
 void
-register_proto_doip_payload_0005(gint proto_doip);
+register_proto_doip_payload_0006(gint);
 
 void
-dissect_payload_0005(doip_header *, proto_item *);
+dissect_payload_0006(doip_header *, proto_item *);
 
-#endif /* __DOIP_PAYLOAD_0005_H */
+#endif /* __DOIP_PAYLOAD_0006_H */
 
 
