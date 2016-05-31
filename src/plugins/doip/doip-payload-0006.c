@@ -19,11 +19,9 @@
 #include <epan/proto.h>
 
 #include "doip-header.h"
+#include "doip-helper.h"
 #include "doip-payload-0006.h"
 
-/*
-static const char *description = "routing activation response";
-*/
 
 static gint hf_test_equipment_addr = -1;
 static gint hf_doip_entity_addr = -1;
@@ -39,18 +37,6 @@ static gint ett_routing_activation_response = -1;
 */
 static gboolean
 fill_tree(proto_tree *, tvbuff_t *);
-
-
-/* helper function inserts a value
- * to a specific field
- * @param[in] proto_tree *, the tree in which the values will be inserted
- * @param[in] gint hf, the header fields id
- * @param[in] gint rel_pos, the values position on a doip-payload
- * @param[in] gint length, number of bytes which represent the value
- * @param[in] const guint encoding, encoding used for displaying
-*/
-static gboolean
-insert_item_to_tree(proto_tree *, const gint hf, tvbuff_t *, gint rel_pos, gint length, const guint encoding);
 
 
 void
@@ -204,25 +190,6 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     return error;
 }
 
-static gboolean
-insert_item_to_tree(proto_tree *tree, const gint hf, tvbuff_t *tvb, gint rel_pos, gint length, const guint enc)
-{
-    gint abs_pos;
-    gboolean overflow;
-    gboolean error;
-
-    abs_pos = payload_offset_to_abs_offset(rel_pos);
-    
-    overflow = abs_pos + length < abs_pos;
-
-    error = overflow;
-
-    if(!error)
-    {
-        proto_tree_add_item(tree, hf, tvb, abs_pos, length, enc);
-    }
-    return error;
-}
 
 
 

@@ -19,6 +19,7 @@
 #include <epan/proto.h>
 
 #include "doip-header.h"
+#include "doip-helper.h"
 #include "doip-payload-0005.h"
 
 static gint hf_doip_payload_sa = -1; /* Source address */
@@ -27,6 +28,9 @@ static gint hf_doip_payload_iso = -1; /* Reserved by this part of ISO 13400 */
 static gint hf_doip_payload_oem = -1; /* Reserved for OEM-specific use */
 
 static gint ett_routing_activation_request = -1;
+
+static gboolean
+fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 /* values which will be displayed for payload type 0005 in proto_tree */
 void
@@ -102,18 +106,52 @@ register_proto_doip_payload_0005(gint proto_doip)
 void
 dissect_payload_0005(doip_header *header, proto_item *pitem)
 {
-    if(header && pitem)
+    tvbuff_t *tvb;
+    proto_tree *doip_tree;
+
+    tvb = retrieve_tvbuff(header);
+    /* attach a new tree to proto_item pitem */
+    doip_tree = proto_item_add_subtree(pitem, ett_routing_activation_request);
+
+    /* check for a valid tvbuff_t */
+    if(doip_tree && tvb)
     {
+        fill_tree(doip_tree, tvb);
     }
 }
 
+static gboolean
+fill_tree(proto_tree *tree, tvbuff_t *tvb)
+{
+    /* Values taken from ISO 13400-2:2012(E) page 32
+    *
+    * Constants starting with prefix "REL_" indicate a relative
+    * offset to a doip-messages payload.
+    * In order to get the absolute offset starting from the very
+    * first doip-header byte we have to calculate the
+    * absolute position
+    */
+    const gint REL_SOURCE_ADDR_POS = 0;
+    const gint SOURCE_ADDR_LEN = 2;
 
+    /*
+    const gint REL_ACT_TYPE_POS = 2;
+    const gint ACT_TYPE_LEN = 1;
 
+    const gint REL_ISO_RESERVED_POS = 3;
+    const gint ISO_RESERVED_LEN = 4;
 
+    const gint REL_OEM_RESERVED_POS = 7;
+    const gint OEM_RESERVED_LEN = 4;
+    */
 
+    gboolean error;
 
+    error = 
+        insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
 
-
+    return error;
+}
 
 
 
