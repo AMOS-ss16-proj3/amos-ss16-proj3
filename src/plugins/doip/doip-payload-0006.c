@@ -27,7 +27,9 @@ static const char *description = "routing activation response";
 
 static gint hf_test_equipment_address = -1;
 static gint hf_doip_entity_address = -1;
-/*static gint response_code = -1;*/
+static gint hf_response_code = -1;
+static gint hf_iso_reserved = -1;
+static gint hf_oem_reserved = -1;
 
 static gint ett_routing_activation_response = -1;
 
@@ -61,12 +63,51 @@ register_proto_doip_payload_0006(gint proto_doip)
             &hf_doip_entity_address,
             {
                 "Logical address of doip entity",
-                "doip.payload.routing.activation.response",
+                "doip.payload.routing.entity.address",
                 FT_UINT16,
                 BASE_HEX,
                 NULL,
                 0x0,
                 NULL,
+                HFILL
+            }
+        },
+        {
+            &hf_response_code,
+            {
+                "Routing activation response code",
+                "doip.payload.routing.response.code",
+                FT_UINT8,
+                BASE_HEX,
+                NULL,
+                0x0,
+                "Response by the DoIP gateway. Routing activation denial will result in the TCP_DATA connection being reseted by DoIP gateway. Successful routing activation implies that diagnostic messages can now be routed over the TCP_DATA connection",
+                HFILL
+            }
+        },
+        {
+            &hf_iso_reserved,
+            {
+                "Reserved by ISO 13400",
+                "doip.payload.routing.iso.reserved",
+                FT_BYTES,
+                BASE_NONE,
+                NULL,
+                0x0,
+                "Reserved for future standardization use.",
+                HFILL
+            }
+        },
+        {
+            &hf_oem_reserved,
+            {
+                "Reserved for OEM-specific use",
+                "doip.payload.routing.oem-reserved",
+                FT_BYTES,
+                BASE_NONE,
+                NULL,
+                0x0,
+                "Available for additional OEM-specific use",
                 HFILL
             }
         }
@@ -82,36 +123,24 @@ register_proto_doip_payload_0006(gint proto_doip)
 }
 
 void
-dissect_payload_0006(doip_header *header, proto_tree *tree, gint proto_doip)
+dissect_payload_0006(doip_header *header, proto_item *pitem)
 {
     tvbuff_t *tvb;
-    proto_item *ti;
     proto_tree *doip_tree;
 
     tvb = retrieve_tvbuff(header);
 
-    if(proto_doip > 0)
+    if(header && tvb)
     {
-        proto_doip = 1;
-    }
-
-    if(header && tree && tvb)
-    {
-        /*ti = proto_tree_add_item(tree, proto_doip, tvb, 8, -1, ENC_NA);*/
-        doip_tree = proto_item_add_subtree(ti, ett_routing_activation_response);
+        doip_tree = proto_item_add_subtree(pitem, ett_routing_activation_response);
 
         proto_tree_add_item(doip_tree, hf_test_equipment_address, tvb, 8, 2, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_entity_address, tvb, 10, 2, ENC_BIG_ENDIAN);
-
-        /*
-        doip_rar = proto_tree_add_item(tree, proto_amin, tvb, 0, -1, FALSE);
-        amin_tree = proto_item_add_subtree(amin_item, ett_amin);
-        */
-
-
-
-
+        proto_tree_add_item(doip_tree, hf_response_code, tvb, 12, 1, ENC_BIG_ENDIAN);
         
+        proto_tree_add_item(doip_tree, hf_iso_reserved, tvb, 13, 4, ENC_NA);
+        proto_tree_add_item(doip_tree, hf_oem_reserved, tvb, 17, 4, ENC_NA);
+
     }
 }
 

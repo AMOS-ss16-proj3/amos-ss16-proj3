@@ -29,50 +29,17 @@ static gint hf_doip_payload_vin = -1;
 void
 register_proto_doip_payload_0001(gint proto_doip)
 {
-    static hf_register_info hf[] = 
-    {
-        /* prepare info for version */
-        {
-            &hf_doip_payload_eid,
-            {
-                "Entity Id",
-                "doip.payload.eid",
-                FT_BYTES,
-                BASE_NONE,
-                NULL,
-                0x0,
-                "A DoIP entities unique ID (e.g. network interface's MAC address) that shall respond to the vehicle identification request message",
-                HFILL
-            }
-        },
-        {
-            &hf_doip_payload_vin,
-            {
-                "Vehicle identification number",
-                "doip.payload.vin",
-                FT_STRING,
-                BASE_NONE,
-                NULL,
-                0x0,
-                "A vehicle's identification number as specified in ISO 3779. This parameter is only present if the external test equipment intends to identify the DoIP entities of an individual vehicle, the VIN of which is known to the test external test equipment.",
-                HFILL
-            }
-        }
-    };
-           
-    /*
-    static gint *ett[] = 
-    {
-        &ett_doip
-    };
+    /* nothing to do here */
 
-    proto_register_field_array(proto_doip, hf, array_length(hf));
-    proto_register_subtree_array(ett, array_length(ett));
-    */
+    /* avoid compiler errors: */
+    if(proto_doip)
+    {
+        proto_doip = 0;
+    }
 }
 
 void
-dissect_payload_0001(doip_header *header, proto_tree *tree, gint proto_doip)
+dissect_payload_0001(doip_header *header, proto_item *pitem, gint proto_doip)
 {
     if(header && tree)
     {

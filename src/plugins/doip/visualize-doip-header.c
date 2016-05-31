@@ -174,40 +174,22 @@ register_proto_doip_header(gint proto_doip)
 
 
 void
-visualize_doip_header(doip_header *header, proto_tree *tree, gint proto_doip)
+visualize_doip_header(doip_header *header, proto_item *pitem)
 {
     tvbuff_t *tvb;
-    gint doip_length;
-    proto_item *ti;
     proto_tree *doip_tree;
-    proto_tree *doip_sub_tree;
 
     tvb = retrieve_tvbuff(header);
-    /* if tree == null, wireshark only wants to evaluate fixed fields */
-    if(header && tree && tvb)
+
+    if(header && tvb)
     {
-        doip_length = get_total_doip_package_length(header);
-
-        /* DEBUG
-        printf("doip_length: %d\n", doip_length);
-        */
-
-
-        ti = proto_tree_add_item(tree, proto_doip, tvb, 0, doip_length, ENC_NA);
-        doip_tree = proto_item_add_subtree(ti, ett_doip);
-        doip_sub_tree = proto_item_add_subtree(ti, ett_test_equipment_address);
+        doip_tree = proto_item_add_subtree(pitem, ett_doip);
 
         proto_tree_add_item(doip_tree, hf_doip_version, tvb, VERSION_POSITION, VERSION_LENGTH, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_inverse_version, tvb, INVERSE_VERSION_POSITION, INVERSE_VERSION_LENGTH, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_payload_type, tvb, PAYLOAD_TYPE_POSITION, PAYLOAD_TYPE_LENGTH, ENC_BIG_ENDIAN);
         proto_tree_add_item(doip_tree, hf_doip_payload_length, tvb, PAYLOAD_LENGTH_POSITION, PAYLOAD_LENGTH_LENGTH, ENC_BIG_ENDIAN);
 
-        /* Test */
-        if(header->payload.type == 6)
-        {
-
-            proto_tree_add_item(doip_sub_tree, hf_test_equipment_address, tvb, 8, 2, ENC_BIG_ENDIAN);
-        }
     }
 }
 
