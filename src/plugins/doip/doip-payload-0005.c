@@ -42,12 +42,13 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 /** Values are defined in ISO 13400-2:2012(E)
  * on table 23
+	TO DO: Considering how to add the ranging values of the two missing Values
 */
 static const value_string activation_types[] = {
 	{ 0x00, "Default" },
 	{ 0x01, "WWH-OBD" },
 	{ 0xE0, "Central Security" }
-	// TO DO: Considering how to add the ranging values of the two missing Values
+	{ 0x00, NULL}	
 };
 
 /* values which will be displayed for payload type 0005 in proto_tree */
