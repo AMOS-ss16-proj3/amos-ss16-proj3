@@ -47,7 +47,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb);
 static const value_string activation_types[] = {
 	{ 0x00, "Default" },
 	{ 0x01, "WWH-OBD" },
-	{ 0xE0, "Central Security" }
+	{ 0xE0, "Central Security" },
 	{ 0x00, NULL}	
 };
 
