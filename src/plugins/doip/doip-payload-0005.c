@@ -22,10 +22,17 @@
 #include "doip-helper.h"
 #include "doip-payload-0005.h"
 
-static gint hf_doip_payload_sa = -1; /* Source address */
-static gint hf_doip_payload_at = -1; /* Activation type */
-static gint hf_doip_payload_iso = -1; /* Reserved by this part of ISO 13400 */
-static gint hf_doip_payload_oem = -1; /* Reserved for OEM-specific use */
+/* Source address */
+static gint hf_doip_payload_sa = -1; 
+
+/* Activation type */
+static gint hf_doip_payload_at = -1; 
+
+/* Reserved by this part of ISO 13400 */
+static gint hf_doip_payload_iso = -1; 
+
+/* Reserved for OEM-specific use */
+static gint hf_doip_payload_oem = -1; 
 
 static gint ett_routing_activation_request = -1;
 
@@ -36,10 +43,11 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb);
 /** Values are defined in ISO 13400-2:2012(E)
  * on table 23
 */
-static const value_string activation_types[] = {
+static const value_string activation_types[] = {  
     { 0x00, "Default"},
     { 0x01, "WWH-OBD"},
     { 0xE0, "Central Security"}
+	// TO DO: Considering who to add the ranging values of the two missing Values
 };
 
 /* values which will be displayed for payload type 0005 in proto_tree */
@@ -80,7 +88,7 @@ register_proto_doip_payload_0005(gint proto_doip)
             {
                 "Reserved by ISO",
                 "doip.payload.iso",
-                FT_UINT32,
+                FT_UINT32,  
                 BASE_HEX,
                 NULL,
                 0x0,
@@ -109,12 +117,14 @@ register_proto_doip_payload_0005(gint proto_doip)
         &ett_routing_activation_request 
     };
 
-    proto_register_field_array(proto_doip, hf, array_length(hf));
+	/* one-time registration after Wireshark is started */
+    proto_register_field_array(proto_doip, hf, array_length(hf));  
     proto_register_subtree_array(ett, array_length(ett));
 }
 
+/* After a doip row is selected in Wireshark */
 void
-dissect_payload_0005(doip_header *header, proto_item *pitem)
+dissect_payload_0005(doip_header *header, proto_item *pitem)   	
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
@@ -158,7 +168,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     error = 
         insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN)
         || insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN)
-        || insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_BIG_ENDIAN)
+        || insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_BIG_ENDIAN) 
         || insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_BIG_ENDIAN)
     ;
 

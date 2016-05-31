@@ -33,8 +33,11 @@ typedef struct doip_header
         guint16 type;
         guint32 length;
 
-        tvbuff_t *tvb;
-        guint32 tvb_offset;
+		/* buffer for doip-payload */
+        tvbuff_t *tvb;  
+
+		/* Offset for the Header */
+        guint32 tvb_offset; 
 
     } payload;
 
