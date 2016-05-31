@@ -18,11 +18,7 @@
 #include "doip-header.h"
 #include "visualize-doip-header.h"
 
-/* TODO not fully implemented yet
-*/
-/*
 #include "doip-payload-0001.h"
-*/
 #include "doip-payload-0006.h"
 
 #include "doip-payload-handler.h"
@@ -36,13 +32,9 @@ find_matching_payload_handler(doip_header *header)
     {
         switch(header->payload.type)
         {
-            /*
             case 0x0001:
                 handler = dissect_payload_0001;
                 break;
-            */
-            /** TODO dissect_payload_type is not fully implemented yet
-            */
             case 0x0006:
                 handler = dissect_payload_0006;
                 break;

@@ -21,10 +21,10 @@
 #include "doip-header.h"
 
 void
-register_proto_doip_payload_0001(gint proto_doip);
+register_proto_doip_payload_0001(gint);
 
 void
-dissect_payload_0001(doip_header *, proto_tree *, gint);
+dissect_payload_0001(doip_header *, proto_item *);
 
 #endif /* __DOIP_PAYLOAD_0001_H */
 

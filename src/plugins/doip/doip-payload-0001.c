@@ -22,16 +22,18 @@
 #include "doip-header.h"
 #include "doip-payload-0001.h"
 
-static gint hf_doip_payload_eid = -1;
-static gint hf_doip_payload_vin = -1;
-
 /* values which will be displayed for payload type in proto_tree */
 void
 register_proto_doip_payload_0001(gint proto_doip)
 {
-    /* nothing to do here */
 
-    /* avoid compiler errors: */
+    /** According to ISO 13400-2:2012(E) payload type 0x0001
+     * does not contain any other data besides the doip-header.
+     * Therefore there is this payload-handler doesn't have to
+     * display anything
+    */
+
+    /* suppress compiler warning */
     if(proto_doip)
     {
         proto_doip = 0;
@@ -39,11 +41,17 @@ register_proto_doip_payload_0001(gint proto_doip)
 }
 
 void
-dissect_payload_0001(doip_header *header, proto_item *pitem, gint proto_doip)
+dissect_payload_0001(doip_header *header, proto_item *pitem)
 {
-    if(header && tree)
-    {
+    /** See comment at register_proto_doip_payload_0001()
+    */
 
+
+    /* suppress compiler warning */
+    if(header && pitem)
+    {
+        header = NULL;
+        pitem = NULL;
     }
 }
 
