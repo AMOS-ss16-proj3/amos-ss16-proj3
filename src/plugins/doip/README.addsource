@@ -1,9 +1,5 @@
-CMakelist.txt
-DISSECTOR_SUPPORT_SRC 
+
+For writing a payload-type dissector please consult [create_payload_dissector.md](../../../docs/create_payload_dissector.md].
 
 
-Makefile.common
-
-NONGENERATED_C_FILES
-CLEAN_HEADER_FILES = \
 

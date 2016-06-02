@@ -14,6 +14,7 @@ You also have to adapt the source-file's include-directives.
 For compiling we are currently using all make-files (and others) provided by wireshark.
 Therefore we have to adapt their rules and have to include every source file we create into [CMakeLists.txt](../src/plugins/doip/CMakeLists.txt) and [Makefile.common](../src/plugins/doip/Makefile.common).
 In *CMakeList.txt* you have to add your \*.c files to **DISSECTOR_SUPPORT_SRC**.
+
 *Makefile.common* requires you to add your \*.c files to the list of **NONGENERATED_C_CILES** and your \*.h files to **CLEAN_HEADER_FILES**.
 Do *NOT* forget the tailing backslash ("\\") at the end of every line but except the last one!
 
