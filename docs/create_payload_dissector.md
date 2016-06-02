@@ -1,5 +1,5 @@
 
-# How to dissecto a doip-payload
+# How to dissect a doip-payload
 
 ## Create your source-file
 
