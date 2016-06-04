@@ -24,7 +24,7 @@ void
 register_proto_doip_payload_0001(gint);
 
 void
-dissect_payload_0001(doip_header *, proto_item *);
+dissect_payload_0001(doip_header *, proto_item *, packet_info *pinfo);
 
 #endif /* __DOIP_PAYLOAD_0001_H */
 

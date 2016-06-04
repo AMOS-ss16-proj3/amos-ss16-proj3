@@ -39,6 +39,8 @@ static gint ett_routing_activation_request = -1;
 static gboolean
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
+static const gchar *description = "Routing activation request";
+
 
 /** Values are defined in ISO 13400-2:2012(E)
  * on table 23
@@ -125,10 +127,13 @@ register_proto_doip_payload_0005(gint proto_doip)
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_0005(doip_header *header, proto_item *pitem)   	
+dissect_payload_0005(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
+
+    /* set info column to description */
+    col_set_str(pinfo->cinfo, COL_INFO, description);
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */

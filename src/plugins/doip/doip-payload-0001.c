@@ -22,6 +22,8 @@
 #include "doip-header.h"
 #include "doip-payload-0001.h"
 
+static const gchar *description = "Vehicle identification request message";
+
 /* values which will be displayed for payload type in proto_tree */
 void
 register_proto_doip_payload_0001(gint proto_doip)
@@ -41,10 +43,13 @@ register_proto_doip_payload_0001(gint proto_doip)
 }
 
 void
-dissect_payload_0001(doip_header *header, proto_item *pitem)
+dissect_payload_0001(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     /** See comment at register_proto_doip_payload_0001()
     */
+
+    /* set info column to description */
+    col_set_str(pinfo->cinfo, COL_INFO, description);
 
 
     /* suppress compiler warning */

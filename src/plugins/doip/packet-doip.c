@@ -71,7 +71,9 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     if(pinfo)
     {
         col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
+        /*
         col_clear(pinfo->cinfo, COL_INFO);
+        */
     }
 
     if(tvb && tree)
@@ -88,7 +90,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 
             if(handler)
             {
-                handler(&header, ti);
+                handler(&header, ti, pinfo);
             }
         }
     }

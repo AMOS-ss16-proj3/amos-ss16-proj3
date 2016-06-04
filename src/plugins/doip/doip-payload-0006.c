@@ -31,6 +31,8 @@ static gint hf_oem_reserved = -1;
 
 static gint ett_routing_activation_response = -1;
 
+static const gchar *description = "Routing activation response";
+
 
 /* helper function for filling the proto_tree
  * structure / displaying stuff
@@ -131,7 +133,7 @@ register_proto_doip_payload_0006(gint proto_doip)
 }
 
 void
-dissect_payload_0006(doip_header *header, proto_item *pitem)
+dissect_payload_0006(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
@@ -139,6 +141,9 @@ dissect_payload_0006(doip_header *header, proto_item *pitem)
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
     doip_tree = proto_item_add_subtree(pitem, ett_routing_activation_response);
+
+    /* set info column to description */
+    col_set_str(pinfo->cinfo, COL_INFO, description);
 
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
