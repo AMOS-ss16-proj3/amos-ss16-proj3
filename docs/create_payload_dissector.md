@@ -20,6 +20,7 @@ Do *NOT* forget the tailing backslash ("\\") at the end of every line except the
 
 ## Make payload type available for doip-dissector
 After creating all required files and adding them to various Makefiles as described above it is required to add the dissector to [doip-payload-handler.c](../src/plugins/doip/doip-payload-handler.c).
+
 1. Add your payload-type-dissectors headerfile to doip-payload-handler.c
 2. Add your register-function to **register\_proto\_doip\_payload()**
 3. Add your dissect-function to **find\_matching\_payload\_handler()**
@@ -30,6 +31,7 @@ An in-depth explanation for implementing a dissector is provided by wireshark an
 Especially relevant are chapters 1.5 to 1.7.
 
 A rather short introduction, however, will also be given in this document.  
+
 1. Delete all global variables and function-implementations you copied from the original dissector.
 2. For each field you want to register create a static global variable of type **gint**. The variable name shoud have the prefix **hf\_**.
 3. Next you have to create a static array of type hf\_register\_info called "hf" in your register-function.
