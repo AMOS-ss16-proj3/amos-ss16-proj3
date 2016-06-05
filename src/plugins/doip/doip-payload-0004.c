@@ -43,7 +43,7 @@ static gint hf_vin_gid_sync = -1;
 static gint ett_vehicle_announce_id_msg = -1;
 
 static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb);
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength);
 
 static const gchar *description = "Vehicle announcement message / vehicle identification response message";
 
@@ -196,6 +196,10 @@ dissect_payload_0004(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
+	guint32 payloadLength;
+
+	/* get the length of the payload */
+	payloadLength = header->payload.length;
 
     /* set info column to description */
     col_set_str(pinfo->cinfo, COL_INFO, description);
@@ -208,12 +212,12 @@ dissect_payload_0004(doip_header *header, proto_item *pitem, packet_info *pinfo)
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
     {
-        fill_tree(doip_tree, tvb);
+        fill_tree(doip_tree, tvb, payloadLength);
     }
 }
 
 static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb)
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 {
     /* Values taken from ISO 13400-2:2012(E) table 19
     *
@@ -247,6 +251,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 	insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
 	insert_item_to_tree(tree, hf_gid, tvb, REL_GID_POS, GID_LEN, ENC_NA);
 	insert_item_to_tree(tree, hf_further_action_req, tvb, REL_FURTHER_ACTION_REQ_POS, FURTHER_ACTION_REQ_LEN, ENC_BIG_ENDIAN);
+	if (payloadLength >= REL_VIN_GID_SYNC) /* only insert this item if needed, since it is optional */
 	insert_item_to_tree(tree, hf_vin_gid_sync, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN);
 }
 
