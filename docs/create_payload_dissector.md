@@ -45,11 +45,11 @@ Please consult chapter 1.5 and 1.5.1 of README.dissector for further details.
 5. Create another array which holds pointers to gint's (gint \*) called **ett** and insert a pointer to your ett\_\* variable.
 6. Finally register your header-fields from step 4 and ett-array from step 3 by calling  
 
-        proto\_register\_field_array(proto\_doip, hf, array\_length(hf));
+        proto_register_field_array(proto_doip, hf, array_length(hf));
 
     and
 
-        proto\_register\_subtree\_array(ett, array\_length(ett));
+        proto_register_subtree_array(ett, array_length(ett));
 
 
 ### Fill your fields
@@ -65,7 +65,7 @@ Therefor you have to define the position and length of a type you want to insert
 As the ISO does mostly gives a starting position relative to the payload's beginning, you either have to calculate the total offset, or use **insert\_item\_to\_tree()** defined in **doip-helper.h** which will take a relative offset and calculate the absolute offset.  
 Usage may look like:
 
-    insert\_item\_to\_tree(tree, hf\_source\_addr, tvb, REL\_SRC\_ADDR\_POS, SRC\_ADDR\_LEN, ENC\_BIG\_ENDIAN);
+    insert_item_to_tree(tree, hf_source_addr, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
 
 
 
