@@ -91,8 +91,8 @@ register_proto_doip_payload_0005(gint proto_doip)
             {
                 "Reserved by ISO",
                 "doip.payload.iso",
-                FT_UINT32,  
-                BASE_HEX,
+                FT_BYTES,
+                BASE_NONE,
                 NULL,
                 0x0,
                 "Reserved for future standardization use",
@@ -104,8 +104,8 @@ register_proto_doip_payload_0005(gint proto_doip)
             {
                 "Reserved for OEM",
                 "doip.payload.oem",
-                FT_UINT32,
-                BASE_HEX,
+				FT_BYTES,
+                BASE_NONE,
                 NULL,
                 0x0,
                 "Available for additional OEM-specific use",
@@ -174,8 +174,8 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     error = 
         insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN)
         || insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN)
-        || insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_BIG_ENDIAN) 
-        || insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_BIG_ENDIAN)
+		|| insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA) // For FT_BYTES fields the encoding is not relevant 
+		|| insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA)
     ;
 
     return error;
