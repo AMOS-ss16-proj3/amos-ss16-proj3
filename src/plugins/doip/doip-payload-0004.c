@@ -23,7 +23,7 @@
 #include "doip-payload-0004.h"
 
 /* Vehicle identification number */
-static gint hf_vin = -1;  
+static gint hf_vin = -1;
 
 /* Logical Address */
 static gint hf_log_addr = -1;
@@ -42,7 +42,7 @@ static gint hf_vin_gid_sync = -1;
 
 static gint ett_vehicle_announce_id_msg = -1;
 
-static gboolean
+static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Vehicle announcement message / vehicle identification response message";
@@ -56,7 +56,7 @@ static const range_string further_action_values[] = {
 	{ 0x01, 0x0F, "Reserved by this part of ISO 13400" },
 	{ 0x10, 0x10, "Routing activation required to initiate central security." },
 	{ 0x11, 0xFF, "Available for additional OEM-specific use." },
-	{ 0x00, 0x00, NULL}	
+	{ 0x00, 0x00, NULL}
 };
 
 /** Values are defined in ISO 13400-2:2012(E)
@@ -106,7 +106,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "doip.payload.vin",
                 FT_UINT_STRING,
                 STR_ASCII,
-                NULL, // TO DO: Use values of table 40 if the vid is not configured at the time of transmission of the message
+                NULL, /* TO DO: Use values of table 40 if the vid is not configured at the time of transmission of the message */
                 0x0,
                 "The vehicle's vehicle identification number (VIN) as specified in ISO 3779.",
                 HFILL
@@ -145,7 +145,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "doip.payload.gid",
                 FT_ETHER,
                 BASE_NONE,
-                NULL, // TO DO: Use values of table 40 if the gid is not available
+                NULL, /* TO DO: Use values of table 40 if the gid is not available */
                 0x0,
                 "The unique identification of a group of DoIP entities within the same vehicle in the case that a VIN is not configured for that vehicle.",
                 HFILL
@@ -180,19 +180,19 @@ register_proto_doip_payload_0004(gint proto_doip)
     };
 
 
-    static gint *ett[] = 
+    static gint *ett[] =
     {
 		&ett_vehicle_announce_id_msg
     };
 
 	/* one-time registration after Wireshark is started */
-    proto_register_field_array(proto_doip, hf, array_length(hf));  
+    proto_register_field_array(proto_doip, hf, array_length(hf));
     proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_0004(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
+dissect_payload_0004(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
@@ -212,7 +212,7 @@ dissect_payload_0004(doip_header *header, proto_item *pitem, packet_info *pinfo)
     }
 }
 
-static gboolean
+static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb)
 {
     /* Values taken from ISO 13400-2:2012(E) table 19
@@ -241,18 +241,13 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 	const gint REL_VIN_GID_SYNC = 32;
 	const gint VIN_GID_SYNC_LEN = 1;
 
-    gboolean error;
 
-    error = 
-		insert_item_to_tree(tree, hf_vin, tvb, REL_VIN_POS, VIN_LEN, ENC_ASCII)
-		|| insert_item_to_tree(tree, hf_log_addr, tvb, REL_LOG_ADDR_POS, LOG_ADDR_LEN, ENC_BIG_ENDIAN)
-		|| insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA)
-		|| insert_item_to_tree(tree, hf_gid, tvb, REL_GID_POS, GID_LEN, ENC_NA)
-		|| insert_item_to_tree(tree, hf_further_action_req, tvb, REL_FURTHER_ACTION_REQ_POS, FURTHER_ACTION_REQ_LEN, ENC_BIG_ENDIAN)
-		|| insert_item_to_tree(tree, hf_vin_gid_sync, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN)
-    ;
-
-    return error;
+	insert_item_to_tree(tree, hf_vin, tvb, REL_VIN_POS, VIN_LEN, ENC_ASCII);
+	insert_item_to_tree(tree, hf_log_addr, tvb, REL_LOG_ADDR_POS, LOG_ADDR_LEN, ENC_BIG_ENDIAN);
+	insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
+	insert_item_to_tree(tree, hf_gid, tvb, REL_GID_POS, GID_LEN, ENC_NA);
+	insert_item_to_tree(tree, hf_further_action_req, tvb, REL_FURTHER_ACTION_REQ_POS, FURTHER_ACTION_REQ_LEN, ENC_BIG_ENDIAN);
+	insert_item_to_tree(tree, hf_vin_gid_sync, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN);
 }
 
 
