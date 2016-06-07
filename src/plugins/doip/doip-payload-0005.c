@@ -36,7 +36,7 @@ static gint hf_doip_payload_oem = -1;
 
 static gint ett_routing_activation_request = -1;
 
-static gboolean
+static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Routing activation request";
@@ -146,7 +146,7 @@ dissect_payload_0005(doip_header *header, proto_item *pitem, packet_info *pinfo)
     }
 }
 
-static gboolean
+static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb)
 {
     /* Values taken from ISO 13400-2:2012(E) page 32
@@ -169,16 +169,10 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_OEM_RESERVED_POS = 7;
     const gint OEM_RESERVED_LEN = 4;
 
-    gboolean error;
-
-    error = 
-        insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN)
-        || insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN)
-		|| insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA) // For FT_BYTES fields the encoding is not relevant 
-		|| insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA)
-    ;
-
-    return error;
+    insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA); // For FT_BYTES fields the encoding is not relevant 
+    insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
 }
 
 

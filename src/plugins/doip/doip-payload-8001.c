@@ -33,7 +33,7 @@ static gint hf_user_data = -1;
 
 static gint ett_diagnostic_msg = -1;
 
-static gboolean
+static void
 fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Diagnostic message";
@@ -121,7 +121,7 @@ dissect_payload_8001(doip_header *header, proto_item *pitem, packet_info *pinfo)
     }
 }
 
-static gboolean
+static void
 fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 {
     /* Values taken from ISO 13400-2:2012(E) page 35 table 26
@@ -143,17 +143,11 @@ fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 
     gint payload_len;
 
-    gboolean error;
-
     payload_len = header->payload.length;
     diagnostic_msg_len = payload_len - REL_DIAGNOSTIC_MSG_POS;
 
-    error = 
-        insert_item_to_tree(tree, hf_src_addr, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN)
-        || insert_item_to_tree(tree, hf_target_addr, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN)
-        || insert_item_to_tree(tree, hf_user_data, tvb, REL_DIAGNOSTIC_MSG_POS, diagnostic_msg_len, ENC_BIG_ENDIAN)
-    ;
-
-    return error;
+    insert_item_to_tree(tree, hf_src_addr, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_target_addr, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_user_data, tvb, REL_DIAGNOSTIC_MSG_POS, diagnostic_msg_len, ENC_BIG_ENDIAN);
 }
 

@@ -16,7 +16,7 @@
  * @param[in] gint length, number of bytes which represent the value
  * @param[in] const guint encoding, encoding used for displaying
 */
-gboolean
+void
 insert_item_to_tree(proto_tree *tree, const gint hf, tvbuff_t *tvb, gint rel_pos, gint length, const guint enc);
 
 #endif /* __DOIP_HELPER_H */

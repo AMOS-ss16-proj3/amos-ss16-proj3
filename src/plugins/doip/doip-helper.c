@@ -12,26 +12,16 @@
 static void
 item_is_in_tvb_range(const gint pos, const gint length, tvbuff_t *tvb);
 
-gboolean
+void
 insert_item_to_tree(proto_tree *tree, const gint hf, tvbuff_t *tvb, gint rel_pos, gint length, const guint enc)
 {
     gint abs_pos;
-    gboolean overflow;
-    gboolean error;
-
-    item_is_in_tvb_range(rel_pos, length, tvb);
 
     abs_pos = payload_offset_to_abs_offset(rel_pos);
+
+    item_is_in_tvb_range(abs_pos, length, tvb);
         
-    overflow = abs_pos + length < abs_pos;
-
-    error = overflow;
-
-    if(!error)
-    {
-        proto_tree_add_item(tree, hf, tvb, abs_pos, length, enc);
-    }
-    return error;
+    proto_tree_add_item(tree, hf, tvb, abs_pos, length, enc);
 }
 
 static void
@@ -44,12 +34,8 @@ item_is_in_tvb_range(const gint pos, const gint length, tvbuff_t *tvb)
     assert(end_pos > pos);
 
     /* check whether the item is within a given tvb-boundary */
-    assert(end_pos < (gint) tvb_len);
+    assert(end_pos <= (gint) tvb_len);
 }
-
-
-
-
 
 
 
