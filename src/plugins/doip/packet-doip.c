@@ -71,21 +71,19 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     if(pinfo)
     {
         col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
-        /*
-        col_clear(pinfo->cinfo, COL_INFO);
-        */
     }
 
     if(tvb && tree)
     {
         if(fill_doip_header(&header, tvb))
         {
-            /*print_doip_header(DEBUG_OUTPUT, &header);*/
-
+            /* Create sub-tree which can be used for inserting proto-items */
             ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
 
+            /* append all doip-header infos to proto-item */
             visualize_doip_header(&header, ti);
 
+            /* find a handler suited for the given doip-type (header->payload.type) */
             handler = find_matching_payload_handler(&header);
 
             if(handler)
