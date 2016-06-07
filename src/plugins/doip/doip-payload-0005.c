@@ -171,7 +171,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 
     insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA); // For FT_BYTES fields the encoding is not relevant 
+    insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA); /* For FT_BYTES fields the encoding is not relevant */
     insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
 }
 
