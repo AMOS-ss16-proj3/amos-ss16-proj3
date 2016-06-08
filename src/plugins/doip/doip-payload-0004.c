@@ -104,7 +104,7 @@ register_proto_doip_payload_0004(gint proto_doip)
             {
                 "Vehicle identification number",
                 "doip.payload.vin",
-                FT_UINT_STRING,
+                FT_STRING,
                 STR_ASCII,
                 NULL, /* TO DO: Use values of table 40 if the vid is not configured at the time of transmission of the message */
                 0x0,
