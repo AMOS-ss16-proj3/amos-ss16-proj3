@@ -245,14 +245,19 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 	const gint REL_VIN_GID_SYNC = 32;
 	const gint VIN_GID_SYNC_LEN = 1;
 
+    gboolean vin_gid_sync_is_present = ((gint) payloadLength) >= (REL_VIN_GID_SYNC + VIN_GID_SYNC_LEN);
+
 
 	insert_item_to_tree(tree, hf_vin, tvb, REL_VIN_POS, VIN_LEN, ENC_ASCII);
 	insert_item_to_tree(tree, hf_log_addr, tvb, REL_LOG_ADDR_POS, LOG_ADDR_LEN, ENC_BIG_ENDIAN);
 	insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
 	insert_item_to_tree(tree, hf_gid, tvb, REL_GID_POS, GID_LEN, ENC_NA);
 	insert_item_to_tree(tree, hf_further_action_req, tvb, REL_FURTHER_ACTION_REQ_POS, FURTHER_ACTION_REQ_LEN, ENC_BIG_ENDIAN);
-	if (payloadLength >= REL_VIN_GID_SYNC) /* only insert this item if needed, since it is optional */
-	insert_item_to_tree(tree, hf_vin_gid_sync, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN);
+    /* only insert this item if needed, since it is optional */
+	if (vin_gid_sync_is_present)
+    {
+        insert_item_to_tree(tree, hf_vin_gid_sync, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN);
+    }
 }
 
 
