@@ -44,12 +44,13 @@ static const gchar *description = "Routing activation request";
 
 /** Values are defined in ISO 13400-2:2012(E)
  * on table 23
-	TO DO: Considering how to add the ranging values of the two missing Values
 */
-static const value_string activation_types[] = {
-	{ 0x00, "Default" },
-	{ 0x01, "WWH-OBD" },
-	{ 0xE0, "Central Security" },
+static const range_string activation_types[] = {
+	{ 0x00, 0x00, "Default" },
+	{ 0x01, 0x01, "WWH-OBD" },
+	{ 0x02, 0xDF, "ISO/SAE reserved" },
+	{ 0xE0, 0xE0, "Central Security" },
+	{ 0xE1, 0xFF, "Available for additional OEM-specific use" },
 	{ 0x00, NULL}	
 };
 

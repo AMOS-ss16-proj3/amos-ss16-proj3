@@ -106,7 +106,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "doip.payload.vin",
                 FT_STRING,
                 STR_ASCII,
-                NULL, /* TO DO: Use values of table 40 if the vid is not configured at the time of transmission of the message */
+                NULL,
                 0x0,
                 "The vehicle's vehicle identification number (VIN) as specified in ISO 3779.",
                 HFILL
@@ -145,7 +145,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "doip.payload.gid",
                 FT_ETHER,
                 BASE_NONE,
-                NULL, /* TO DO: Use values of table 40 if the gid is not available */
+                NULL,
                 0x0,
                 "The unique identification of a group of DoIP entities within the same vehicle in the case that a VIN is not configured for that vehicle.",
                 HFILL
