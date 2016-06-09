@@ -31,7 +31,7 @@ then
     if [ ! -f wireshark-1.12.11.tar.bz2 ]
     then
         #URL=https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
-        URL=https://www.wireshark.org/download/src/wireshark-1.12.11.tar.bz2
+        URL=https://www.wireshark.org/download/src/all-versions/wireshark-1.12.11.tar.bz2
         wget ${URL}
     fi
 
