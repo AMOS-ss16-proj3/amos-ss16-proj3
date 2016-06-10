@@ -118,10 +118,13 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "Logical Address",
                 "doip.payload.la",
                 FT_UINT16,
-                BASE_HEX,
-                log_addr_values,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(log_addr_values),
                 0x0,
-                "The logical address that is assigned to the responding DoIP entity. It can be used, for example, to address diagnostic requests directly to the DoIP entity.",
+                "The logical address that is assigned to \
+                the responding DoIP entity. It can be used, \
+                for example, to address diagnostic requests \
+                directly to the DoIP entity.",
                 HFILL
             }
         },
@@ -134,7 +137,11 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_NONE,
                 NULL,
                 0x0,
-                "The unique identification of the DoIP entities in order to separate their responses even before the VIN is programmed to or recognized by the DoIP devices (e.g. during the vehicle assembly process).",
+                "The unique identification of the DoIP entities \
+                in order to separate their responses even before \
+                the VIN is programmed to or recognized by the \
+                DoIP devices (e.g. during the vehicle \
+                assembly process).",
                 HFILL
             }
         },
@@ -147,7 +154,9 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_NONE,
                 NULL,
                 0x0,
-                "The unique identification of a group of DoIP entities within the same vehicle in the case that a VIN is not configured for that vehicle.",
+                "The unique identification of a group of DoIP \
+                entities within the same vehicle in the case \
+                that a VIN is not configured for that vehicle.",
                 HFILL
             }
         },
@@ -157,10 +166,14 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "Further action required",
                 "doip.payload.far",
                 FT_UINT8,
-                BASE_HEX,
-                further_action_values,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(further_action_values),
                 0x0,
-                "The additional information to notify the external test equipment that there are either DoIP entities with no initial connectivity or that a centralized security approach is used.",
+                "The additional information to notify the \
+                external test equipment that there are \
+                either DoIP entities with no initial \
+                connectivity or that a centralized security \
+                approach is used.",
                 HFILL
             }
         },
@@ -170,10 +183,13 @@ register_proto_doip_payload_0004(gint proto_doip)
                 "VIN/GID sync. status",
                 "doip.payload.vgss",
                 FT_UINT8,
-                BASE_HEX,
-                vin_gid_sync_values,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(vin_gid_sync_values),
                 0x0,
-                "The additional information to notify the external test equipment that all DoIP entities have synchronized their information about the VIN or GID of the vehicle.",
+                "The additional information to notify the \
+                external test equipment that all DoIP \
+                entities have synchronized their information \
+                about the VIN or GID of the vehicle.",
                 HFILL
             }
         }
