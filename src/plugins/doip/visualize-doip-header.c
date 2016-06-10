@@ -51,35 +51,42 @@ static gint ett_doip = -1;
 
 
 /* value_strings which will be displayed for version in proto_tree */
-static const value_string doip_version_names[] = {
-    { 0x00, "Reserved"},
-    { 0x01, "DoIP ISO/DIS 13400-2:2010"},
-    { 0x02, "DoIP ISO 13400-2:2012"},
-    { 0xFF, "Default value for vehicle identification request messages"},
-    { 0x00, NULL}
+static const range_string doip_version_names[] = {
+    { 0x00, 0x00, "Reserved"},
+    { 0x01, 0x01, "DoIP ISO/DIS 13400-2:2010"},
+    { 0x02, 0x02, "DoIP ISO 13400-2:2012"},
+    { 0x03, 0xFE, "Reserved by ISO 13400"},
+    { 0xFF, 0xFF, "Default value for vehicle identification request messages"},
+    { 0x00, 0x00, NULL}
 };
 
 /* values which will be displayed for payload type in proto_tree */
-static const value_string packet_type_names[] = {
-    { 0x0000, "Generic DoIP header negative acknowledge" },
-    { 0x0001, "Vehicle identification request message" },
-    { 0x0002, "Vehicle identification request message with EID" },
-    { 0x0003, "Vehicle identification request message with VID" },
-    { 0x0004, "Vehicle announcement message/vehicle identification response message" },
-    { 0x0005, "Routing activation request" },
-    { 0x0006, "Routing activation response" },
-    { 0x0007, "Alive check request" },
-    { 0x0008, "Alive check response" },
+static const range_string packet_type_names[] = {
+    { 0x0000, 0x0000, "Generic DoIP header negative acknowledge" },
+    { 0x0001, 0x0001, "Vehicle identification request message" },
+    { 0x0002, 0x0002, "Vehicle identification request message with EID" },
+    { 0x0003, 0x0003, "Vehicle identification request message with VID" },
+    { 0x0004, 0x0004, "Vehicle announcement message/vehicle identification response message" },
+    { 0x0005, 0x0005, "Routing activation request" },
+    { 0x0006, 0x0006, "Routing activation response" },
+    { 0x0007, 0x0007, "Alive check request" },
+    { 0x0008, 0x0008, "Alive check response" },
 
-    { 0x4001, "DoIP entity status request" },
-    { 0x4002, "DoIP entity status response" },
-    { 0x4003, "Diagnostic power mode activation request" },
-    { 0x4004, "Diagnostic power mode activation response" },
+    { 0x0009, 0x4000, "Reserved by this part of ISO 13400" },
 
-    { 0x8001, "Diagnostic message" },
-    { 0x8002, "Diagnostic message positive acknowledgement" },
-    { 0x8003, "Diagnostic message negative acknowledgement" },
-    { 0, NULL }
+    { 0x4001, 0x4001, "DoIP entity status request" },
+    { 0x4002, 0x4002, "DoIP entity status response" },
+    { 0x4003, 0x4003, "Diagnostic power mode activation request" },
+    { 0x4004, 0x4004, "Diagnostic power mode activation response" },
+
+    { 0x4005, 0x8000, "Reserved by this part of ISO 13400"},
+
+    { 0x8001, 0x8001, "Diagnostic message" },
+    { 0x8002, 0x8002, "Diagnostic message positive acknowledgement" },
+    { 0x8003, 0x8003, "Diagnostic message negative acknowledgement" },
+    { 0x8004, 0xEFFF, "Reserved by this part of ISO 13400"},
+    { 0xF000, 0xFFFF, "Reserved for manufacturer-specific use"},
+    { 0x0000, 0x0000, NULL }
 };
 
 void
@@ -91,30 +98,42 @@ register_proto_doip_header(gint proto_doip)
         {
             &hf_doip_version,
             {
-                "Version", "doip.version",
-                FT_UINT8, BASE_DEC,
-                VALS(doip_version_names), 0x0,
-                NULL, HFILL
+                "Version",
+                "doip.version",
+                FT_UINT8,
+                BASE_DEC | BASE_RANGE_STRING,
+                RVALS(doip_version_names),
+                0x0,
+                NULL,
+                HFILL
             }
         },
         /* prepare info for inverse version */
         {
             &hf_doip_inverse_version,
             {
-                "Inverse Version", "doip.iversion",
-                FT_UINT8, BASE_DEC,
-                NULL, 0x0,
-                NULL, HFILL
+                "Inverse Version",
+                "doip.iversion",
+                FT_UINT8,
+                BASE_DEC,
+                NULL,
+                0x0,
+                NULL,
+                HFILL
             }
         },
         /* prepare info for payload type */
         {
             &hf_doip_payload_type,
             {
-                "Payload Type", "doip.payload.type",
-                FT_UINT16, BASE_HEX,
-                VALS(packet_type_names), 0x0,
-                NULL, HFILL
+                "Payload Type",
+                "doip.payload.type",
+                FT_UINT16,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(packet_type_names),
+                0x0,
+                NULL,
+                HFILL
             }
         },
         /* prepare info for payload length */
