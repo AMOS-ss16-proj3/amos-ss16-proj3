@@ -36,6 +36,14 @@ static gint hf_prev_diag_msg_data = -1;
 
 static gint ett_diag_msg_pos_resp = -1;
 
+
+static const range_string ack_codes[] = 
+{
+    {0x00, 0x00, "Diagnostic message was correctly received, processed and put into the transmission buffer of the destination network."},
+    {0x01, 0xFF, NULL},
+    {0x00, 0x00, NULL}
+};
+
 static void
 fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 
@@ -87,8 +95,8 @@ register_proto_doip_payload_8002(gint proto_doip)
                 "ACK code",
                 "doip.payload.ackcode",
                 FT_UINT8,  
-                BASE_HEX,
-                NULL,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(ack_codes),
                 0x0,
                 "Contains the diagnostic message positive \
                 acknowledge code.",
