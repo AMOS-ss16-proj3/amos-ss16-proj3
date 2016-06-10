@@ -33,6 +33,28 @@ static gint ett_routing_activation_response = -1;
 
 static const gchar *description = "Routing activation response";
 
+static const range_string routing_actvation_response_codes[] = {
+    {0x00, 0x00, "Routing activation denied due to unknown source address."},
+    {0x01, 0x01, "Routing activation denied because all concurrently supported TCP_DATA sockets are registered and active."},
+    {0x02, 0x02, "Routing activation denied because an SA different from the table connection entry was received on the already activated TCP_DATA socket."},
+    {0x03, 0x03, "Routing activation denied because the SA is already registered and active on a different TCP_DATA socket."},
+    {0x04, 0x04, "Routing activation denied due to missing authentication."},
+    {0x05, 0x05, "Routing activation denied due to rejected confirmation."},
+    {0x06, 0x06, "Routing activation denied due to unsupported routing activation type."},
+
+    {0x07, 0x0F, "Reserved by this part of ISO 13400."},
+
+    {0x10, 0x10, "Routing successfully activated."},
+    {0x11, 0x11, "Routing will be activated; confirmation required."},
+
+    {0x12, 0xDF, "Reserved by this part of ISO 13400."},
+
+    {0xE0, 0xFE, "Vehicle-manufacturer specific."},
+
+    {0xFF, 0xFF, "Reserved by this part of ISO 13400."},
+
+    {0x00, 0x00, NULL}
+};
 
 /* helper function for filling the proto_tree
  * structure / displaying stuff
@@ -88,8 +110,8 @@ register_proto_doip_payload_0006(gint proto_doip)
                 "Routing activation response code",
                 "doip.routing.response.code",
                 FT_UINT8,
-                BASE_HEX,
-                NULL,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(routing_actvation_response_codes),
                 0x0,
                 "Response by the DoIP gateway. Routing activation denial will result in the TCP_DATA connection being reseted by DoIP gateway. Successful routing activation implies that diagnostic messages can now be routed over the TCP_DATA connection",
                 HFILL
