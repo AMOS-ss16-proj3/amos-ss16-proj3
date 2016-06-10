@@ -46,7 +46,8 @@ NONGENERATED_C_FILES = \
     doip-payload-0005.c \
     doip-payload-0006.c \
     doip-payload-8001.c \
-    doip-payload-8002.c
+    doip-payload-8002.c \
+    doip-payload-8003.c
 
 # Headers.
 CLEAN_HEADER_FILES = \
@@ -60,7 +61,8 @@ CLEAN_HEADER_FILES = \
     doip-payload-0005.h \
     doip-payload-0006.h \
     doip-payload-8001.h \
-    doip-payload-8002.h
+    doip-payload-8002.h \
+    doip-payload-8003.h
 
 HEADER_FILES = \
 	$(CLEAN_HEADER_FILES)
