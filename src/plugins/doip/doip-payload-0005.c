@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Copyright 2017 The Open Source Research Group,
 *                University of Erlangen-Nürnberg
 *
@@ -54,6 +54,28 @@ static const range_string activation_types[] = {
 	{ 0x00, 0x00, NULL}	
 };
 
+/** Values are defined in ISO 13400-2:2012(E)
+* on table 39
+*/
+static const range_string source_address_values[] = {
+	{ 0x0000, 0x0000, "ISO/SAE reserved" },
+	{ 0x0001, 0x0DFF, "Vehicle manufacturer specific" },
+	{ 0x0E00, 0x0FFF, "Reserved for addresses of external test equipment" },
+	{ 0x0E00, 0x0E7F, "External legislated diagnostics test equipment (e.g. for emissions test scan-tool use)" },
+	{ 0x0E80, 0x0EFF, "External vehicle-manufacturer-/aftermarket-enhanced diagnostics test equipment" },
+	{ 0x0F00, 0x0F7F, "Internal data collection/on-board diagnostic equipment (for vehicle-manufacturer use only)" },
+	{ 0x0F80, 0x0FFF, "External prolonged data collection equipment (vehicle data recorders and loggers, e.g. used by insurance companies or to collect vehicle fleet data)" },
+	{ 0x1000, 0x7FFF, "Vehicle manufacturer specific" },
+	{ 0x8000, 0xCFFF, "ISO/SAE reserved" },
+	{ 0xD000, 0xDFFF, "Reserved for SAE Truck & Bus Control and Communication Committee" },
+	{ 0xE000, 0xE3FF, "ISO/SAE-reserved functional group addresses" },
+	{ 0xE000, 0xE000, "ISO 27145 WWH-OBD functional group address" },
+	{ 0xE001, 0xE3FF, "ISO/SAE reserved" },
+	{ 0xE400, 0xEFFF, "Vehicle-manufacturer-defined functional group logical addresses" },
+	{ 0xF000, 0xFFFF, "ISO/SAE reserved" },
+	{ 0x0000, 0x0000, NULL }
+};
+
 /* values which will be displayed for payload type 0005 in proto_tree */
 void
 register_proto_doip_payload_0005(gint proto_doip)
@@ -67,8 +89,8 @@ register_proto_doip_payload_0005(gint proto_doip)
                 "Source address",
                 "doip.payload.sa",
                 FT_UINT16,
-                BASE_HEX,
-                NULL,
+                BASE_HEX | BASE_RANGE_STRING,
+		 RVALS(source_address_values),
                 0x0,
                 "A address of the external test equipment that requests routing activation. This is the same address that is used by the external test equipment when sending diagnostic messages on the same TCP_DATA socket",
                 HFILL
