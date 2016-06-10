@@ -80,8 +80,8 @@ register_proto_doip_payload_0005(gint proto_doip)
                 "Activation type",
                 "doip.payload.at",
                 FT_UINT8,
-                BASE_HEX,
-                activation_types,
+                BASE_HEX | BASE_RANGE_STRING,
+                RVALS(activation_types),
                 0x0,
                 "Specific type of routing activation that may require different types of authentication and/or confirmation",
                 HFILL
