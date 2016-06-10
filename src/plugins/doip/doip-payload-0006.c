@@ -225,10 +225,6 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_OEM_RESERVED_POS = 9;
     const gint OEM_RESERVED_POS = 4;
 
-    /* execute everything with a logical OR for
-     * stopping evaluation automatically as soon
-     * as one of the calls fails
-    */
     insert_item_to_tree(tree, hf_test_equipment_addr, tvb, REL_TEST_EQUIP_ADDR_POS, TEST_EQUIP_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_doip_entity_addr, tvb, REL_DOIP_ENTITY_ADDR_POS, DOIP_ENTITY_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_response_code, tvb, REL_RESPONSE_CODE_POS, RESPONSE_CODE_LEN, ENC_BIG_ENDIAN);
