@@ -37,6 +37,7 @@ set(DISSECTOR_SUPPORT_SRC
     doip-payload-0004.c
     doip-payload-0005.c
     doip-payload-0006.c
+    doip-payload-4001.c
     doip-payload-8002.c
     doip-payload-8003.c
 )
