@@ -19,11 +19,11 @@
 
 set -ue
 
-echo "preparing build environment"
-if  ! command -v wireshark > /dev/null
-then
-    sudo apt-get -qy install wireshark-dev
-fi
+#echo "preparing build environment"
+#if  ! command -v wireshark > /dev/null
+#then
+#   sudo apt-get -qy install wireshark-dev
+#fi
 
 echo "preparing latest Wireshark soucecode"
 if [ ! -d wireshark ]
