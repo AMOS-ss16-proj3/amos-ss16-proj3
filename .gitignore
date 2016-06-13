@@ -16,4 +16,6 @@ docker/plugins/*
 # lua example
 lua
 
+# deploy
+deploy/deployvars.sh
 
