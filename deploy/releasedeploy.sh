@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 ###
 # Copyright 2017 The Open Source Research Group,
 #                University of Erlangen-Nürnberg
@@ -19,10 +18,11 @@
 #
 
 
+
 set -ue
 
 curl -X POST $DEPLOY_URL \
     --user $DEPLOY_USER:$DEPLOY_PW \
-    --data-urlencode json='{"parameter": [{"name":"action", "value":"test--deploy"}, {"name":"team", "value":"3"}]}'
+    --data-urlencode json='{"parameter": [{"name":"action", "value":"production--deploy"}, {"name":"team", "value":"3"}]}'
 
 
