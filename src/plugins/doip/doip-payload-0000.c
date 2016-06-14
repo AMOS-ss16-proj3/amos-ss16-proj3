@@ -25,6 +25,8 @@
 /* Generic DoIP header NACK code */
 static gint hf_doip_payload_nc = -1; 
 
+static gint ett_nack_codes = -1;
+
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
@@ -66,8 +68,14 @@ register_proto_doip_payload_0000(gint proto_doip)
         }
     };
 
+    static gint *ett[] = 
+    {
+        &ett_nack_codes 
+    };
+
 	/* one-time registration after Wireshark is started */
     proto_register_field_array(proto_doip, hf, array_length(hf));  
+    proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
@@ -81,6 +89,8 @@ dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)
     col_set_str(pinfo->cinfo, COL_INFO, description);
 
     tvb = retrieve_tvbuff(header);
+    /* attach a new tree to proto_item pitem */
+    doip_tree = proto_item_add_subtree(pitem, ett_nack_codes);
 
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
@@ -88,3 +98,25 @@ dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)
         fill_tree(doip_tree, tvb);
     }
 }
+
+static void
+fill_tree(proto_tree *tree, tvbuff_t *tvb)
+{
+    /* Values taken from ISO 13400-2:2012(E) page 24
+    *
+    * Constants starting with prefix "REL_" indicate a relative
+    * offset to a doip-messages payload.
+    * In order to get the absolute offset starting from the very
+    * first doip-header byte we have to calculate the
+    * absolute position
+    */
+    const gint REL_HEADER_NACK_CODE_POS = 0;
+    const gint HEADER_NACK_LEN = 1;
+
+    insert_item_to_tree(tree, hf_doip_payload_nc, tvb, REL_HEADER_NACK_CODE_POS, HEADER_NACK_LEN, ENC_BIG_ENDIAN);
+}
+
+
+
+
+
