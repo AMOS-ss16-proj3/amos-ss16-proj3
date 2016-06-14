@@ -33,6 +33,7 @@ set(DISSECTOR_SUPPORT_SRC
     doip-helper.c
     doip-payload-handler.c
     visualize-doip-header.c
+    doip-payload-0000.c
     doip-payload-0001.c
     doip-payload-0002.c
     doip-payload-0004.c

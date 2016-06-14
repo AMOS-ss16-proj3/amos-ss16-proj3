@@ -18,6 +18,7 @@
 #include "doip-header.h"
 #include "visualize-doip-header.h"
 
+#include "doip-payload-0000.h"
 #include "doip-payload-0001.h"
 #include "doip-payload-0002.h"
 #include "doip-payload-0004.h"
@@ -40,6 +41,9 @@ find_matching_payload_handler(doip_header *header)
     {
         switch(header->payload.type)
         {
+            case 0x0000:
+                handler = dissect_payload_0000;
+                break;
             case 0x0001:
                 handler = dissect_payload_0001;
                 break;
@@ -84,6 +88,9 @@ register_proto_doip_payload(gint proto_doip)
     /* prepare proto entries for header */
     register_proto_doip_header(proto_doip);
 
+    /* prepare proto entries for payload type 0x0000 */
+    register_proto_doip_payload_0000(proto_doip);
+    
     /* prepare proto entries for payload type 0x0001 */
     register_proto_doip_payload_0001(proto_doip);
 	

@@ -41,6 +41,7 @@ NONGENERATED_C_FILES = \
     doip-helper.c \
     doip-payload-handler.c \
     visualize-doip-header.c \
+    doip-payload-0000.c \
     doip-payload-0001.c \
     doip-payload-0002.c \
     doip-payload-0004.c \
@@ -59,6 +60,7 @@ CLEAN_HEADER_FILES = \
     doip-helper.h \
     doip-payload-handler.h \
     visualize-doip-header.h \
+    doip-payload-0000.h \
     doip-payload-0001.h \
     doip-payload-0002.h \
     doip-payload-0004.h \

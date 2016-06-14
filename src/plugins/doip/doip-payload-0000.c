@@ -1,0 +1,90 @@
+﻿/**
+* Copyright 2017 The Open Source Research Group,
+*                University of Erlangen-Nürnberg
+*
+* Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     https://www.gnu.org/licenses/gpl.html
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+#include "config.h"
+#include <epan/proto.h>
+
+#include "doip-header.h"
+#include "doip-helper.h"
+#include "doip-payload-0000.h"
+
+/* Generic DoIP header NACK code */
+static gint hf_doip_payload_nc = -1; 
+
+static void
+fill_tree(proto_tree *tree, tvbuff_t *tvb);
+
+static const gchar *description = "Generic DoIP header NACK code";
+
+
+/** Values are defined in ISO 13400-2:2012(E)
+ * on table 14
+*/
+static const range_string nack_codes[] = {
+	{ 0x00, 0x00, "Incorrect pattern format" },
+	{ 0x01, 0x01, "Unknown payload type" },
+	{ 0x02, 0x02, "Message too large" },
+	{ 0x03, 0x03, "Out of memory" },
+	{ 0x04, 0x04, "Invalid payload lenght" },
+	{ 0x05, 0xFF, "Reserved by this part of ISO 13400"}	
+};
+
+
+/* values which will be displayed for payload type 0000 in proto_tree */
+void
+register_proto_doip_payload_0000(gint proto_doip)
+{
+    static hf_register_info hf[] =
+    {
+        /* prepare info for the header field based on ISO 13400-2:2012(E) */
+        {
+            &hf_doip_payload_nc,
+            {
+                "Generic DoIP header NACK code",
+                "doip.payload.nc",
+                FT_UINT8,
+                BASE_HEX | BASE_RANGE_STRING,
+		 RVALS(nack_codes),
+                0x0,
+                "The generic header negative acknoledge code indicates the specific error that was detected in the generic DoIP header or it indicates an unsupported payload or a memory overload condition",
+                HFILL
+            }
+        }
+    };
+
+	/* one-time registration after Wireshark is started */
+    proto_register_field_array(proto_doip, hf, array_length(hf));  
+}
+
+/* After a doip row is selected in Wireshark */
+void
+dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
+{
+    tvbuff_t *tvb;
+    proto_tree *doip_tree;
+
+    /* set info column to description */
+    col_set_str(pinfo->cinfo, COL_INFO, description);
+
+    tvb = retrieve_tvbuff(header);
+
+    /* check for a valid tvbuff_t */
+    if(doip_tree && tvb)
+    {
+        fill_tree(doip_tree, tvb);
+    }
+}
