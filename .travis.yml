@@ -23,6 +23,7 @@ script:
     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="$DOCKER_EMAIL"
     - docker push jufuch/amos-ss16-proj3:latest
     - docker logout
+    - bash deploy/deploytrigger.sh
 
 
 
