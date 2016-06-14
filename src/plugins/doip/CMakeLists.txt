@@ -35,6 +35,7 @@ set(DISSECTOR_SUPPORT_SRC
     visualize-doip-header.c
     doip-payload-0001.c
     doip-payload-0002.c
+    doip-payload-0003.c
     doip-payload-0004.c
     doip-payload-0005.c
     doip-payload-0006.c
