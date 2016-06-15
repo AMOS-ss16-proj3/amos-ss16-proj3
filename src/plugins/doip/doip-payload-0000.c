@@ -37,12 +37,12 @@ static const gchar *description = "Generic DoIP header NACK code";
  * on table 14
 */
 static const range_string nack_codes[] = {
-	{ 0x00, 0x00, "Incorrect pattern format" },
-	{ 0x01, 0x01, "Unknown payload type" },
-	{ 0x02, 0x02, "Message too large" },
-	{ 0x03, 0x03, "Out of memory" },
-	{ 0x04, 0x04, "Invalid payload lenght" },
-	{ 0x05, 0xFF, "Reserved by this part of ISO 13400"}	
+    { 0x00, 0x00, "Incorrect pattern format" },
+    { 0x01, 0x01, "Unknown payload type" },
+    { 0x02, 0x02, "Message too large" },
+    { 0x03, 0x03, "Out of memory" },
+    { 0x04, 0x04, "Invalid payload lenght" },
+    { 0x05, 0xFF, "Reserved by this part of ISO 13400"}	
 };
 
 
@@ -60,7 +60,7 @@ register_proto_doip_payload_0000(gint proto_doip)
                 "doip.payload.nc",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
-		 RVALS(nack_codes),
+                RVALS(nack_codes),
                 0x0,
                 "The generic header negative acknoledge code indicates the specific error that was detected in the generic DoIP header or it indicates an unsupported payload or a memory overload condition",
                 HFILL
@@ -73,14 +73,14 @@ register_proto_doip_payload_0000(gint proto_doip)
         &ett_nack_codes 
     };
 
-	/* one-time registration after Wireshark is started */
+    /* one-time registration after Wireshark is started */
     proto_register_field_array(proto_doip, hf, array_length(hf));  
     proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
+dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)       
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
