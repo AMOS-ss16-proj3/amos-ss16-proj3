@@ -26,7 +26,6 @@ COMMITMSG=`git log -n 1 --pretty=format:%s --grep \[TDEPLOY\]`
 if [[ $AMOSTAG == *"release"* ]]
 then
     RELEASETAG=`git tag --list --points-at $AMOSHASH *release`
-    CANDIDATETAG=`git tag --list --points-at $AMOSHASH *release-candidate`
     if [[ $RELEASETAG  == *"release"* ]]
     then
         echo 'deploying realease--candidate';
