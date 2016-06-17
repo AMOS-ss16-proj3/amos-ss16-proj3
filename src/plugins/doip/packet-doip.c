@@ -22,6 +22,7 @@
 
 #include "doip-header.h"
 #include "doip-payload-handler.h"
+#include "visualize-doip-header.h"
 #include "packet-doip.h"
 
 /* debug variables */
@@ -37,8 +38,8 @@ static const guint32 TCP_DATA_PORT = 13400;
 static const guint32 UDP_DISCOVERY_PORT = 13400;
 static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
-static int proto_doip = -1;
 
+static gint proto_doip = -1;
 
 
 /* function declaration */
@@ -60,26 +61,36 @@ register_udp_test_equipment_messages(proto_tree *);
 static void
 dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    /*doip_header *header;*/
     doip_header header;
     payload_handler handler;
 
-    col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
-    col_clear(pinfo->cinfo, COL_INFO);
 
-    /*header = create_doip_header(tvb);*/
-    if(fill_doip_header(&header, tvb))
+    proto_item *ti;
+    /*proto_tree *doip_tree;*/
+
+    if(pinfo)
     {
-        print_doip_header(DEBUG_OUTPUT, &header);
+        col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
+    }
 
-        handler = find_matching_payload_handler(&header);
-
-        if(handler)
+    if(tvb && tree)
+    {
+        if(fill_doip_header(&header, tvb))
         {
-            handler(&header, pinfo, tree);
-        }
+            /* Create sub-tree which can be used for inserting proto-items */
+            ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
 
-        /*destroy_doip_header(header);*/
+            /* append all doip-header infos to proto-item */
+            visualize_doip_header(&header, ti);
+
+            /* find a handler suited for the given doip-type (header->payload.type) */
+            handler = find_matching_payload_handler(&header);
+
+            if(handler)
+            {
+                handler(&header, ti, pinfo);
+            }
+        }
     }
 }
 
@@ -119,6 +130,8 @@ proto_register_doip(void)
         DOIP_SHORTNAME,
         DOIP_ABBREV
     );
+
+    register_proto_doip_payload(proto_doip);
 }
 
 void

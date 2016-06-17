@@ -8,9 +8,14 @@ traces
 # directory and files required by build-process
 wireshark
 wireshark-2.0.2.tar.bz2
+wireshark-1.12.11.tar.bz2
 
 # directory for building docker-images
 docker/plugins/*
 
+# lua example
+lua
 
+# deploy
+deploy/deployvars.sh
 

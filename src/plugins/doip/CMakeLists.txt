@@ -30,9 +30,21 @@ set(DISSECTOR_SRC
 
 set(DISSECTOR_SUPPORT_SRC 
     doip-header.c
+    doip-helper.c
     doip-payload-handler.c
+    visualize-doip-header.c
     doip-payload-0000.c
+    doip-payload-0001.c
+    doip-payload-0002.c
+    doip-payload-0003.c
+    doip-payload-0004.c
     doip-payload-0005.c
+    doip-payload-0006.c
+    doip-payload-0008.c
+    doip-payload-4001.c
+    doip-payload-8001.c
+    doip-payload-8002.c
+    doip-payload-8003.c
 )
 
 set(PLUGIN_FILES

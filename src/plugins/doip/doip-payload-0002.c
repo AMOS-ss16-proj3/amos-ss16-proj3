@@ -20,67 +20,56 @@
 
 #include "doip-header.h"
 #include "doip-helper.h"
-#include "doip-payload-0000.h"
+#include "doip-payload-0002.h"
 
-/* Generic DoIP header NACK code */
-static gint hf_doip_payload_nc = -1; 
+/* Entity identification */
+static gint hf_eid = -1;
 
-static gint ett_nack_codes = -1;
+static gint ett_vehicle_identification_request_eid = -1;
 
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
-static const gchar *description = "Generic DoIP header NACK code";
+static const gchar *description = "Vehicle identification request message with Entity Identification (EID)";
 
 
-/** Values are defined in ISO 13400-2:2012(E)
- * on table 14
-*/
-static const range_string nack_codes[] = {
-    { 0x00, 0x00, "Incorrect pattern format" },
-    { 0x01, 0x01, "Unknown payload type" },
-    { 0x02, 0x02, "Message too large" },
-    { 0x03, 0x03, "Out of memory" },
-    { 0x04, 0x04, "Invalid payload lenght" },
-    { 0x05, 0xFF, "Reserved by this part of ISO 13400"}	
-};
-
-
-/* values which will be displayed for payload type 0000 in proto_tree */
+/* values which will be displayed for payload type 0002 in proto_tree */
 void
-register_proto_doip_payload_0000(gint proto_doip)
+register_proto_doip_payload_0002(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) */
         {
-            &hf_doip_payload_nc,
+            &hf_eid,
             {
-                "Generic DoIP header NACK code",
-                "doip.payload.nc",
-                FT_UINT8,
-                BASE_HEX | BASE_RANGE_STRING,
-                RVALS(nack_codes),
+                "Entity identification",
+                "doip.payload.eid",
+                FT_ETHER,
+                BASE_NONE,
+                NULL,
                 0x0,
-                "The generic header negative acknoledge code indicates the specific error that was detected in the generic DoIP header or it indicates an unsupported payload or a memory overload condition",
+				"The DoIP entity's unique ID (e.g. network interface's MAC address) \
+                that shall respond to the vehicle identification request message.",
                 HFILL
             }
         }
     };
 
+
     static gint *ett[] = 
     {
-        &ett_nack_codes 
+		&ett_vehicle_identification_request_eid
     };
 
-    /* one-time registration after Wireshark is started */
+	/* one-time registration after Wireshark is started */
     proto_register_field_array(proto_doip, hf, array_length(hf));  
     proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)       
+dissect_payload_0002(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
@@ -90,7 +79,7 @@ dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
-    doip_tree = proto_item_add_subtree(pitem, ett_nack_codes);
+	doip_tree = proto_item_add_subtree(pitem, ett_vehicle_identification_request_eid);
 
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
@@ -102,7 +91,7 @@ dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 24
+    /* Values taken from ISO 13400-2:2012(E) page 32
     *
     * Constants starting with prefix "REL_" indicate a relative
     * offset to a doip-messages payload.
@@ -110,10 +99,10 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     * first doip-header byte we have to calculate the
     * absolute position
     */
-    const gint REL_HEADER_NACK_CODE_POS = 0;
-    const gint HEADER_NACK_LEN = 1;
+    const gint REL_EID_POS = 0;
+    const gint EID_LEN = 6;
 
-    insert_item_to_tree(tree, hf_doip_payload_nc, tvb, REL_HEADER_NACK_CODE_POS, HEADER_NACK_LEN, ENC_BIG_ENDIAN);
+	insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
 }
 
 

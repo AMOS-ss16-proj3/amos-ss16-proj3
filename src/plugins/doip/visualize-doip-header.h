@@ -15,33 +15,19 @@
 * limitations under the License.
 */
 
-#ifndef __DOIP_PAYLOAD_HANDLER_H
-#define __DOIP_PAYLOAD_HANDLER_H
+#ifndef __VISUALIZE_DOIP_HEADER_H
+#define __VISUALIZE_DOIP_HEADER_H
 
-#include "config.h"
-#include <epan/packet.h>
+#include <epan/proto.h>
 
 #include "doip-header.h"
 
-/* payload_handler is a function pointer to
- * a function which can further dissect a package
- */
-typedef
-void (*payload_handler)(doip_header *, proto_item *, packet_info *pinfo);
-
-/* Determines a suitable payload_handler based on 
- * a header's payload type
- *
- * @param[in] header, header containing payload type
- * @return a valid payload_handler if payload type can be handled,
- *  otherwise NULL
- */
-payload_handler
-find_matching_payload_handler(doip_header *);
+void
+register_proto_doip_header(gint proto_doip);
 
 void
-register_proto_doip_payload(gint proto_doip);
+visualize_doip_header(doip_header *, proto_item*);
 
-#endif /* __DOIP_PAYLOAD_HANDLER_H */
+#endif /* __VISUALIZE_DOIP_HEADER_H */
 
 

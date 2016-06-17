@@ -28,14 +28,15 @@ fi
 echo "preparing latest Wireshark soucecode"
 if [ ! -d wireshark ]
 then
-    if [ ! -f wireshark-2.0.2.tar.bz2 ]
+    if [ ! -f wireshark-1.12.11.tar.bz2 ]
     then
-        URL=https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
+        #URL=https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
+        URL=https://www.wireshark.org/download/src/all-versions/wireshark-1.12.11.tar.bz2
         wget ${URL}
     fi
 
-    tar xf wireshark-2.0.2.tar.bz2
-    mv wireshark-2.0.2 wireshark
+    tar xf wireshark-1.12.11.tar.bz2
+    mv wireshark-1.12.11 wireshark
 fi
 
 echo "copying plugin-source to wireshark directory"

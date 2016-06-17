@@ -1,4 +1,6 @@
-#
+#!/bin/bash
+
+###
 # Copyright 2017 The Open Source Research Group,
 #                University of Erlangen-Nürnberg
 #
@@ -17,10 +19,10 @@
 
 
 
-FROM osrgroup/amos-downloader-base-image:1.0
+set -ue
 
-ENV HTML_INDEX_FILE doip.so
+curl -X POST $DEPLOY_URL \
+    --user $DEPLOY_USER:$DEPLOY_PW \
+    --data-urlencode json='{"parameter": [{"name":"action", "value":"production--deploy"}, {"name":"team", "value":"3"}]}'
 
-ADD ./plugins/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
-ADD ./insert-win-link.sh /assets/insert-win-link.sh
-RUN bash /assets/insert-win-link.sh
+

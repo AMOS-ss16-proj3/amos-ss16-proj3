@@ -13,6 +13,10 @@ For further details see below
 
 ### Requirements
 - [apt](https://en.wikipedia.org/wiki/Advanced_Packaging_Tool) (if not available, the scripts in section _Compiling_ have to be adapted)
+- [autoconf](https://www.gnu.org/software/autoconf/autoconf.html) (>= 2.6)
+- [automake](https://www.gnu.org/software/automake/) (>= 1.9)
+- [libtool](https://www.gnu.org/software/libtool/) (>= 1.4)
+- [GLib 2](https://wiki.gnome.org/Projects/GLib)
 
 ### Compiling
 Execute following scripts in this order:

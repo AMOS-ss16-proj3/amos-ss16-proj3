@@ -33,8 +33,11 @@ typedef struct doip_header
         guint16 type;
         guint32 length;
 
-        tvbuff_t *tvb;
-        guint32 tvb_offset;
+		/* buffer for doip-payload */
+        tvbuff_t *tvb;  
+
+		/* Offset for the Header */
+        guint32 tvb_offset; 
 
     } payload;
 
@@ -65,6 +68,27 @@ destroy_doip_header(doip_header *);
  */
 void
 print_doip_header(FILE *, doip_header *);
+
+/* Returns a tvbuff_t * instancel associated
+ * with this header
+ */
+tvbuff_t *
+retrieve_tvbuff(doip_header *);
+
+
+/* Calculates the total length of a doip-message
+ * in bytes
+ */
+gint
+get_total_doip_package_length(doip_header *);
+
+
+/* Calculates the total offset of
+ * a byte in the payload section
+ * by adding the number of header bytes
+ */
+gint
+payload_offset_to_abs_offset(gint payload_offset);
 
 /* Retrieves eight bits of data from a
  * doip_header's message section
