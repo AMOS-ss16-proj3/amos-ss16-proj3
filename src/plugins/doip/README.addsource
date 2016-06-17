@@ -1,9 +1,0 @@
-CMakelist.txt
-DISSECTOR_SUPPORT_SRC 
-
-
-Makefile.common
-
-NONGENERATED_C_FILES
-CLEAN_HEADER_FILES = \
-
