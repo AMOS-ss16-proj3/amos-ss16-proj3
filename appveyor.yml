@@ -80,10 +80,23 @@ after_build:
  # - dir c:\projects\wiresharkBuild\plugins\doip
  # - 7z a run_folder.zip c:\projects\wiresharkBuild\run
   #- appveyor PushArtifact run_folder.zip
-  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll"
-# Try to push the doip.dll with the appveyor build number in the name
-  - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip$env:appveyor_build_number.dll
-  - ps: Push-AppveyorArtifact c:\projects\doip$env:appveyor_build_number.dll
+#  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll"
+
+# Push latest doip.dll with build number as zip
+  - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip-build-$env:appveyor_build_number.dll
+  - 7z a c:\projects\doip.zip c:\projects\doip-build-$env:appveyor_build_number.dll
+  - ps: Push-AppveyorArtifact c:\projects\doip.zip
+
+# Push doip.dll with build number as zip for release candidate or release
+  - ps: if($env:APPVEYOR_REPO_TAG) {
+		if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
+			7z a c:\projects\doip-candidate.zip c:\projects\doip-build-$env:appveyor_build_number.dll
+			Push-AppveyorArtifact c:\projects\doip-candidate.zip
+		} elseif (($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+			7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
+			Push-AppveyorArtifact c:\projects\doip-release.zip
+		}
+	}
 #  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
   #- appveyor PushArtifact allbuild.zip
 
@@ -102,5 +115,17 @@ on_failure:
 
 deploy:
  # maybe we dont need this and can use: https://ci.appveyor.com/api/projects/tester/amos-ss16-proj3/artifacts/doip.dll
-  provider: Environment
-  name: ftp-docker
+  - ps: if(! $env:APPVEYOR_REPO_TAG) {
+		echo "we come here"
+  		provider: Environment
+  		name: ftp-latest
+ 	}
+  - ps: if($env:APPVEYOR_REPO_TAG) {
+		if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
+			provider: Environment
+			name: ftp-candidate
+		} elseif (($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+			provider: Environment
+			name: ftp-release
+		}
+	}
