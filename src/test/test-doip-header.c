@@ -26,12 +26,6 @@
 #include "../plugins/doip/doip-header.h"
 
 
-static guint8 doip_header_buffer[] = {
-    0x02, /* proto_version */
-    0xFD, /* inverse proto_version */
-    0x43, 0x21, /* payload type == 0x4321 */
-    0x12, 0x34, 0x56, 0x78 /* payload length == 0x12345678 */
-};
 
 int
 init_suite_doip_header(void)
@@ -48,26 +42,53 @@ clean_suite_doip_header(void)
 void
 all_header_fields_are_set_correctly(void)
 {
+    guint8 doip_header_buffer[] = {
+        0x02, /* proto_version */
+        0xFD, /* inverse proto_version */
+        0x43, 0x21, /* payload type == 0x4321 */
+        0x12, 0x34, 0x56, 0x78 /* payload length == 0x12345678 */
+    };
+
     doip_header header;
     tvbuff_t *tvb;
 
     tvb = create_tvb_mock(doip_header_buffer, sizeof(doip_header_buffer));
 
-    fill_doip_header(&header, tvb);
+    gboolean success = fill_doip_header(&header, tvb);
 
-    /*
-    printf("proto_version value: %#2x\n", header.proto_version);
-    printf("inverse_proto_version: %#2x\n", header.inverse_proto_version);
-    printf("payload type: %#4x\n", header.payload.type);
-    printf("payload length: %#8x\n", header.payload.length);
-    */
-
+    CU_ASSERT(success == TRUE);
     CU_ASSERT(header.proto_version == 0x02);
     CU_ASSERT(header.inverse_proto_version == 0xFD);
     CU_ASSERT(header.payload.type == 0x4321);
     CU_ASSERT(header.payload.length == 0x12345678);
 
     destroy_tvb_mock(tvb);
+}
+
+void
+fill_doip_header_indicates_error_by_return(void)
+{
+    const gint BUFFER_SIZE = 8;
+    guint8 doip_header_buffer[][8] =
+    {
+        /* protocol version and inverse proto version do not match */
+        {0x02, 0x00, 0x43, 0x21, 0x12, 0x34, 0x56, 0x78},
+        {0x01, 0xFD, 0x43, 0x21, 0x12, 0x34, 0x56, 0x78}
+    };
+    doip_header header;
+    tvbuff_t *tvb;
+    gint i;
+
+    for(i = 0; i < sizeof(doip_header_buffer) / BUFFER_SIZE; i += 1)
+    {
+        tvb = create_tvb_mock(doip_header_buffer[i], BUFFER_SIZE);
+
+        gboolean success = fill_doip_header(&header, tvb);
+
+        CU_ASSERT(success == FALSE);
+
+        destroy_tvb_mock(tvb);
+    }
 }
 
 
@@ -92,7 +113,8 @@ main(void)
 
 
     /* add the tests to the suite */
-    if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly))
+    if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly)
+        || !CU_add_test(pSuite, "", fill_doip_header_indicates_error_by_return))
     {
         CU_cleanup_registry();
         return CU_get_error();
