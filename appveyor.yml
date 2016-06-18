@@ -117,15 +117,15 @@ on_failure:
 
 deploy:
  # maybe we dont need this and can use: https://ci.appveyor.com/api/projects/tester/amos-ss16-proj3/artifacts/doip.dll
-  - provider: Environment
+   provider: Environment
   name: ftp-latest
 
-  - provider: Environment
+   provider: Environment
   name: ftp-candidate
   on:
     doipcandidate: true
 
-  - provider: Environment
+   provider: Environment
   name: ftp-release
   on:
     doiprelase: true
