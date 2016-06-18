@@ -92,12 +92,13 @@ after_build:
       if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
         7z a c:\projects\doip-candidate.zip c:\projects\doip-build-$env:appveyor_build_number.dll
         Push-AppveyorArtifact c:\projects\doip-candidate.zip
+        $env:doipcandidate = $true
+      }
+      elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+        7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
+        Push-AppveyorArtifact c:\projects\doip-release.zip
+        $env:doiprelease = $true
       } }
-#      elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
- #       7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
-  #      Push-AppveyorArtifact c:\projects\doip-release.zip
- #     }
-#    }
 #  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
   #- appveyor PushArtifact allbuild.zip
 
@@ -116,17 +117,25 @@ on_failure:
 
 deploy:
  # maybe we dont need this and can use: https://ci.appveyor.com/api/projects/tester/amos-ss16-proj3/artifacts/doip.dll
-  - ps: if(! $env:APPVEYOR_REPO_TAG) {
-      echo "we come here"
-      provider: Environment
-      name: ftp-latest
-     }
-  - ps: if($env:APPVEYOR_REPO_TAG) {
-      if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
-        provider: Environment
-        name: ftp-candidate
-      } elseif (($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
-        provider: Environment
-        name: ftp-release
-      }
-    }
+  - provider: Environment
+  name: ftp-latest
+
+  - provider: Environment
+  name: ftp-candidate
+  on:
+    doipcandidate: true
+
+  - provider: Environment
+  name: ftp-release
+  on:
+    doiprelase: true
+     
+#  - ps: if($env:APPVEYOR_REPO_TAG) {
+#      if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
+#        provider: Environment
+#        name: ftp-candidate
+#      } elseif (($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+#        provider: Environment
+#        name: ftp-release
+#      }
+#    }
