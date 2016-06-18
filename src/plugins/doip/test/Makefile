@@ -1,6 +1,6 @@
 
 CFLAGS = `pkg-config --cflags glib-2.0`
-W = 
+W = -Wall -Werror
 CC = gcc $(W) $(CFLAGS) -g
 MOCKDIR = ./mock
 
