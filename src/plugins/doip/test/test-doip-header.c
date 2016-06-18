@@ -24,8 +24,6 @@
 #include "doip-header.h"
 
 
-static tvbuff_t *tvb;
-
 static guint8 doip_header_buffer[] = {
     0x02, /* proto_version */
     0xFD, /* inverse proto_version */
