@@ -84,7 +84,9 @@ after_build:
 
 # Push latest doip.dll with build number as zip
   - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip_build$env:appveyor_build_number.dll
+  - dir c:\projects
   - 7z a c:\projects\doip.zip c:\projects\doip_build$env:appveyor_build_number.dll
+  - dir c:\projects
   - ps: Push-AppveyorArtifact c:\projects\doip.zip
 
 # Push doip.dll with build number as zip for release candidate or release
