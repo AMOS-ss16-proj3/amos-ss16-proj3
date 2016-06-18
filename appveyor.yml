@@ -96,7 +96,8 @@ after_build:
         7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
         Push-AppveyorArtifact c:\projects\doip-release.zip
       }
-    }
+    } else {
+}
 #  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
   #- appveyor PushArtifact allbuild.zip
 
