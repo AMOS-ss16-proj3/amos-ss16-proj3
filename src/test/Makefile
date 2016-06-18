@@ -28,7 +28,7 @@ doip-header.o: doip-header.c doip-header.h ; \
 test: tvbuff.o doip-header.o tvbmock.o test.c; \
     $(CC) $^ -o $@
 
-test-doip-header: test-doip-header.c *.o ; \
+test-doip-header: test-doip-header.c doip-header.o tvbuff.o tvbmock.o  ; \
     $(CC) $(CUNIT) $^ -o $@
 
 #gcc test-doip-header.c -I./mock `pkg-config --cflags glib-2.0` ./doip-header.o ./mock/tvbuff.o ./mock/tvbmock.o -lcunit -g

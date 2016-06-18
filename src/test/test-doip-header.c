@@ -92,7 +92,8 @@ main(void)
 
 
     /* add the tests to the suite */
-    if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly))
+    if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly)
+        || !CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly))
     {
         CU_cleanup_registry();
         return CU_get_error();
