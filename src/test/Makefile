@@ -2,6 +2,7 @@
 CFLAGS = `pkg-config --cflags glib-2.0`
 W = -Wall -Werror
 MOCKDIR = ./mock
+PLUGINDIR = ../plugins/doip
 HEADER_DIRS = -I. -I$(MOCKDIR)
 
 CC = gcc $(W) $(CFLAGS) $(HEADER_DIRS) -g
@@ -13,7 +14,7 @@ RM = rm -rf
 all: test-doip-header
 
 clean: ; \
-    $(RM) ./test tvbuff.o tvbmock.o
+    $(RM) tvbuff.o tvbmock.o doip-header.o
 
 tvbuff.o: $(MOCKDIR)/epan/tvbuff.c $(MOCKDIR)/epan/tvbuff.h ; \
     $(CC) -c $(MOCKDIR)/epan/tvbuff.c -o $@
@@ -21,8 +22,8 @@ tvbuff.o: $(MOCKDIR)/epan/tvbuff.c $(MOCKDIR)/epan/tvbuff.h ; \
 tvbmock.o: tvbuff.o $(MOCKDIR)/tvb-mock.c $(MOCKDIR)/tvb-mock.h ; \
     $(CC) -c $(MOCKDIR)/tvb-mock.c -o $@
 
-doip-header.o: doip-header.c doip-header.h ; \
-    $(CC) -c doip-header.c -o $@
+doip-header.o: $(PLUGINDIR)/doip-header.c $(PLUGINDIR)/doip-header.h ; \
+    $(CC) -c $(PLUGINDIR)/doip-header.c -o $@
 
 
 test: tvbuff.o doip-header.o tvbmock.o test.c; \

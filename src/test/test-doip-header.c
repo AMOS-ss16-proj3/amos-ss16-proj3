@@ -21,7 +21,7 @@
 
 #include "tvb-mock.h"
 
-#include "doip-header.h"
+#include "../plugins/doip/doip-header.h"
 
 
 static guint8 doip_header_buffer[] = {
