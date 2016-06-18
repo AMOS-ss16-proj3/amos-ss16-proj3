@@ -93,10 +93,10 @@ after_build:
         7z a c:\projects\doip-candidate.zip c:\projects\doip-build-$env:appveyor_build_number.dll
         Push-AppveyorArtifact c:\projects\doip-candidate.zip
       }
-      elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
-        7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
-        Push-AppveyorArtifact c:\projects\doip-release.zip
-      }
+#      elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+ #       7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
+  #      Push-AppveyorArtifact c:\projects\doip-release.zip
+ #     }
     }
 #  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
   #- appveyor PushArtifact allbuild.zip
