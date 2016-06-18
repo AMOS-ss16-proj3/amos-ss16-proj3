@@ -83,20 +83,20 @@ after_build:
 #  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll"
 
 # Push latest doip.dll with build number as zip
-  - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip-build-$env:appveyor_build_number.dll
-  - 7z a c:\projects\doip.zip c:\projects\doip-build-$env:appveyor_build_number.dll
+  - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip_build_$env:appveyor_build_number.dll
+  - 7z a c:\projects\doip.zip c:\projects\doip_build_$env:appveyor_build_number.dll
   - ps: Push-AppveyorArtifact c:\projects\doip.zip
 
 # Push doip.dll with build number as zip for release candidate or release
   - ps: if($env:APPVEYOR_REPO_TAG) {
       if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
-        7z a c:\projects\doip-candidate.zip c:\projects\doip-build-$env:appveyor_build_number.dll
-        Push-AppveyorArtifact c:\projects\doip-candidate.zip
+        7z a c:\projects\doip_candidate.zip c:\projects\doip_build_$env:appveyor_build_number.dll
+        Push-AppveyorArtifact c:\projects\doip_candidate.zip
         $env:doipcandidate = $true
       }
       elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
-        7z a c:\projects\doip-release.zip c:\projects\doip-build-$env:appveyor_build_number.dll
-        Push-AppveyorArtifact c:\projects\doip-release.zip
+        7z a c:\projects\doip_release.zip c:\projects\doip_build_$env:appveyor_build_number.dll
+        Push-AppveyorArtifact c:\projects\doip_release.zip
         $env:doiprelease = $true
       } }
 #  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
