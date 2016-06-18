@@ -18,6 +18,8 @@
 #include <stdio.h>
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
+#include <CUnit/Console.h>
+#include <CUnit/Automated.h>
 
 #include "tvb-mock.h"
 
@@ -34,14 +36,12 @@ static guint8 doip_header_buffer[] = {
 int
 init_suite_doip_header(void)
 {
-    printf("\ninit_suite()\n");
     return 0;
 }
 
 int
 clean_suite_doip_header(void)
 {
-    printf("\nclean_suite()\n");
     return 0;
 }
 
@@ -92,8 +92,7 @@ main(void)
 
 
     /* add the tests to the suite */
-    if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly)
-        || !CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly))
+    if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly))
     {
         CU_cleanup_registry();
         return CU_get_error();
@@ -102,9 +101,12 @@ main(void)
     /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
+
+    int no_failures  = CU_get_number_of_failures();
+
     CU_cleanup_registry();
 
-    return CU_get_error();
+    return no_failures;
 }
 
 
