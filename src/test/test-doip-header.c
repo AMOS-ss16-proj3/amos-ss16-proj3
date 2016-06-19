@@ -22,24 +22,27 @@
 #include <CUnit/Automated.h>
 
 #include "tvb-mock.h"
+#include "epan/tvbuff.h"
 
 #include "../plugins/doip/doip-header.h"
 
+#include "test-doip-header.h"
 
 
-int
+
+static int
 init_suite_doip_header(void)
 {
     return 0;
 }
 
-int
+static int
 clean_suite_doip_header(void)
 {
     return 0;
 }
 
-void
+static void
 all_header_fields_are_set_correctly(void)
 {
     guint8 doip_header_buffer[] = {
@@ -65,7 +68,7 @@ all_header_fields_are_set_correctly(void)
     destroy_tvb_mock(tvb);
 }
 
-void
+static void
 fill_doip_header_indicates_error_by_return(void)
 {
     const gint BUFFER_SIZE = 8;
@@ -92,15 +95,15 @@ fill_doip_header_indicates_error_by_return(void)
 }
 
 
-int
-main(void)
+CU_pSuite
+add_doip_header_suite(void)
 {
     CU_pSuite pSuite = NULL;
     
     /* initialize the CUnit test registry */
     if(CUE_SUCCESS != CU_initialize_registry())
     {
-        return CU_get_error();
+        return NULL;
     }
 
     /* add a suite to the registry */
@@ -108,32 +111,18 @@ main(void)
     if(!pSuite)
     {
         CU_cleanup_registry();
-        return CU_get_error();
+        return NULL;
     }
 
 
     /* add the tests to the suite */
     if(!CU_add_test(pSuite, "test of doip_header", all_header_fields_are_set_correctly)
-        || !CU_add_test(pSuite, "", fill_doip_header_indicates_error_by_return))
+        || !CU_add_test(pSuite, "fill doip header indicates error by return", fill_doip_header_indicates_error_by_return))
     {
         CU_cleanup_registry();
-        return CU_get_error();
+        return NULL;
     }
 
-    /* Run all tests using the CUnit Basic interface */
-    CU_basic_set_mode(CU_BRM_VERBOSE);
-    CU_basic_run_tests();
-
-    int no_failures  = CU_get_number_of_failures();
-
-    CU_cleanup_registry();
-
-    return no_failures;
+    return pSuite;
 }
-
-
-
-
-
-
 
