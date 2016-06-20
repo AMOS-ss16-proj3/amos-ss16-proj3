@@ -86,7 +86,7 @@ after_build:
   - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip_build$env:appveyor_build_number.dll
   - dir c:\projects
   - $env:appveyor_build_number
-  -ps: 7z a c:\projects\doip.zip c:\projects\doip_build$env:appveyor_build_number.dll
+  - ps: 7z a c:\projects\doip.zip c:\projects\doip_build$env:appveyor_build_number.dll
   - dir c:\projects
   - ps: Push-AppveyorArtifact c:\projects\doip.zip
 
