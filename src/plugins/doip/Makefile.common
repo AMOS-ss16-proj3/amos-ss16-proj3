@@ -51,6 +51,7 @@ NONGENERATED_C_FILES = \
     doip-payload-0007.c \
     doip-payload-0008.c \
     doip-payload-4001.c \
+    doip-payload-4002.c \
     doip-payload-8001.c \
     doip-payload-8002.c \
     doip-payload-8003.c
@@ -72,6 +73,7 @@ CLEAN_HEADER_FILES = \
     doip-payload-0007.h \
     doip-payload-0008.h \
     doip-payload-4001.h \
+    doip-payload-4002.h \
     doip-payload-8001.h \
     doip-payload-8002.h \
     doip-payload-8003.h
