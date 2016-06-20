@@ -9,7 +9,14 @@ environment:
 # script after cloning repo:
 install:
   - echo Install Script now!
-  - cinst winflexbison
+  - mkdir c:\own-download
+  - cd c:\own-download
+  - ps: Invoke-WebRequest -Uri http://downloads.sourceforge.net/project/winflexbison/win_flex_bison-latest.zip?r=&ts=1466424158&use_mirror=tenet
+  - 7z x win_flex_bison-latest.zip
+#  - cinst winflexbison
+  - set Path=c:\own-download\win_flex_bison-latest
+  - win_flex --version
+  - win_bison --version
   - cinst wget
   #- choco install winflexbison
 
