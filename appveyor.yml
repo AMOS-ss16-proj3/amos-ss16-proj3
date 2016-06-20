@@ -18,7 +18,7 @@ install:
   - set Path=c:\own-download\win_flex_bison-2.5.5
   - win_flex --version
   - win_bison --version
-  - cinst wget
+  - choco install wget
   #- choco install winflexbison
 
 platform:
