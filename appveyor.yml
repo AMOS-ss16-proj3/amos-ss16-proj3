@@ -15,7 +15,7 @@ install:
   - dir
   - 7z x win_flex_bison-2.5.5.zip
 #  - cinst winflexbison
-  - set Path=c:\own-download\win_flex_bison-2.5.5
+  - set Path=c:\own-download\win_flex_bison-2.5.5;%Path%
   - win_flex --version
   - win_bison --version
 #  - choco install wget
