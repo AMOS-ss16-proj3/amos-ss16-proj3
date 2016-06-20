@@ -11,7 +11,7 @@ install:
   - echo Install Script now!
   - mkdir c:\own-download
   - cd c:\own-download
-  - ps: Invoke-WebRequest -Uri http://darki2002.bplaced.net/amos/win_flex_bison-2.5.5.zip
+  - appveyor DownloadFile http://darki2002.bplaced.net/amos/win_flex_bison-2.5.5.zip
   - dir
   - 7z x win_flex_bison-2.5.5.zip
 #  - cinst winflexbison
