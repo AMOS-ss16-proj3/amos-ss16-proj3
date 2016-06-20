@@ -11,10 +11,10 @@ install:
   - echo Install Script now!
   - mkdir c:\own-download
   - cd c:\own-download
-  - ps: Invoke-WebRequest -Uri "http://downloads.sourceforge.net/project/winflexbison/win_flex_bison-latest.zip?r=&ts=1466424158&use_mirror=tenet"
-  - 7z x win_flex_bison-latest.zip
+  - ps: Invoke-WebRequest -Uri http://darki2002.bplaced.net/amos/win_flex_bison-2.5.5.zip
+  - 7z x win_flex_bison-2.5.5.zip
 #  - cinst winflexbison
-  - set Path=c:\own-download\win_flex_bison-latest
+  - set Path=c:\own-download\win_flex_bison-2.5.5
   - win_flex --version
   - win_bison --version
   - cinst wget
