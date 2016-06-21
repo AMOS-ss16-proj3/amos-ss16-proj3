@@ -138,7 +138,7 @@ dissect_payload_4002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 
 	tvb = retrieve_tvbuff(header);
 	/* attach a new tree to proto_item pitem */
-	doip_tree = proto_item_add_subtree(pitem, ett_routing_activation_response);
+	doip_tree = proto_item_add_subtree(pitem, ett_doip_status_response);
 
 	/* set info column to description */
 	col_set_str(pinfo->cinfo, COL_INFO, description);
