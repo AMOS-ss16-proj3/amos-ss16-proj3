@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo apt-get install libcunit1-dev
+sudo apt-get install -qy libcunit1-dev
 
 

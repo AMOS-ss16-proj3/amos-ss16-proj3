@@ -15,7 +15,17 @@ install:
     - bash build/prepare_env.sh
 
 script: 
+    - echo "compiling doip-dissector"
     - bash build/plugin.sh
+
+    - echo "preparing unit tests"
+    - build/cunit_install.sh
+    - echo "compiling tests"
+    - make -C ./src/test/
+    - echo "executing tests"
+    - ./src/test/doip-test
+
+after_success:
     # create docker image
     - bash build/prepare_docker.sh
     - docker build -t jufuch/amos-ss16-proj3 ./docker
@@ -24,13 +34,6 @@ script:
     - docker push jufuch/amos-ss16-proj3:latest
     - docker logout
     - bash deploy/deploytrigger.sh
-
-after_success:
-    - build/cunit_install.sh
-    - echo "compiling tests"
-    - make -C ./src/test/
-    - echo "executing tests"
-    - ./src/test/doip-test
 
 
 
