@@ -101,10 +101,10 @@ after_build:
 # Prepare for deployment of candidate and release
   - ps: cp c:\projects\doip_build$env:appveyor_build_number.dll c:\projects\doip_candidate_build$env:appveyor_build_number.dll
   - dir c:\projects
-  - ps: 7z a c:\projects\doip_candidate.zip c:\projects\doip_candidate_build_$env:appveyor_build_number.dll
+  - ps: 7z a c:\projects\doip_candidate.zip c:\projects\doip_candidate_build$env:appveyor_build_number.dll
   - ps: cp c:\projects\doip_build$env:appveyor_build_number.dll c:\projects\doip_release_build$env:appveyor_build_number.dll
   - dir c:\projects
-  - ps: 7z a c:\projects\doip_release.zip c:\projects\doip_release_build_$env:appveyor_build_number.dll
+  - ps: 7z a c:\projects\doip_release.zip c:\projects\doip_release_build$env:appveyor_build_number.dll
 
 # Push doip.dll with build number as zip for release candidate or release
   - ps: if($env:APPVEYOR_REPO_TAG) {
