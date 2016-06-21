@@ -9,13 +9,25 @@ compiler:
     - gcc
 
 before_install:
-    - sudo apt-get -qy update
+    - build/update_env.sh
 
 install: 
     - bash build/prepare_env.sh
 
 script: 
+    - echo "compiling doip-dissector"
     - bash build/plugin.sh
+
+    - echo "preparing unit tests"
+    - build/cunit_install.sh
+    - echo "checking whether cunit has been installed properly or not"
+    - /sbin/ldconfig -p | grep cunit
+    - echo "compiling tests"
+    - make -C ./src/test/
+    - echo "executing tests"
+    - ./src/test/bin/doip-test
+
+after_success:
     # create docker image
     - bash build/prepare_docker.sh
     - docker build -t jufuch/amos-ss16-proj3 ./docker
@@ -24,7 +36,6 @@ script:
     - docker push jufuch/amos-ss16-proj3:latest
     - docker logout
     - bash deploy/deploytrigger.sh
-
 
 
 

@@ -18,7 +18,9 @@
 #include "config.h"
 #include <stdlib.h>
 #include <stdio.h>
+/*
 #include <epan/packet.h>
+*/
 #include <epan/tvbuff.h>
 
 #include "doip-header.h"
@@ -45,7 +47,7 @@ const gint DOIP_HEADER_LENGTH = 8;
  *  FALSE if an overflow or any other error occured
  */
 static inline gboolean
-message_byte_offset_to_tvb_bit_offset(gint , gint *);
+message_byte_offset_to_tvb_bit_offset(guint , guint *);
 
 
 
@@ -60,7 +62,7 @@ message_byte_offset_to_tvb_bit_offset(gint , gint *);
  *  FALSE if an overflow or any other error occured
  */ 
 static inline gboolean
-message_byte_offset_to_tvb_byte_offset(gint msg_offset, gint *tvb_byte_offset);
+message_byte_offset_to_tvb_byte_offset(guint msg_offset, guint *tvb_byte_offset);
 
 /* reads proto_version from tvbuff_t and 
  * writes it into doip_header
@@ -273,12 +275,12 @@ get_guint64_from_message(const doip_header *header, guint64 *i, gint offset)
 
 
 static inline gboolean
-message_byte_offset_to_tvb_bit_offset(gint msg_offset, gint *tvb_bit_offset)
+message_byte_offset_to_tvb_bit_offset(guint msg_offset, guint *tvb_bit_offset)
 {
     /* three left shifts are equivalent to multiplication by eight */
     guint BIT_SHIFTER = 3;
-    gint tvb_byte_offset;
-    gint bit_offset;
+    guint tvb_byte_offset;
+    guint bit_offset;
     gboolean overflow;
 
     if(message_byte_offset_to_tvb_byte_offset(msg_offset, &tvb_byte_offset))
@@ -302,10 +304,10 @@ message_byte_offset_to_tvb_bit_offset(gint msg_offset, gint *tvb_bit_offset)
 }
 
 gboolean
-message_byte_offset_to_tvb_byte_offset(gint msg_offset, gint *tvb_byte_offset)
+message_byte_offset_to_tvb_byte_offset(guint msg_offset, guint *tvb_byte_offset)
 {
     gboolean overflow;
-    gint offset;
+    guint offset;
 
     offset = msg_offset + DOIP_HEADER_LENGTH;
     overflow = offset < msg_offset;

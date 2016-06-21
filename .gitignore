@@ -19,3 +19,9 @@ lua
 # deploy
 deploy/deployvars.sh
 
+# ignore object-files
+src/**/*.o
+
+# ignore compiled files
+src/test/bin/
+
