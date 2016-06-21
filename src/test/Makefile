@@ -7,14 +7,19 @@ HEADER_DIRS = -I. -I$(MOCKDIR)
 
 CC = gcc $(W) $(CFLAGS) $(HEADER_DIRS) -g
 
+BIN = ./bin
+
 CUNIT = -lcunit
 
 RM = rm -rf
 
-all: doip-test
+all: $(BIN)/doip-test
 
 clean: ; \
-    $(RM) tvbuff.o tvbmock.o doip-header.o test-doip-header.o doip-test
+    $(RM) tvbuff.o tvbmock.o doip-header.o test-doip-header.o $(BIN)/doip-test
+
+$(BIN): ; \
+    mkdir --parents $(BIN)
 
 tvbuff.o: $(MOCKDIR)/epan/tvbuff.c $(MOCKDIR)/epan/tvbuff.h ; \
     $(CC) -c $(MOCKDIR)/epan/tvbuff.c -o $@
@@ -31,6 +36,6 @@ test: tvbuff.o doip-header.o tvbmock.o test.c; \
 test-doip-header.o: test-doip-header.c ; \
     $(CC) -c $(CUNIT) $^ -o $@
 
-doip-test: doip-test.c doip-header.o test-doip-header.o tvbuff.o tvbmock.o  ; \
+$(BIN)/doip-test: $(BIN) doip-test.c doip-header.o test-doip-header.o tvbuff.o tvbmock.o  ; \
     $(CC) $(CUNIT) doip-test.c doip-header.o test-doip-header.o tvbuff.o tvbmock.o  -o $@
 

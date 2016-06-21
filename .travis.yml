@@ -23,7 +23,7 @@ script:
     - echo "compiling tests"
     - make -C ./src/test/
     - echo "executing tests"
-    - ./src/test/doip-test
+    - ./src/test/bin/doip-test
 
 after_success:
     # create docker image
