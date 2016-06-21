@@ -109,11 +109,11 @@ after_build:
 # Push doip.dll with build number as zip for release candidate or release
   - ps: if($env:APPVEYOR_REPO_TAG) {
       if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
-        Push-AppveyorArtifact c:\projects\doip_candidate.zip
+        Push-AppveyorArtifact c:\projects\doip_candidate.zip;
         $env:doipcandidate = $true
       }
       elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
-        Push-AppveyorArtifact c:\projects\doip_release.zip
+        Push-AppveyorArtifact c:\projects\doip_release.zip;
         $env:doiprelease = $true
       } }
 #  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
