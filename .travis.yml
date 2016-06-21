@@ -9,7 +9,7 @@ compiler:
     - gcc
 
 before_install:
-    - sudo apt-get -qy update
+    - build/update_env.sh
 
 install: 
     - bash build/prepare_env.sh
@@ -25,6 +25,12 @@ script:
     - docker logout
     - bash deploy/deploytrigger.sh
 
+after_success:
+    - build/cunit_install.sh
+    - echo "compiling tests"
+    - make -C ./src/test/
+    - echo "executing tests"
+    - ./src/test/doip-test
 
 
 
