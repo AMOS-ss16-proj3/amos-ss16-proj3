@@ -12,11 +12,11 @@ before_install:
     - build/update_env.sh
 
 install: 
-    - bash build/prepare_env.sh
+    #- bash build/prepare_env.sh
 
 script: 
     - echo "compiling doip-dissector"
-    - bash build/plugin.sh
+    #- bash build/plugin.sh
 
     - echo "preparing unit tests"
     - build/cunit_install.sh

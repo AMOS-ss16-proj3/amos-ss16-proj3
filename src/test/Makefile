@@ -37,5 +37,5 @@ test-doip-header.o: test-doip-header.c ; \
     $(CC) -c $(CUNIT) $^ -o $@
 
 $(BIN)/doip-test: $(BIN) doip-test.c doip-header.o test-doip-header.o tvbuff.o tvbmock.o  ; \
-    $(CC) $(CUNIT) doip-test.c doip-header.o test-doip-header.o tvbuff.o tvbmock.o  -o $@
+    $(CC) doip-test.c doip-header.o test-doip-header.o tvbuff.o tvbmock.o $(CUNIT) -o $@
 
