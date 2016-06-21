@@ -98,15 +98,19 @@ after_build:
   - dir c:\projects
   - ps: Push-AppveyorArtifact c:\projects\doip.zip
 
+# Prepare for deployment of candidate and release
+  - ps: mv c:\projects\doip_build$env:appveyor_build_number.dll c:\projects\doip_candidate_build$env:appveyor_build_number.dll
+  - ps: 7z a c:\projects\doip_candidate.zip c:\projects\doip_candidate_build_$env:appveyor_build_number.dll
+  - ps: mv c:\projects\doip_candidate_build$env:appveyor_build_number.dll c:\projects\doip_release_build$env:appveyor_build_number.dll
+  - ps: 7z a c:\projects\doip_release.zip c:\projects\doip_release_build_$env:appveyor_build_number.dll
+
 # Push doip.dll with build number as zip for release candidate or release
   - ps: if($env:APPVEYOR_REPO_TAG) {
       if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
-        7z a c:\projects\doip_candidate.zip c:\projects\doip_build_$env:appveyor_build_number.dll
         Push-AppveyorArtifact c:\projects\doip_candidate.zip
         $env:doipcandidate = $true
       }
       elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
-        7z a c:\projects\doip_release.zip c:\projects\doip_build_$env:appveyor_build_number.dll
         Push-AppveyorArtifact c:\projects\doip_release.zip
         $env:doiprelease = $true
       } }
