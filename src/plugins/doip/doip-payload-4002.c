@@ -24,10 +24,13 @@
 
 /* Node type */
 static gint hf_nd = -1;
+
 /* Max. concurrent TCP_DATA sockets*/
 static gint hf_mcts = -1;
+
 /* Currently open TCP_DATA sockets*/
 static gint hf_ncts = -1;
+
 /* Max. data size*/
 static gint hf_mds = -1;
 
@@ -46,81 +49,83 @@ static const range_string node_types[] = {
 };
 
 static void
-fill_tree(proto_tree *, tvbuff_t *);
+fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 
 void
 register_proto_doip_payload_4002(gint proto_doip)
 {
-	/** All "DoIP payload 0x4002" items are described at
-	* ISO 13400-2:2012(E) Table 37
-	*/
-	static hf_register_info hf[] =
+    /** All "DoIP payload 0x4002" items are described at
+    * ISO 13400-2:2012(E) Table 37
+    */
+    static hf_register_info hf[] =
+    {
+	/*prepare info for the header field based on ISO 13400 - 2:2012(E)*/
 	{
-		/*prepare info for the header field based on ISO 13400 - 2:2012(E)*/
-		{
-			&hf_nd,
-			{
-			"Node type",
-			"doip.payload.nd",
-			FT_UINT16,
-			BASE_HEX | BASE_RANGE_STRING,
-			RVALS(node_types),
-			0x0,
-			"Identifies whether the contaced DoIP instance is either a DoIP node or a DoIP gateway.",
-			HFILL
-			}
-		},
-		{
-			&hf_mcts,
-			{
-			"Max. concurrent TCP_DATA sockets",
-			"doip.payload.mcts",
-			FT_UINT8,
-			BASE_DEC,
-			NULL,
-			0x0,
-			"Represents the maximum number of concurrent TCP_DATA sockets allowed with this DoIP entity, excluding the reserve socket required for socket handling.",
-			HFILL
-			}
-		},
-		{
-			&hf_ncts,
-			{
-			"Currently open TCP_DATA sockets",
-			"doip.routing.payload.ncts",
-			FT_UINT8,
-			BASE_DEC,
-			NULL,
-			0x0,
-			"Number of currently established sockets.",
-			HFILL
-			}
-		},
-		{
-			&hf_mds,
-			{
-			"Max. data size",
-			"doip.payload.mds",
-			FT_UINT32,
-			BASE_DEC,
-			NULL,
-			0x0,
-			"Maximum size of one logical request that this DoIP entity can process.",
-			HFILL
-			}
-		}
-	};
+	    &hf_nd,
+	    {
+		"Node type",
+		"doip.payload.nd",
+		FT_UINT16,
+		BASE_HEX | BASE_RANGE_STRING,
+		RVALS(node_types),
+		0x0,
+		"Identifies whether the contaced DoIP instance is either a DoIP node or a DoIP gateway.",
+		HFILL
+	    }
+	},
+	{
+	    &hf_mcts,
+	    {
+		"Max. concurrent TCP_DATA sockets",
+		"doip.payload.mcts",
+		FT_UINT8,
+		BASE_DEC,
+		NULL,
+		0x0,
+		"Represents the maximum number of concurrent TCP_DATA sockets allowed with this DoIP entity, excluding the reserve socket required for socket handling.",
+		HFILL
+	    }
+	},
+	{
+	    &hf_ncts,
+	    {
+		"Currently open TCP_DATA sockets",
+		"doip.routing.payload.ncts",
+		FT_UINT8,
+		BASE_DEC,
+		NULL,
+		0x0,
+		"Number of currently established sockets.",
+		HFILL
+	    }
+	},
+	{
+	    &hf_mds,
+	    {
+	        "Max. data size",
+	        "doip.payload.mds",
+	        FT_UINT32,
+	        BASE_DEC,
+		NULL,
+		0x0,
+		"Maximum size of one logical request that this DoIP entity can process.",
+		HFILL
+	    }
+	}
+    };
 
 	static gint *ett[] =
 	{
 		&ett_doip_status_response,
 	};
-
+        
+        /* one-time registration after Wireshark is started */
 	proto_register_field_array(proto_doip, hf, array_length(hf));
 	proto_register_subtree_array(ett, array_length(ett));
 }
 
+/* After a doip row is selected in Wireshark */
 void
 dissect_payload_4002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
@@ -137,7 +142,7 @@ dissect_payload_4002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 	/* check for a valid tvbuff_t */
 	if (doip_tree && tvb)
 	{
-		fill_tree(doip_tree, tvb);
+	    fill_tree(doip_tree, tvb);
 	}
 }
 
@@ -164,15 +169,15 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 	const gint REL_MDS_POS = 3;
 	const gint MDS_LEN = 4;
 
-	gboolean mds_sync_is_present = ((gint)payloadLength) >= (REL_MDS_POS + MDS_LEN);
+	gboolean mds_is_present = ((gint)payloadLength) >= (REL_MDS_POS + MDS_LEN);
 
 	insert_item_to_tree(tree, hf_nd, tvb, REL_ND_POS, ND_LEN, ENC_BIG_ENDIAN);
 	insert_item_to_tree(tree, hf_mcts, tvb, REL_MCTS_POS, MCTS_LEN, ENC_BIG_ENDIAN);
 	insert_item_to_tree(tree, hf_ncts, tvb, REL_NCTS_POS, NCTS_LEN, ENC_BIG_ENDIAN);
 	/* only insert this item if needed, since it is optional */
-	if (mds_sync_is_present)
+	if (mds_is_present)
 	{
-		insert_item_to_tree(tree, hf_mds, tvb, REL_MDS_POS, MDS_LEN, ENC_BIG_ENDIAN);
+	    insert_item_to_tree(tree, hf_mds, tvb, REL_MDS_POS, MDS_LEN, ENC_BIG_ENDIAN);
 	}
 }
 
