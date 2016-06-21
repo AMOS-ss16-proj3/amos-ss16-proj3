@@ -94,9 +94,9 @@ after_build:
   - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip_build$env:appveyor_build_number.dll
   - dir c:\projects
   - ps: $env:appveyor_build_number
-  - ps: 7z a c:\projects\doip.zip c:\projects\doip_build$env:appveyor_build_number.dll
+  - ps: 7z a c:\projects\doip_latest.zip c:\projects\doip_build$env:appveyor_build_number.dll
   - dir c:\projects
-  - ps: Push-AppveyorArtifact c:\projects\doip.zip
+  - ps: Push-AppveyorArtifact c:\projects\doip_latest.zip
 
 # Prepare for deployment of candidate and release
   - ps: cp c:\projects\doip_build$env:appveyor_build_number.dll c:\projects\doip_candidate_build$env:appveyor_build_number.dll
@@ -127,8 +127,8 @@ on_failure:
   #- dir c:\projects\wiresharkBuild\plugins
   #- dir c:\projects\wiresharkBuild\plugins\gryphon
   #- msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
-  - echo FAILURE warum nur.... aber mal versuchen das Plugin zu pushen:
-  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
+  - echo FAILURE! Nothing will be done.
+#  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
   #- 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
   #- appveyor PushArtifact myapp.zipi
 
