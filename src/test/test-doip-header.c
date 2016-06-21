@@ -49,7 +49,7 @@ all_header_fields_are_set_correctly(void)
         0x02, /* proto_version */
         0xFD, /* inverse proto_version */
         0x43, 0x21, /* payload type == 0x4321 */
-        0x22, 0x34, 0x56, 0x78 /* payload length == 0x12345678 */
+        0x12, 0x34, 0x56, 0x78 /* payload length == 0x12345678 */
     };
 
     doip_header header;
