@@ -36,6 +36,9 @@ static gint hf_mds = -1;
 
 static gint ett_doip_status_response = -1;
 
+static void
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength);
+
 static const gchar *description = "DoIP status response";
 
 /** Values are defined in ISO 13400-2:2012(E)
@@ -47,9 +50,6 @@ static const range_string node_types[] = {
 	{ 0x02, 0xFF, "reserved by this part of ISO 13400" },
 	{ 0x00, 0x00, NULL }
 };
-
-static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 
 void
@@ -131,6 +131,10 @@ dissect_payload_4002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
 	tvbuff_t *tvb;
 	proto_tree *doip_tree;
+        guint32 payloadLength;
+
+        /* get the length of the payload */
+        payloadLength = header->payload.length;
 
 	tvb = retrieve_tvbuff(header);
 	/* attach a new tree to proto_item pitem */
@@ -142,12 +146,12 @@ dissect_payload_4002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 	/* check for a valid tvbuff_t */
 	if (doip_tree && tvb)
 	{
-	    fill_tree(doip_tree, tvb);
+	    fill_tree(doip_tree, tvb, payloadLength);
 	}
 }
 
 static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb)
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 {
 	/* Values taken from ISO 13400-2:2012(E) table 37
 	*
@@ -169,7 +173,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
 	const gint REL_MDS_POS = 3;
 	const gint MDS_LEN = 4;
 
-	gboolean mds_is_present = ((gint)payloadLength) >= (REL_MDS_POS + MDS_LEN);
+	gboolean mds_is_present = ((gint) payloadLength) >= (REL_MDS_POS + MDS_LEN);
 
 	insert_item_to_tree(tree, hf_nd, tvb, REL_ND_POS, ND_LEN, ENC_BIG_ENDIAN);
 	insert_item_to_tree(tree, hf_mcts, tvb, REL_MCTS_POS, MCTS_LEN, ENC_BIG_ENDIAN);
