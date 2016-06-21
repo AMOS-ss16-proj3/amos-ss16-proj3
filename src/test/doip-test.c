@@ -32,7 +32,6 @@ main(void)
 
     CU_pSuite (*test_functions[])(void) =
     {
-        add_doip_header_suite,
         add_doip_header_suite
     };
 
