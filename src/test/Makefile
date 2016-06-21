@@ -9,7 +9,7 @@ CC = gcc $(W) $(CFLAGS) $(HEADER_DIRS) -g
 
 BIN = ./bin
 
-CUNIT = -lcunit
+CUNIT = -L/usr/lib -lcunit
 
 RM = rm -rf
 
