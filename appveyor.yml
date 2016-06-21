@@ -145,7 +145,7 @@ deploy:
 - provider: Environment
   name: ftp-release
   on:
-    doiprelase: true
+    doiprelease: true
      
 #  - ps: if($env:APPVEYOR_REPO_TAG) {
 #      if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
