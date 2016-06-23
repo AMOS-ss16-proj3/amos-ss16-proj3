@@ -69,21 +69,25 @@ Windows 7 X64:
 	-> ERRORs occured, but it seems to work any way...
 6.) choco install cygwin
 7.) choco install cyg-get
-/*
-8.) cyg-get sed perl patch asciidoc docbook-xml45
-	-> ERROR: cygwin not installed...
-	solving seems not to be trivial, so I switched to the standard cygwin installer after some research
-*/
+	
+	/*
+	8.) cyg-get sed perl patch asciidoc docbook-xml45
+		-> ERROR: cygwin not installed...
+		solving seems not to be trivial, so I switched to the standard cygwin installer after some research
+	*/
+
 8.) Download cygwin setup-x86_64.exe and run it from commandline:
 	path_to_file\setup-x86_64.exe -q -P sed
 	and do the same for: perl,patch,asciidoc,docbook-xml45
 9.) choco install winflexbison
 	-> downloading winflexbison 32 bit (???)
-/*
-10.) choco install python2
-	-> ERROR: Exit code 1603
-	switch to manual install, see below
-*/
+	
+	/*
+	10.) choco install python2
+		-> ERROR: Exit code 1603
+		switch to manual install, see below
+	*/
+
 10.) manually download and install python (python.org/downloads/release/python-2711
 	2.7.11 Windows x86-64 MSI installer (with switch: add python.exe to path)
 11.) choco install git
@@ -99,7 +103,22 @@ Windows 7 X64:
 	> set QT5_BASE_DIR=C:\Qt\5.5\msvc2013_64
 
 	> set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
-17.) TODO add own plugin sources
-18.) cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" ..\wireshark
-19.) msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
----> Wireshark build without errors, but unchecked yet
+
+17.) git clone https://github.com/AMOS-ss16-proj3/amos-ss16-proj3.git
+18.) copy content of amos-ss16-proj3\src\plugins to wireshark\plugins
+19.) add doip to CmakeLists.txt
+20.) cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" ..\wireshark
+21.) msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
+
+	-> Build failed with both, the whole wireshark and with msbuild .\doip\doip.vcxproj because of an Error in Payload type 8001 (solved now)
+
+Problems:
+VS does not provide logging by default
+-> try do compile in the vs gui
+
+nothing changed -> back to console
+
+-> github issue x7 -> missing 8001 in cmakelists.txt
+-> compiling again
+
+---> Wireshark and plugin builds without errors. The resulting plugin works with the compiles wireshark version, but not with the one from the Homepage!! Therefore the upload of an portable, self-compiled wireshark is planned.
