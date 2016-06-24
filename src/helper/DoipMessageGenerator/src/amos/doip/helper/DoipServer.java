@@ -12,21 +12,26 @@ public class DoipServer implements Runnable {
     
     @Override
     public void run() {
-        
+        ServerSocket s = null;
         try {
-            ServerSocket s = new ServerSocket(DOIP_PORT);
-            Socket con = null; 
-            while((con = s.accept()) != null) {
-                handleConnection(con);
-            }
+            s = new ServerSocket(DOIP_PORT);
+            Socket con = s.accept();
+        
+            handleConnection(con);
+            
         } catch (IOException e) {
             e.printStackTrace();
+        }finally{
+            if(s != null){
+                try{s.close();}catch(IOException e){}
+            }
         }
     }
     
     private void handleConnection(Socket s) throws IOException{
         InputStream stream = s.getInputStream();
-        while(stream.read() != -1);
+        int read = 0;
+        while((read = stream.read()) != -1)System.out.println((byte)read);
         s.close();
     }
 

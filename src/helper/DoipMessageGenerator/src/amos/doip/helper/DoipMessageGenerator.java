@@ -1,32 +1,35 @@
 package amos.doip.helper;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class DoipMessageGenerator {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
 
-        DoipMessage msg = new DoipMessage(1, new byte[]{0x04});
+        DoipMessage dmsg = new DoipMessage(1, new byte[]{0x04});
         
-        byte[] foo = msg.toByteArray();
+        byte[] msg = dmsg.toByteArray();
+        
+        List<byte[]> msgs = new LinkedList<byte[]>();
+        msgs.add(msg);
         
         
-        /*
         Thread server = new Thread(new DoipServer());
-        Thread client = new Thread(new DoipClient());
+        Thread client = new Thread(new DoipClient("localhost" ,13400, msgs));
         
         server.start();
         client.start();
         
         try {
             
-            server.interrupt();
             server.join();
             client.join();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        */
+        
         
     }
 
