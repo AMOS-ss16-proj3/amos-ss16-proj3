@@ -16,10 +16,36 @@ public class DoipHeader {
     public byte[] toByteArray() {
         
         byte[] header = new byte[BASIC_HEADER.length];
-        for(int i = 0; i < BASIC_HEADER.length; i += 1){
-            header[i] = (byte) ((BASIC_HEADER[i] << 16) >> 16);
-        }
+        System.arraycopy(BASIC_HEADER, 0, header, 0, BASIC_HEADER.length);
+        
+        setPayloadType(payloadType, header);
+        setPayloadLength(payload.length, header);
         
         return header;
+    }
+    
+    public static void setPayloadType(int payloadType, byte[] header){
+        final int TYPE_INDEX = 2;
+        
+        byte[] typeParts = new byte[]{
+            (byte) (payloadType >> 8),
+            (byte) payloadType
+        };
+        
+        System.arraycopy(typeParts, 0, header, TYPE_INDEX, typeParts.length);
+    }
+    
+    public static void setPayloadLength(int length, byte[] header){
+        
+        final int LENGTH_INDEX = 4;
+        
+        byte[] lengthParts = new byte[]{
+            (byte) (length >> 24),
+            (byte) (length >> 16),
+            (byte) (length >> 8),
+            (byte) length
+        };
+        
+        System.arraycopy(lengthParts, 0, header, LENGTH_INDEX, lengthParts.length);
     }
 }
