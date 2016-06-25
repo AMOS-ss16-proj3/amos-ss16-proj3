@@ -68,7 +68,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     proto_item *ti;
     /*proto_tree *doip_tree;*/
 
-    printf("tvb: %#x\t pinfo: %#x\t tree: %#x\n", (uint)tvb, (uint)pinfo, (uint)tree);
+    printf("tvb: %p\t pinfo: %p\t tree: %p\n", tvb, pinfo, tree);
 
     if(pinfo)
     {
@@ -82,12 +82,15 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
             /* Create sub-tree which can be used for inserting proto-items */
             ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
 
+            printf("before visualize doip header\n");
             /* append all doip-header infos to proto-item */
             visualize_doip_header(&header, ti);
 
             /* find a handler suited for the given doip-type (header->payload.type) */
+            printf("before find matching payload handler\n");
             handler = find_matching_payload_handler(&header);
 
+            printf("payload handler: %p\n", handler);
             if(handler)
             {
                 handler(&header, ti, pinfo);
