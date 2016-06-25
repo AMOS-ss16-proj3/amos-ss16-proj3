@@ -20,6 +20,7 @@
 #include <epan/proto.h>
 
 #include "doip-header.h"
+#include "doip-helper.h"
 #include "doip-payload-4003.h"
 
 /* Diagnostic power mode */
