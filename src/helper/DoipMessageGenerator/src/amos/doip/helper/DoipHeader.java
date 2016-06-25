@@ -3,7 +3,8 @@ package amos.doip.helper;
 
 public class DoipHeader {
     
-    public final byte[] BASIC_HEADER = new byte[] {0x02, (byte)0xFE, 0, 0, 0, 0, 0, 0};
+    public final static byte PROTO_VERSION = 0x02;
+    public final byte[] BASIC_HEADER = new byte[] {PROTO_VERSION, 0, 0, 0, 0, 0, 0, 0};
     
     private final int payloadType;
     private final byte[] payload;
@@ -18,6 +19,7 @@ public class DoipHeader {
         byte[] header = new byte[BASIC_HEADER.length];
         System.arraycopy(BASIC_HEADER, 0, header, 0, BASIC_HEADER.length);
         
+        setInverseProtoVersion(header);
         setPayloadType(payloadType, header);
         setPayloadLength(payload.length, header);
         
@@ -33,6 +35,12 @@ public class DoipHeader {
         };
         
         System.arraycopy(typeParts, 0, header, TYPE_INDEX, typeParts.length);
+    }
+
+    public static void setInverseProtoVersion(byte[] header){
+        final int INDEX = 1;
+        byte inverseVersion = PROTO_VERSION ^ ((byte) 0xFF);
+        header[INDEX] = inverseVersion;
     }
     
     public static void setPayloadLength(int length, byte[] header){
