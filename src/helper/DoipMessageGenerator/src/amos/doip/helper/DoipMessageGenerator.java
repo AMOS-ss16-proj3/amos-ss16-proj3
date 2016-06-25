@@ -8,12 +8,15 @@ public class DoipMessageGenerator {
     public static void main(String[] args) {
         // TODO Auto-generated method stub
 
-        DoipMessage dmsg = new DoipMessage(1, new byte[]{0x04});
+        DoipMessage dmsg1 = new DoipMessage(1, new byte[]{0x04});
+        DoipMessage dmsg2 = new DoipMessage(0x8001, new byte[]{0x03, (byte)0x80, (byte)0xe4,0x00, 0x3e, (byte)0x80});
         
-        byte[] msg = dmsg.toByteArray();
+        byte[] msg1 = dmsg1.toByteArray();
+        byte[] msg2 = dmsg2.toByteArray();
         
         List<byte[]> msgs = new LinkedList<byte[]>();
-        msgs.add(msg);
+        //msgs.add(msg1);
+        msgs.add(msg2);
         
         
         Thread server = new Thread(new DoipServer());
