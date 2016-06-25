@@ -68,6 +68,8 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     proto_item *ti;
     /*proto_tree *doip_tree;*/
 
+    printf("tvb: %#x\t pinfo: %#x\t tree: %#x\n", (uint)tvb, (uint)pinfo, (uint)tree);
+
     if(pinfo)
     {
         col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
