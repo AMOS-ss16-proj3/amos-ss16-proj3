@@ -108,7 +108,12 @@ public class DoipMessageGenerator {
 
         /* 0x0007 - Alive check request */
         new DoipMessage(0x0007, new byte[]{}),
-        /* 0x0007 - Alive check response */
+
+        /* 0x0008 - Alive check response */
+        new DoipMessage(0x0008, new byte[]{
+            // source address
+            (byte) 0xAC, (byte) 0xDC
+        }),
 
         /* 0x4001 - Doip entity status request */
         /* 0x4001 - Doip entity status response */
