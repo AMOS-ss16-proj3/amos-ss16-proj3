@@ -50,7 +50,7 @@ public class DoipMessageGenerator {
             /* VIN */
             '1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7',
             /* Logical address */ 
-            (byte) 0x13, (byte)0x37,
+            (byte) 0x00, (byte)0x01,
             /* EID */
             0x00, 0x11, 0x22, 0x33, 0x44, 0x55,
             /* GID */
@@ -61,8 +61,44 @@ public class DoipMessageGenerator {
             0x00
         }),
 
-        /* 0x8001 - */
+        /* 0x0005 - Routing activation request */
+        new DoipMessage(0x0005, new byte[]{
+            // source address
+            0x00, 0x01,
+            // activation type
+            0x00,
+            // reserved by iso
+            0x00, 0x00, 0x00, 0x00
+        }),
+        new DoipMessage(0x0005, new byte[]{
+            // source address
+            0x00, 0x01,
+            // activation type
+            0x00,
+            // reserved by iso
+            0x00, 0x00, 0x00, 0x00,
+            // reserved for oem specific use
+            0x12, 0x23, 0x34, 0x45
+        }),
+
+        /* 0x0006 - Routing activation response */
+
+        /* 0x0007 - Alive check request */
+        /* 0x0007 - Alive check response */
+
+        /* 0x4001 - Doip entity status request */
+        /* 0x4001 - Doip entity status response */
+
+        /* 0x4003 - Diagnostic power mode information request */
+        /* 0x4003 - Diagnostic power mode information response */
+
+
+        /* 0x8001 - Diagnostic message */
         new DoipMessage(0x8001, new byte[]{0x03, (byte)0x80, (byte)0xe4,0x00, 0x3e, (byte)0x80})
+
+        /* 0x8002 Diagnostic message positive ack */
+        /* 0x8003 Diagnostic message negative ack */
+
     };
         
     public static void main(String[] args) {
