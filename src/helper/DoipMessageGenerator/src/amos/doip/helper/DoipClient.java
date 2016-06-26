@@ -7,41 +7,45 @@ import java.util.List;
 
 public class DoipClient implements Runnable {
     
-    private final List<byte[]> messageBacklog;
+    private final List<byte[]> msgBacklog;
     private final String host;
     private final int port;
     
     public DoipClient(String host, int port, List<byte[]> msgs){
         this.host = host;
         this.port = port;
-        messageBacklog = msgs;
+        msgBacklog = msgs;
     }
 
     @Override
     public void run() {
 
         Socket con = null;
-        try{
-            con = new Socket(host, port);
-            OutputStream os = con.getOutputStream();
-            
-            sendMessages(os);
-            
-        } catch (IOException e){
-            e.printStackTrace();
-        } finally{
-            if(con != null){
-                try{con.close();}catch(IOException e){}
+        for(byte[] msg : msgBacklog){
+            try{
+                con = null;
+                con = openConnection();
+                OutputStream os = con.getOutputStream();
+                
+                sendMsg(os, msg);
+                
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally{
+                if(con != null){
+                    try{con.close();}catch(IOException e){}
+                }
             }
         }
-        
+    }
+
+    private Socket openConnection() throws IOException {
+        Socket s = new Socket(host, port);
+        return s;
     }
     
-    private void sendMessages(OutputStream stream) throws IOException{
-        for(byte[] msg : messageBacklog){
-
-            stream.write(msg, 0, msg.length);
-        }
+    private void sendMsg(OutputStream stream, byte[] msg) throws IOException{
+        stream.write(msg, 0, msg.length);
     }
 
 }
