@@ -21,7 +21,7 @@
 
 #include "doip-header.h"
 #include "doip-helper.h"
-#include "doip-payload-4003.h"
+#include "doip-payload-4004.h"
 
 /* Diagnostic power mode */
 static gint hf_diag_power_mode = -1;
@@ -44,9 +44,9 @@ static const range_string power_mode_values[] = {
 	{ 0x00, 0x00, NULL }
 };
 
-/* values which will be displayed for payload type 4003 in proto_tree */
+/* values which will be displayed for payload type 4004 in proto_tree */
 void
-register_proto_doip_payload_4003(gint proto_doip)
+register_proto_doip_payload_4004(gint proto_doip)
 {
 	static hf_register_info hf[] =
 	{
@@ -79,7 +79,7 @@ register_proto_doip_payload_4003(gint proto_doip)
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_4003(doip_header *header, proto_item *pitem, packet_info *pinfo)
+dissect_payload_4004(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
 	tvbuff_t *tvb;
 	proto_tree *doip_tree;

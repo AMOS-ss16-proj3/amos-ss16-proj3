@@ -15,17 +15,17 @@
 * limitations under the License.
 */
 
-#ifndef __DOIP_PAYLOAD_4004_H
-#define __DOIP_PAYLOAD_4004_H
+#ifndef __DOIP_PAYLOAD_4003_H
+#define __DOIP_PAYLOAD_4003_H
 
 #include "doip-header.h"
 
 void
-register_proto_doip_payload_4004(gint);
+register_proto_doip_payload_4003(gint);
 
 void
-dissect_payload_4004(doip_header *, proto_item *, packet_info *pinfo);
+dissect_payload_4003(doip_header *, proto_item *, packet_info *pinfo);
 
-#endif /* __DOIP_PAYLOAD_4004_H */
+#endif /* __DOIP_PAYLOAD_4003_H */
 
 
