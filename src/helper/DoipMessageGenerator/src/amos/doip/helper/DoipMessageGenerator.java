@@ -119,7 +119,24 @@ public class DoipMessageGenerator {
         new DoipMessage(0x4001, new byte[]{}),
 
         /* 0x4002 - Doip entity status response */
-        //new DoipMessage(0x4002, new byte[]{}),
+        new DoipMessage(0x4002, new byte[]{
+            // node type
+            0x00,
+            // max. concurrent tcp_data sockets (MCTS)
+            (byte) 123,
+            // currently open TCP_data sockets (NCTS)
+            (byte) 42
+        }),
+        new DoipMessage(0x4002, new byte[]{
+            // node type
+            0x00,
+            // max. concurrent tcp_data sockets (MCTS)
+            (byte) 123,
+            // currently open TCP_data sockets (NCTS)
+            (byte) 42,
+            // max 
+            (byte) 0xFF, (byte) 0xEE, (byte) 0xDD, (byte) 0xCC
+        }),
 
         /* 0x4003 - Diagnostic power mode information request */
         new DoipMessage(0x4003, new byte[]{}),
