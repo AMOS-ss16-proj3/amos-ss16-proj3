@@ -79,6 +79,9 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     {
         if(fill_doip_header(&header, tvb))
         {
+            print_doip_header(DEBUG_OUTPUT, &header);
+
+
             /* Create sub-tree which can be used for inserting proto-items */
             ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
 
