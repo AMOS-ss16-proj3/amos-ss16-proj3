@@ -80,8 +80,31 @@ public class DoipMessageGenerator {
             // reserved for oem specific use
             0x12, 0x23, 0x34, 0x45
         }),
-
+        
         /* 0x0006 - Routing activation response */
+        new DoipMessage(0x0006, new byte[]{
+            // logical address of external test equipment
+            0x00, 0x01,
+            // logical address of doip entity
+            0x00, 0x00,
+            // routing activation response code
+            0x00,
+            // reserved by iso
+            0x00, 0x00, 0x00, 0x00
+        }),
+        new DoipMessage(0x0006, new byte[]{
+            // logical address of external test equipment
+            0x00, 0x01,
+            // logical address of doip entity
+            0x00, 0x00,
+            // routing activation response code
+            0x04,
+            // reserved by iso
+            0x00, 0x00, 0x00, 0x00,
+            // reserved for oem specific use
+            0x12, 0x23, 0x34, 0x45
+        }),
+
 
         /* 0x0007 - Alive check request */
         /* 0x0007 - Alive check response */
