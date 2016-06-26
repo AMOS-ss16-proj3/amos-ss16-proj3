@@ -116,10 +116,20 @@ public class DoipMessageGenerator {
         }),
 
         /* 0x4001 - Doip entity status request */
-        /* 0x4001 - Doip entity status response */
+        new DoipMessage(0x4001, new byte[]{}),
+
+        /* 0x4002 - Doip entity status response */
+        //new DoipMessage(0x4002, new byte[]{}),
 
         /* 0x4003 - Diagnostic power mode information request */
-        /* 0x4003 - Diagnostic power mode information response */
+        new DoipMessage(0x4003, new byte[]{}),
+
+        /* 0x4004 - Diagnostic power mode information response */
+        new DoipMessage(0x4004, new byte[]{
+            // diagnostic power mode
+            0x01
+        }),
+
 
 
         /* 0x8001 - Diagnostic message */
