@@ -130,9 +130,27 @@ public class DoipMessageGenerator {
             (byte)0xe4,0x00,
             // user data
             0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27
-        })
+        }),
 
         /* 0x8002 Diagnostic message positive ack */
+        new DoipMessage(0x8002, new byte[]{
+            // source address
+            0x03, (byte)0x80,
+            // target address
+            (byte)0xe4,0x00,
+            // ACK code
+            0x00
+        }),
+        new DoipMessage(0x8002, new byte[]{
+            // source address
+            0x03, (byte)0x80,
+            // target address
+            (byte)0xe4,0x00,
+            // ACK code
+            0x00,
+            // user data
+            0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27
+        })
         /* 0x8003 Diagnostic message negative ack */
 
     };
