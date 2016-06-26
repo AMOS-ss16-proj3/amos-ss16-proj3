@@ -35,29 +35,29 @@ public class DoipMessageGenerator {
 
         /* 0x0004 - vehicle announcement/vehicle identification response message */
         new DoipMessage(4, new byte[]{
-            /* VIN */
+            // VIN
             '1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7',
-            /* Logical address */ 
+            // Logical address 
             (byte) 0x13, (byte)0x37,
-            /* EID */
+            // EID
             0x00, 0x11, 0x22, 0x33, 0x44, 0x55,
-            /* GID */
+            // GID
             (byte) 0xFF, (byte)0xEE, (byte) 0xDD, (byte) 0xCC, (byte) 0xBB, (byte) 0xAA,
-            /* Further action required */
+            // Further action required
             0x00
         }),
         new DoipMessage(4, new byte[]{
-            /* VIN */
+            // VIN 
             '1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7',
-            /* Logical address */ 
+            // Logical address
             (byte) 0x00, (byte)0x01,
-            /* EID */
+            // EID
             0x00, 0x11, 0x22, 0x33, 0x44, 0x55,
-            /* GID */
+            // GID
             (byte) 0xFF, (byte)0xEE, (byte) 0xDD, (byte) 0xCC, (byte) 0xBB, (byte) 0xAA,
-            /* Further action required */
+            // Further action required
             0x00,
-            /* VIN/GID sync status */
+            // VIN/GID sync status
             0x00
         }),
 
@@ -104,7 +104,7 @@ public class DoipMessageGenerator {
             // reserved for oem specific use
             0x12, 0x23, 0x34, 0x45
         }),
-
+        
 
         /* 0x0007 - Alive check request */
         /* 0x0007 - Alive check response */
@@ -117,7 +117,20 @@ public class DoipMessageGenerator {
 
 
         /* 0x8001 - Diagnostic message */
-        new DoipMessage(0x8001, new byte[]{0x03, (byte)0x80, (byte)0xe4,0x00, 0x3e, (byte)0x80})
+        new DoipMessage(0x8001, new byte[]{
+            // source address
+            0x03, (byte)0x80,
+            // target address
+            (byte)0xe4,0x00,
+        }),
+        new DoipMessage(0x8001, new byte[]{
+            // source address
+            0x03, (byte)0x80,
+            // target address
+            (byte)0xe4,0x00,
+            // user data
+            0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27
+        })
 
         /* 0x8002 Diagnostic message positive ack */
         /* 0x8003 Diagnostic message negative ack */
@@ -125,9 +138,6 @@ public class DoipMessageGenerator {
     };
         
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
-        
         List<byte[]> msgs = new LinkedList<byte[]>();
         for(DoipMessage dmsg : dmsgs){
             msgs.add(dmsg.toByteArray());
