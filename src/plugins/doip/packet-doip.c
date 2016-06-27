@@ -52,24 +52,24 @@ static int
 dissect_doip(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
-dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *);
+dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
-dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *);
+dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
 register_udp_test_equipment_messages(proto_tree *);
 
 static guint
-get_doip_message_len(packet_info *, tvbuff_t *, int, void *);
+get_doip_message_len(packet_info *, tvbuff_t *, int);
 
 static void
-dissect_doip_message(tvbuff_t *, packet_info *, proto_tree *, void *);
+dissect_doip_message(tvbuff_t *, packet_info *, proto_tree *);
 
 
 /* function implementation is now called from tcp_dissect_pdus */
 static void
-dissect_doip_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
+dissect_doip_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
     doip_header header;
     payload_handler handler;
@@ -115,7 +115,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
 }
 
 /* determine Protocol Data Unit (PDU) length of protocol doip */
-static guint get_doip_message_len(packet_info *pinfo, tvbuff_t *tvb, int offset, void *data)
+static guint get_doip_message_len(packet_info *pinfo, tvbuff_t *tvb, int offset)
 {
 	/* the packet's size */
 	/* TODO by Michael: */
@@ -124,17 +124,17 @@ static guint get_doip_message_len(packet_info *pinfo, tvbuff_t *tvb, int offset,
 }
 
 static void
-dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
 {
-    dissect_doip(tvb, pinfo, tree);
+    dissect_doip(tvb, pinfo, tree, data);
 }
 
 static void
-dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
 {
     register_udp_test_equipment_messages(tree);
 
-    dissect_doip(tvb, pinfo, tree);
+    dissect_doip(tvb, pinfo, tree, data);
 }
 
 static void
