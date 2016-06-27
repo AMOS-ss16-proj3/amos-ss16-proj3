@@ -60,6 +60,12 @@ dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *);
 static void
 register_udp_test_equipment_messages(proto_tree *);
 
+static guint
+get_doip_message_len(packet_info *, tvbuff_t *, int);
+
+static void
+dissect_doip_message(tvbuff_t *, packet_info *, proto_tree *);
+
 
 /* function implementation is now called from tcp_dissect_pdus */
 static void
@@ -103,7 +109,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 	/*Reassembling TCP Fragments with the first three paramters handed over and additional parameters
 	as described in Wireshark Developers Guide on page 66 */
 	tcp_dissect_pdus(tvb, pinfo, tree, TRUE, FRAME_HEADER_LEN,
-		get_doip_message_len, dissect_doip_message)
+		get_doip_message_len, dissect_doip_message);
 
 }
 
