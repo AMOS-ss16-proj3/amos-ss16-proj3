@@ -25,7 +25,7 @@
 #include "doip-payload-handler.h"
 #include "visualize-doip-header.h"
 #include "packet-doip.h"
-#include "packet-tcp.h"
+#include <epan/dissectors/packet-tcp.h>
 
 /* indicates how much data has at least to be available to be able to determine the length of a message */
 #define FRAME_HEADER_LEN 8
