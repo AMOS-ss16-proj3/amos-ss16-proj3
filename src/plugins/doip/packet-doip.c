@@ -17,6 +17,7 @@
 
 
 #include <epan/tvbuff.h>
+#include <epan/prefs.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -24,6 +25,10 @@
 #include "doip-payload-handler.h"
 #include "visualize-doip-header.h"
 #include "packet-doip.h"
+#include <epan/dissectors/packet-tcp.h>
+
+/* indicates how much data has at least to be available to be able to determine the length of a message */
+#define FRAME_HEADER_LEN 8
 
 /* debug variables */
 #define DEBUG_OUTPUT stdout
@@ -43,27 +48,31 @@ static gint proto_doip = -1;
 
 
 /* function declaration */
-static void
-dissect_doip(tvbuff_t *, packet_info *, proto_tree *);
+static int
+dissect_doip(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
-dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *);
+dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
-dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *);
+dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
 register_udp_test_equipment_messages(proto_tree *);
 
-
-/* function implementation */
+static guint
+get_doip_message_len(packet_info *, tvbuff_t *, int);
 
 static void
-dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_doip_message(tvbuff_t *, packet_info *, proto_tree *);
+
+
+/* function implementation is now called from tcp_dissect_pdus */
+static void
+dissect_doip_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
     doip_header header;
     payload_handler handler;
-
 
     proto_item *ti;
     /*proto_tree *doip_tree;*/
@@ -102,18 +111,38 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     }
 }
 
-static void
-dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+static int
+dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
 {
-    dissect_doip(tvb, pinfo, tree);
+	/*Reassembling TCP Fragments with the first three paramters handed over and additional parameters
+	as described in Wireshark Developers Guide on page 66 */
+	tcp_dissect_pdus(tvb, pinfo, tree, TRUE, FRAME_HEADER_LEN,
+		get_doip_message_len, dissect_doip_message, data);
+	return tvb_captured_length(tvb);
+
+}
+
+/* determine Protocol Data Unit (PDU) length of protocol doip */
+static guint get_doip_message_len(packet_info *pinfo, tvbuff_t *tvb, int offset)
+{
+	/* the packet's size */
+	/* TODO by Michael: */
+	/* Calculate the suitable packet's size*/
+	return (guint)tvb_get_ntohl(tvb, offset + 4); /* e.g. length is at offset 4 */
 }
 
 static void
-dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
+{
+    dissect_doip(tvb, pinfo, tree, data);
+}
+
+static void
+dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data)
 {
     register_udp_test_equipment_messages(tree);
 
-    dissect_doip(tvb, pinfo, tree);
+    dissect_doip(tvb, pinfo, tree, data);
 }
 
 static void
