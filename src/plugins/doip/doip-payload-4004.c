@@ -48,71 +48,71 @@ static const range_string power_mode_values[] = {
 void
 register_proto_doip_payload_4004(gint proto_doip)
 {
-	static hf_register_info hf[] =
+    static hf_register_info hf[] =
+    {
+        /* prepare info for the header field based on ISO 13400-2:2012(E) table 35 */
 	{
-		/* prepare info for the header field based on ISO 13400-2:2012(E) table 35 */
-		{
-			&hf_diag_power_mode,
-			{
-				"Diagnostic power mode",
-				"doip.payload.dpm",
-				FT_UINT16,
-				BASE_HEX | BASE_RANGE_STRING,
-				RVALS(power_mode_values),
-				0x0,
-				"Identifies whether or not the vehicle is in diagnostic power mode and ready to perform reliable diagnostics.",
-				HFILL
-			}
-		}
-	};
+	    &hf_diag_power_mode,
+	    {
+	        "Diagnostic power mode",
+		"doip.payload.dpm",
+		FT_UINT16,
+		BASE_HEX | BASE_RANGE_STRING,
+		RVALS(power_mode_values),
+		0x0,
+		"Identifies whether or not the vehicle is in diagnostic power mode and ready to perform reliable diagnostics.",
+		HFILL
+	    }
+	}
+    };
 
 
-	static gint *ett[] =
-	{
-		&ett_diagnostic_power_mode
-	};
+    static gint *ett[] =
+    {
+	&ett_diagnostic_power_mode
+    };
 
 	/* one-time registration after Wireshark is started */
-	proto_register_field_array(proto_doip, hf, array_length(hf));
-	proto_register_subtree_array(ett, array_length(ett));
+    proto_register_field_array(proto_doip, hf, array_length(hf));
+    proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
 void
 dissect_payload_4004(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
-	tvbuff_t *tvb;
-	proto_tree *doip_tree;
+    tvbuff_t *tvb;
+    proto_tree *doip_tree;
 
-	/* set info column to description */
-	col_set_str(pinfo->cinfo, COL_INFO, description);
+    /* set info column to description */
+    col_set_str(pinfo->cinfo, COL_INFO, description);
 
-	tvb = retrieve_tvbuff(header);
-	/* attach a new tree to proto_item pitem */
-	doip_tree = proto_item_add_subtree(pitem, ett_diagnostic_power_mode);
+    tvb = retrieve_tvbuff(header);
+    /* attach a new tree to proto_item pitem */
+    doip_tree = proto_item_add_subtree(pitem, ett_diagnostic_power_mode);
 
-	/* check for a valid tvbuff_t */
-	if (doip_tree && tvb)
-	{
-		fill_tree(doip_tree, tvb);
-	}
+    /* check for a valid tvbuff_t */
+    if (doip_tree && tvb)
+    {
+	fill_tree(doip_tree, tvb);
+    }
 }
 
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb)
 {
-	/* Values taken from ISO 13400-2:2012(E) table 35
-	*
-	* Constants starting with prefix "REL_" indicate a relative
-	* offset to a doip-messages payload.
-	* In order to get the absolute offset starting from the very
-	* first doip-header byte we have to calculate the
-	* absolute position
-	*/
-	const gint REL_DIAG_POWER_MODE_POS = 0;
-	const gint DIAG_POWER_MODE_LEN = 1;
+    /* Values taken from ISO 13400-2:2012(E) table 35
+    *
+    * Constants starting with prefix "REL_" indicate a relative
+    * offset to a doip-messages payload.
+    * In order to get the absolute offset starting from the very
+    * first doip-header byte we have to calculate the
+    * absolute position
+    */
+    const gint REL_DIAG_POWER_MODE_POS = 0;
+    const gint DIAG_POWER_MODE_LEN = 1;
 
-	insert_item_to_tree(tree, hf_diag_power_mode, tvb, REL_DIAG_POWER_MODE_POS, DIAG_POWER_MODE_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_diag_power_mode, tvb, REL_DIAG_POWER_MODE_POS, DIAG_POWER_MODE_LEN, ENC_BIG_ENDIAN);
 }
 
 
