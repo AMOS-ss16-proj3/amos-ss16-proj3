@@ -85,7 +85,7 @@ static const range_string address_values[] = {
  * structure / displaying stuff
 */
 static void
-fill_tree(proto_tree *, tvbuff_t *);
+fill_tree(proto_tree *, tvbuff_t *, guint32);
 
 
 void
@@ -184,6 +184,7 @@ dissect_payload_0006(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
+    guint32 payloadLength;
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
@@ -192,15 +193,17 @@ dissect_payload_0006(doip_header *header, proto_item *pitem, packet_info *pinfo)
     /* set info column to description */
     col_set_str(pinfo->cinfo, COL_INFO, description);
 
+    payloadLength = header->payload.length;
+
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
     {
-        fill_tree(doip_tree, tvb);
+        fill_tree(doip_tree, tvb, payloadLength);
     }
 }
 
 static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb)
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 {
     /* Values taken from ISO 13400-2:2012(E) page 32
      *
@@ -223,13 +226,18 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint ISO_RESERVED_LEN = 4;
 
     const gint REL_OEM_RESERVED_POS = 9;
-    const gint OEM_RESERVED_POS = 4;
+    const gint OEM_RESERVED_LEN = 4;
+
+    gboolean oemReservedIsPresent = ((gint) payloadLength) >= (REL_OEM_RESERVED_POS + OEM_RESERVED_LEN);
 
     insert_item_to_tree(tree, hf_test_equipment_addr, tvb, REL_TEST_EQUIP_ADDR_POS, TEST_EQUIP_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_doip_entity_addr, tvb, REL_DOIP_ENTITY_ADDR_POS, DOIP_ENTITY_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_response_code, tvb, REL_RESPONSE_CODE_POS, RESPONSE_CODE_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_iso_reserved, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA);
-    insert_item_to_tree(tree, hf_oem_reserved, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_POS, ENC_NA);
+    if(oemReservedIsPresent)
+    {
+        insert_item_to_tree(tree, hf_oem_reserved, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
+    }
 }
 
 

@@ -23,96 +23,35 @@
 #include "doip-helper.h"
 #include "doip-payload-4003.h"
 
-/* Diagnostic power mode */
-static gint hf_diag_power_mode = -1;
-
-static gint ett_diagnostic_power_mode = -1;
-
-static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb);
-
-static const gchar *description = "Diagnostic Power Mode";
-
-/** Values are defined in ISO 13400-2:2012(E)
-* on table 35
-*/
-static const range_string power_mode_values[] = {
-	{ 0x00, 0x00, "not ready" },
-	{ 0x01, 0x01, "ready" },
-	{ 0x02, 0x02, "not supported" },
-	{ 0x03, 0xFF, "reserved by this part of ISO 13400" },
-	{ 0x00, 0x00, NULL }
-};
+static const gchar *description = "Diagnostic power mode information request";
 
 /* values which will be displayed for payload type 4003 in proto_tree */
 void
 register_proto_doip_payload_4003(gint proto_doip)
 {
-	static hf_register_info hf[] =
-	{
-		/* prepare info for the header field based on ISO 13400-2:2012(E) table 35 */
-		{
-			&hf_diag_power_mode,
-			{
-				"Diagnostic power mode",
-				"doip.payload.dpm",
-				FT_UINT16,
-				BASE_HEX | BASE_RANGE_STRING,
-				RVALS(power_mode_values),
-				0x0,
-				"Identifies whether or not the vehicle is in diagnostic power mode and ready to perform reliable diagnostics.",
-				HFILL
-			}
-		}
-	};
-
-
-	static gint *ett[] =
-	{
-		&ett_diagnostic_power_mode
-	};
-
-	/* one-time registration after Wireshark is started */
-	proto_register_field_array(proto_doip, hf, array_length(hf));
-	proto_register_subtree_array(ett, array_length(ett));
+    /* suppress compiler warning */
+    if(proto_doip)
+    {
+        proto_doip = 0;
+    }
 }
 
 /* After a doip row is selected in Wireshark */
 void
 dissect_payload_4003(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
-	tvbuff_t *tvb;
-	proto_tree *doip_tree;
+    if(pinfo)
+    {
+        /* set info column to description */
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
+    
+    /* suppress compiler warning */
+    if(header && pitem)
+    {
+        header = NULL;
+    }
 
-	/* set info column to description */
-	col_set_str(pinfo->cinfo, COL_INFO, description);
-
-	tvb = retrieve_tvbuff(header);
-	/* attach a new tree to proto_item pitem */
-	doip_tree = proto_item_add_subtree(pitem, ett_diagnostic_power_mode);
-
-	/* check for a valid tvbuff_t */
-	if (doip_tree && tvb)
-	{
-		fill_tree(doip_tree, tvb);
-	}
-}
-
-static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb)
-{
-	/* Values taken from ISO 13400-2:2012(E) table 35
-	*
-	* Constants starting with prefix "REL_" indicate a relative
-	* offset to a doip-messages payload.
-	* In order to get the absolute offset starting from the very
-	* first doip-header byte we have to calculate the
-	* absolute position
-	*/
-	const gint REL_DIAG_POWER_MODE_POS = 0;
-	const gint DIAG_POWER_MODE_LEN = 1;
-
-	insert_item_to_tree(tree, hf_diag_power_mode, tvb, REL_DIAG_POWER_MODE_POS, DIAG_POWER_MODE_LEN, ENC_BIG_ENDIAN);
 }
 
 

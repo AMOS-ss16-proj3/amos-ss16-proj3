@@ -148,6 +148,10 @@ fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 
     insert_item_to_tree(tree, hf_src_addr, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_target_addr, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_user_data, tvb, REL_DIAGNOSTIC_MSG_POS, diagnostic_msg_len, ENC_BIG_ENDIAN);
+    /* if(diagnostic_msg_len > 0)*/
+    if(diagnostic_msg_len)
+    {
+        insert_item_to_tree(tree, hf_user_data, tvb, REL_DIAGNOSTIC_MSG_POS, diagnostic_msg_len, ENC_BIG_ENDIAN);
+    }
 }
 

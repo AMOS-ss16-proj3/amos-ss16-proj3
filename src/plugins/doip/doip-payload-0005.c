@@ -37,7 +37,7 @@ static gint hf_doip_payload_oem = -1;
 static gint ett_routing_activation_request = -1;
 
 static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb);
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32);
 
 static const gchar *description = "Routing activation request";
 
@@ -154,6 +154,7 @@ dissect_payload_0005(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
+    guint32 payloadLength;
 
     /* set info column to description */
     col_set_str(pinfo->cinfo, COL_INFO, description);
@@ -162,15 +163,18 @@ dissect_payload_0005(doip_header *header, proto_item *pitem, packet_info *pinfo)
     /* attach a new tree to proto_item pitem */
     doip_tree = proto_item_add_subtree(pitem, ett_routing_activation_request);
 
+    /* get length of payload */
+    payloadLength = header->payload.length;
+
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
     {
-        fill_tree(doip_tree, tvb);
+        fill_tree(doip_tree, tvb, payloadLength);
     }
 }
 
 static void
-fill_tree(proto_tree *tree, tvbuff_t *tvb)
+fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 {
     /* Values taken from ISO 13400-2:2012(E) page 32
     *
@@ -192,10 +196,15 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_OEM_RESERVED_POS = 7;
     const gint OEM_RESERVED_LEN = 4;
 
+    gboolean oemReservedIsPresent = ((gint) payloadLength) >= (REL_OEM_RESERVED_POS + OEM_RESERVED_LEN);
+
     insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA); /* For FT_BYTES fields the encoding is not relevant */
-    insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
+    if(oemReservedIsPresent)
+    {
+        insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
+    }
 }
 
 
