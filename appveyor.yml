@@ -1,0 +1,158 @@
+version: '0.0.1-{build}'
+
+clone_folder: c:\projects\ws-plugin
+
+environment:
+  CYG_ROOT: C:\cygwin64
+#  var: value
+
+# script after cloning repo:
+install:
+  - echo Install Script now!
+  - mkdir c:\own-download
+  - cd c:\own-download
+  - appveyor DownloadFile http://darki2002.bplaced.net/amos/win_flex_bison-2.5.5.zip
+  - dir
+  - 7z x win_flex_bison-2.5.5.zip
+#  - cinst winflexbison
+  - set Path=c:\own-download\win_flex_bison-2.5.5;%Path%
+  - win_flex --version
+  - win_bison --version
+#  - choco install wget
+  #- choco install winflexbison
+
+platform:
+  - x86
+  
+before_build:
+  #- echo %PATH%
+  - set PATH=%PATH%;C:\cygwin64\bin\
+  #- echo %PATH%
+  - set PATH=C:\cygwin64\bin\;%PATH%
+  #- echo %PATH%
+  - echo before_build Script now!
+  - mkdir c:\projects\wireshark
+  - git clone https://github.com/wireshark/wireshark.git c:\projects\wireshark
+  #- ps: Invoke-WebRequest -Uri https://2.na.dl.wireshark.org/src/wireshark-2.0.3.tar.bz2 -OutFile c:\projects\wireshark-2.0.3.tar.bz2
+  #- cd c:\projects\ ..... TOTO manual download if needed
+  #- 7z x wireshark-2.0.3.tar.bz2
+  #7z x wireshark-2.0.3.tar
+  #- dir c:\projects\wireshark
+  #- echo nach dir
+  - cmd: set CYGWIN=nodosfilewarning
+  #- echo nach set cygwin
+  - cmd: set WIRESHARK_BASE_DIR=c:\projects
+  - cmd: set WIRESHARK_TARGET_PLATFORM=win32
+  - cmd: set QT5_BASE_DIR=c:\Qt\5.6\msvc2013
+  - cmd: set WIRESHARK_VERSION_EXTRA=-YourExtraVersionInfo
+  - echo xcopy now
+  - cmd: xcopy /E c:\projects\ws-plugin\src\plugins c:\projects\wireshark\plugins
+  - cmd: copy /Y c:\projects\ws-plugin\CMakeLists.txt c:\projects\wireshark\CMakeLists.txt
+  #- cmd: xcopy /E c:\projects\ws-plugin\CMakeOptions.txt c:\projects\wireshark /Y
+  - echo nach xcopy
+  - ps: Invoke-WebRequest -Uri https://cygwin.com/setup-x86_64.exe -OutFile c:\projects\cygwin-setup.exe
+  - mkdir c:\projects\cyg-packages
+  - c:\projects\cygwin-setup.exe -q -n -N -d -R C:\cygwin64 -s http://ftp.hawo.stw.uni-erlangen.de/cygwin/ -l c:\projects\cyg-packages -P  flex -P bison
+  #- dir c:\projects\wireshark\plugins
+ # - cmd: '%CYG_ROOT%/bin/flex -V'
+ # - cmd: '%CYG_ROOT%/bin/bison --version'
+  - cmd: set WIRESHARK_CYGWIN_INSTALL_PATH=C:\cygwin64
+# Testy to check if build is shorther with prebuild wireshark/plugin:
+  #- ps: Invoke-WebRequest -Uri http://amos.darki2002.bplaced.de/allbuild.zip  -OutFile c:\projects\allbuild.zip 
+ # - wget http://amos.darki2002.bplaced.de/allbuild.zip
+ # - 7z e -y allbuild.zip
+ # - dir
+ # - dir c:\projects
+ # - dir c:\projects\wiresharkBuild
+ # - ps: rm -r wiresharkBuild\plugins\doip
+
+build_script:
+  - echo Build Script now!
+  - mkdir c:\projects\wiresharkBuild
+  - cd  c:\projects\wiresharkBuild
+  - cmake -DENABLE_CHM_GUIDES=on -G "Visual Studio 12 Win64" c:\projects\wireshark
+  #- cmake -G "Visual Studio 12 Win64" c:\projects\wireshark\plugins\doip  ----------------------not working :(
+  #- dir c:\projects\wiresharkBuild\
+  -  msbuild /m /p:Configuration=RelWithDebInfo c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
+  #-  msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
+  #- msbuild /m /p:Configuration=RelWithDebInfo Wireshark.sln
+  #- dir
+  #- dir plugins\doip
+
+after_build:
+  #- 7z a allbuild.zip "c:\projects\wiresharkBuild"
+  #- 7z a wiresharkbuild.zip "c:\projects\wiresharkBuild"
+  #- appveyor PushArtifact wiresharkbuild.zip
+  #- appveyor PushArtifact appveyor-build-folder.zip
+ # - dir c:\projects\wiresharkBuild\run
+ # - dir c:\projects\wiresharkBuild\plugins\doip
+ # - 7z a run_folder.zip c:\projects\wiresharkBuild\run
+  #- appveyor PushArtifact run_folder.zip
+#  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll"
+
+# Push latest doip.dll with build number as zip
+  - ps: cp c:\projects\wiresharkBuild\run\RelWithDebInfo\plugins\doip.dll c:\projects\doip_build$env:appveyor_build_number.dll
+  - dir c:\projects
+  - ps: $env:appveyor_build_number
+  - ps: 7z a c:\projects\doip_latest.zip c:\projects\doip_build$env:appveyor_build_number.dll
+  - dir c:\projects
+  - ps: Push-AppveyorArtifact c:\projects\doip_latest.zip
+
+# Prepare for deployment of candidate and release
+  - ps: cp c:\projects\doip_build$env:appveyor_build_number.dll c:\projects\doip_candidate_build$env:appveyor_build_number.dll
+  - dir c:\projects
+  - ps: 7z a c:\projects\doip_candidate.zip c:\projects\doip_candidate_build$env:appveyor_build_number.dll
+  - ps: cp c:\projects\doip_build$env:appveyor_build_number.dll c:\projects\doip_release_build$env:appveyor_build_number.dll
+  - dir c:\projects
+  - ps: 7z a c:\projects\doip_release.zip c:\projects\doip_release_build$env:appveyor_build_number.dll
+
+# Push doip.dll with build number as zip for release candidate or release
+  - ps: if($env:APPVEYOR_REPO_TAG) {
+      if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
+        Push-AppveyorArtifact c:\projects\doip_candidate.zip;
+        $env:doipcandidate = $true
+      }
+      elseif ($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+        Push-AppveyorArtifact c:\projects\doip_release.zip;
+        $env:doiprelease = $true
+      } }
+#  - appveyor PushArtifact c:\projects\doip$env:appveyor_build_number.dll
+  #- appveyor PushArtifact allbuild.zip
+
+#artifacts:
+#  - path: myapp.zip
+#    name: MyApp
+    
+on_failure:
+  #- dir c:\projects\wiresharkBuild\plugins
+  #- dir c:\projects\wiresharkBuild\plugins\gryphon
+  #- msbuild /verbosity:diag c:\projects\wiresharkBuild\plugins\doip\doip.vcxproj
+  - echo FAILURE! Nothing will be done.
+#  - appveyor PushArtifact "c:\projects\wiresharkBuild\run\Debug\plugins\doip.dll"
+  #- 7z a myapp.zip c:\projects\wireshark\CMakeFiles\ "C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake"
+  #- appveyor PushArtifact myapp.zipi
+
+deploy:
+ # maybe we dont need this and can use: https://ci.appveyor.com/api/projects/tester/amos-ss16-proj3/artifacts/doip.dll
+- provider: Environment
+  name: ftp-latest
+
+- provider: Environment
+  name: ftp-candidate
+  on:
+    doipcandidate: true
+
+- provider: Environment
+  name: ftp-release
+  on:
+    doiprelease: true
+     
+#  - ps: if($env:APPVEYOR_REPO_TAG) {
+#      if($env:APPVEYOR_REPO_TAG_NAME -match "candidate") {
+#        provider: Environment
+#        name: ftp-candidate
+#      } elseif (($env:APPVEYOR_REPO_TAG_NAME -match "release")  {
+#        provider: Environment
+#        name: ftp-release
+#      }
+#    }
