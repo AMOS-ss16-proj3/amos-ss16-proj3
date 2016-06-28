@@ -110,10 +110,18 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 /* determine Protocol Data Unit (PDU) length of protocol doip */
 static guint get_doip_message_len(packet_info *pinfo, tvbuff_t *tvb, int offset, void *data _U_) 
 {
-	/* the packet's size */
-	/* TODO by Michael: */
-	/* Calculate the suitable packet's size*/
-	return (guint)tvb_get_ntohl(tvb, offset + 4); /* e.g. length is at offset 4 */
+	guint header_length;
+	guint payload_length;
+	doip_header header;
+
+	header_length = (guint)get_header_length();
+	tvb = tvb_new_subset_length(tvb, (gint) offset, (gint) header_length);
+
+	fill_doip_header(&header, tvb);
+
+	payload_length = (guint) header.payload.length;
+
+	return header_length + payload_length;
 }
 
 static int
