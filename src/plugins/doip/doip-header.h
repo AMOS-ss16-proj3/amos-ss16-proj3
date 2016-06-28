@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Copyright 2017 The Open Source Research Group,
 *                University of Erlangen-Nürnberg
 *
@@ -43,6 +43,11 @@ typedef struct doip_header
 
 } doip_header;
 
+/* Returns the length of
+ * the doip_header
+ */
+int
+get_header_length();
 
 /* Allocates and fills a doip_header
  * returned doip_header must be destroyed calling 'destroy_doip_header()'

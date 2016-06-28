@@ -32,6 +32,12 @@
  * takes 8 bytes of space
 */
 const gint DOIP_HEADER_LENGTH = 8;
+
+int 
+get_header_length()
+{
+	return DOIP_HEADER_LENGTH;
+}
    
 
 
