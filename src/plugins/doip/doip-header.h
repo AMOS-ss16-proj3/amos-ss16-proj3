@@ -47,7 +47,7 @@ typedef struct doip_header
  * the doip_header
  */
 int
-get_header_length();
+get_header_length(void);
 
 /* Allocates and fills a doip_header
  * returned doip_header must be destroyed calling 'destroy_doip_header()'

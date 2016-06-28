@@ -33,13 +33,6 @@
 */
 const gint DOIP_HEADER_LENGTH = 8;
 
-int 
-get_header_length()
-{
-	return DOIP_HEADER_LENGTH;
-}
-   
-
 
 
 /* converts a byte-offset into a bit-offset
@@ -110,6 +103,11 @@ validate_doip_header(doip_header *);
 static inline gboolean
 validate_doip_version(guint8 version, guint8 inverse_version);
 
+int 
+get_header_length(void)
+{
+	return DOIP_HEADER_LENGTH;
+}
 
 doip_header *
 create_doip_header(tvbuff_t *tvb)

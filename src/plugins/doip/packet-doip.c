@@ -58,7 +58,7 @@ static void
 register_udp_test_equipment_messages(proto_tree *);
 
 static guint
-get_doip_message_len(packet_info *, tvbuff_t *, int, void *);
+get_doip_message_len(packet_info *, tvbuff_t *, int);
 
 
 /* function implementation is now called from tcp_dissect_pdus */
@@ -108,7 +108,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 }
 
 /* determine Protocol Data Unit (PDU) length of protocol doip */
-static guint get_doip_message_len(packet_info *pinfo, tvbuff_t *tvb, int offset, void *data _U_) 
+static guint get_doip_message_len(packet_info *pinfo _U_, tvbuff_t *tvb, int offset) 
 {
 	guint header_length;
 	guint payload_length;
@@ -130,8 +130,15 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data
 	gint header_length = get_header_length();
 	/*Reassembling TCP Fragments with the first three paramters handed over and additional parameters
 	as described in Wireshark Developers Guide on page 66 */
-	tcp_dissect_pdus(tvb, pinfo, tree, TRUE, header_length,
-		get_doip_message_len, dissect_doip, data);
+	tcp_dissect_pdus(
+        tvb,
+        pinfo,
+        tree,
+        TRUE,
+        header_length,
+		get_doip_message_len,
+        dissect_doip, data
+    );
 	return tvb_captured_length(tvb);
 }
 
@@ -140,7 +147,7 @@ dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
 	register_udp_test_equipment_messages(tree);
 
-	dissect_doip(tvb, pinfo, tree);
+	dissect_doip(tvb, pinfo, tree, NULL);
 }
 
 static void
@@ -175,7 +182,7 @@ proto_reg_handoff_doip(void)
 	static dissector_handle_t doip_tcp_handle;
 	static dissector_handle_t doip_udp_handle;
 
-	doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
+	doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
 	doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
 
 	dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_tcp_handle);
