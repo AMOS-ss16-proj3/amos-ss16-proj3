@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright 2017 The Open Source Research Group,
+* Copyright 2016 The Open Source Research Group,
 *                University of Erlangen-Nürnberg
 *
 * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License");
