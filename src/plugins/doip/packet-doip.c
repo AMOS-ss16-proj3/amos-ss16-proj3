@@ -182,7 +182,11 @@ proto_reg_handoff_doip(void)
 	static dissector_handle_t doip_tcp_handle;
 	static dissector_handle_t doip_udp_handle;
 
+#if VERSION_MAJOR == 1
 	doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
+#else 
+	doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
+#endif
 	doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
 
 	dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_tcp_handle);
