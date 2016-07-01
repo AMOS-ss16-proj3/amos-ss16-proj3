@@ -26,7 +26,7 @@
 static gint hf_vin = -1;
 
 /* Logical Address */
-static gint hf_log_addr = -1;
+static gint hf_la = -1;
 
 /* Entity identification */
 static gint hf_eid = -1;
@@ -35,10 +35,10 @@ static gint hf_eid = -1;
 static gint hf_gid = -1;
 
 /* Further action required */
-static gint hf_further_action_req = -1;
+static gint hf_far = -1;
 
 /* VIN/GID sync. status */
-static gint hf_vin_gid_sync = -1;
+static gint hf_vgss = -1;
 
 static gint ett_vehicle_announce_id_msg = -1;
 
@@ -103,7 +103,7 @@ register_proto_doip_payload_0004(gint proto_doip)
             &hf_vin,
             {
                 "Vehicle identification number",
-                "doip.payload.vin",
+                "doip.vin",
                 FT_STRING,
                 STR_ASCII,
                 NULL,
@@ -113,10 +113,10 @@ register_proto_doip_payload_0004(gint proto_doip)
             }
         },
         {
-            &hf_log_addr,
+            &hf_la,
             {
                 "Logical Address",
-                "doip.payload.la",
+                "doip.la",
                 FT_UINT16,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(log_addr_values),
@@ -132,7 +132,7 @@ register_proto_doip_payload_0004(gint proto_doip)
             &hf_eid,
             {
                 "Entity identification",
-                "doip.payload.eid",
+                "doip.eid",
                 FT_ETHER,
                 BASE_NONE,
                 NULL,
@@ -149,7 +149,7 @@ register_proto_doip_payload_0004(gint proto_doip)
             &hf_gid,
             {
                 "Group identification",
-                "doip.payload.gid",
+                "doip.gid",
                 FT_ETHER,
                 BASE_NONE,
                 NULL,
@@ -161,10 +161,10 @@ register_proto_doip_payload_0004(gint proto_doip)
             }
         },
         {
-            &hf_further_action_req,
+            &hf_far,
             {
                 "Further action required",
-                "doip.payload.far",
+                "doip.far",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(further_action_values),
@@ -178,10 +178,10 @@ register_proto_doip_payload_0004(gint proto_doip)
             }
         },
         {
-            &hf_vin_gid_sync,
+            &hf_vgss,
             {
                 "VIN/GID sync. status",
-                "doip.payload.vgss",
+                "doip.vgss",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(vin_gid_sync_values),
@@ -265,14 +265,14 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 
 
     insert_item_to_tree(tree, hf_vin, tvb, REL_VIN_POS, VIN_LEN, ENC_ASCII);
-    insert_item_to_tree(tree, hf_log_addr, tvb, REL_LOG_ADDR_POS, LOG_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_la, tvb, REL_LOG_ADDR_POS, LOG_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
     insert_item_to_tree(tree, hf_gid, tvb, REL_GID_POS, GID_LEN, ENC_NA);
-    insert_item_to_tree(tree, hf_further_action_req, tvb, REL_FURTHER_ACTION_REQ_POS, FURTHER_ACTION_REQ_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_far, tvb, REL_FURTHER_ACTION_REQ_POS, FURTHER_ACTION_REQ_LEN, ENC_BIG_ENDIAN);
     /* only insert this item if needed, since it is optional */
     if (vin_gid_sync_is_present)
     {
-        insert_item_to_tree(tree, hf_vin_gid_sync, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN);
+        insert_item_to_tree(tree, hf_vgss, tvb, REL_VIN_GID_SYNC, VIN_GID_SYNC_LEN, ENC_BIG_ENDIAN);
     }
 }
 

@@ -23,7 +23,7 @@
 #include "doip-payload-0008.h"
 
 /* Source address */
-static gint hf_doip_payload_sa = -1; 
+static gint hf_sa = -1; 
 
 static gint ett_alive_check_response = -1;
 
@@ -62,10 +62,10 @@ register_proto_doip_payload_0008(gint proto_doip)
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) */
         {
-            &hf_doip_payload_sa,
+            &hf_sa,
             {
                 "Source address",
-                "doip.payload.sa",
+                "doip.sa",
                 FT_UINT16,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(source_address_values),
@@ -122,7 +122,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_SOURCE_ADDR_POS = 0;
     const gint SOURCE_ADDR_LEN = 2;
 
-    insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
 }
 
 

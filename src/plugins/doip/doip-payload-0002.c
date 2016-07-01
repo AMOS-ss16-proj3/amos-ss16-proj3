@@ -44,7 +44,7 @@ register_proto_doip_payload_0002(gint proto_doip)
             &hf_eid,
             {
                 "Entity identification",
-                "doip.payload.eid",
+                "doip.eid",
                 FT_ETHER,
                 BASE_NONE,
                 NULL,

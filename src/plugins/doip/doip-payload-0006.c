@@ -23,11 +23,11 @@
 #include "doip-payload-0006.h"
 
 
-static gint hf_test_equipment_addr = -1;
-static gint hf_doip_entity_addr = -1;
-static gint hf_response_code = -1;
-static gint hf_iso_reserved = -1;
-static gint hf_oem_reserved = -1;
+static gint hf_tea = -1;
+static gint hf_ea = -1;
+static gint hf_rc = -1;
+static gint hf_iso = -1;
+static gint hf_oem = -1;
 
 static gint ett_routing_activation_response = -1;
 
@@ -104,10 +104,10 @@ register_proto_doip_payload_0006(gint proto_doip)
              * instead of a string describing who reserved the
              * corresponding field
             */
-            &hf_test_equipment_addr,
+            &hf_tea,
             {
                 "Logical address of external test equipment",
-                "doip.routingaddr.testequip",
+                "doip.tea",
                 FT_UINT16,
 		 BASE_HEX | BASE_RANGE_STRING,
 		 RVALS(address_values),
@@ -117,10 +117,10 @@ register_proto_doip_payload_0006(gint proto_doip)
             }
         },
         {
-            &hf_doip_entity_addr,
+            &hf_ea,
             {
                 "Logical address of doip entity",
-                "doip.routingaddr.doipentity",
+                "doip.ea",
                 FT_UINT16,
 		 BASE_HEX | BASE_RANGE_STRING,
 		 RVALS(address_values),
@@ -130,10 +130,10 @@ register_proto_doip_payload_0006(gint proto_doip)
             }
         },
         {
-            &hf_response_code,
+            &hf_rc,
             {
                 "Routing activation response code",
-                "doip.routing.response.code",
+                "doip.rc",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(routing_actvation_response_codes),
@@ -143,10 +143,10 @@ register_proto_doip_payload_0006(gint proto_doip)
             }
         },
         {
-            &hf_iso_reserved,
+            &hf_iso,
             {
                 "Reserved by ISO 13400",
-                "doip.routing.iso.reserved",
+                "doip.iso",
                 FT_BYTES,
                 BASE_NONE,
                 NULL,
@@ -156,10 +156,10 @@ register_proto_doip_payload_0006(gint proto_doip)
             }
         },
         {
-            &hf_oem_reserved,
+            &hf_oem,
             {
                 "Reserved for OEM-specific use",
-                "doip.routing.oem-reserved",
+                "doip.oem",
                 FT_BYTES,
                 BASE_NONE,
                 NULL,
@@ -230,13 +230,13 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 
     gboolean oemReservedIsPresent = ((gint) payloadLength) >= (REL_OEM_RESERVED_POS + OEM_RESERVED_LEN);
 
-    insert_item_to_tree(tree, hf_test_equipment_addr, tvb, REL_TEST_EQUIP_ADDR_POS, TEST_EQUIP_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_doip_entity_addr, tvb, REL_DOIP_ENTITY_ADDR_POS, DOIP_ENTITY_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_response_code, tvb, REL_RESPONSE_CODE_POS, RESPONSE_CODE_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_iso_reserved, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA);
+    insert_item_to_tree(tree, hf_tea, tvb, REL_TEST_EQUIP_ADDR_POS, TEST_EQUIP_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_ea, tvb, REL_DOIP_ENTITY_ADDR_POS, DOIP_ENTITY_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_rc, tvb, REL_RESPONSE_CODE_POS, RESPONSE_CODE_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA);
     if(oemReservedIsPresent)
     {
-        insert_item_to_tree(tree, hf_oem_reserved, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
+        insert_item_to_tree(tree, hf_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
     }
 }
 

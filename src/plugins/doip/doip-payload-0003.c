@@ -44,7 +44,7 @@ register_proto_doip_payload_0003(gint proto_doip)
 	    &hf_vin,
 	    {
 		"Vehicle identification number",
-		"doip.payload.vin",
+		"doip.vin",
 		FT_STRING,
 		STR_ASCII,
 		NULL,

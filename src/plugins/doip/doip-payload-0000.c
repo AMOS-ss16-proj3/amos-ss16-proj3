@@ -23,7 +23,7 @@
 #include "doip-payload-0000.h"
 
 /* Generic DoIP header NACK code */
-static gint hf_doip_payload_nc = -1; 
+static gint hf_nc = -1; 
 
 static gint ett_nack_codes = -1;
 
@@ -54,10 +54,10 @@ register_proto_doip_payload_0000(gint proto_doip)
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) */
         {
-            &hf_doip_payload_nc,
+			&hf_nc,
             {
                 "Generic DoIP header NACK code",
-                "doip.payload.nc",
+                "doip.nc",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(nack_codes),
@@ -113,7 +113,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_HEADER_NACK_CODE_POS = 0;
     const gint HEADER_NACK_LEN = 1;
 
-    insert_item_to_tree(tree, hf_doip_payload_nc, tvb, REL_HEADER_NACK_CODE_POS, HEADER_NACK_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_nc, tvb, REL_HEADER_NACK_CODE_POS, HEADER_NACK_LEN, ENC_BIG_ENDIAN);
 }
 
 
