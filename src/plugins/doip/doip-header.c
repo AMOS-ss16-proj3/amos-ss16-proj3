@@ -132,20 +132,23 @@ create_doip_header(tvbuff_t *tvb)
 gboolean
 fill_doip_header(doip_header *header, tvbuff_t *tvb)
 {
+    gboolean valid = TRUE;
     if(tvb && header)
     {
-        insert_proto_version(header, tvb);
-
-        insert_inverse_proto_version(header, tvb);
-
-        insert_payload_type(header, tvb);
-
-        insert_payload_length(header, tvb);
-
-        insert_payload_message(header, tvb);
+        valid &= insert_proto_version(header, tvb)
+            && insert_inverse_proto_version(header, tvb)
+            && insert_payload_type(header, tvb)
+            && insert_payload_length(header, tvb)
+            && insert_payload_message(header, tvb)
+            && validate_doip_header(header)
+        ;
+    }
+    else
+    {
+        valid = FALSE;
     }
 
-    return validate_doip_header(header);
+    return valid;
 }
 
 void
@@ -325,34 +328,46 @@ message_byte_offset_to_tvb_byte_offset(gint msg_offset, gint *tvb_byte_offset)
 static inline gboolean
 insert_proto_version(doip_header *header, tvbuff_t *tvb)
 {
-    const gint offset = 0;
-    if(header)
+    const gint OFFSET = 0;
+    const gint LENGTH = 1; 
+    guint tvb_length = tvb_reported_length(tvb);
+    gboolean version_available = header && tvb_length >= OFFSET + LENGTH;
+
+    if(version_available)
     {
-        header->proto_version = tvb_get_guint8(tvb, offset);
+        header->proto_version = tvb_get_guint8(tvb, OFFSET);
     }
-    return header != NULL;
+    return version_available;
 }
 
 static inline gboolean
 insert_inverse_proto_version(doip_header *header, tvbuff_t *tvb)
 {
-    const gint offset = 1;
-    if(header)
+    const gint OFFSET = 1;
+    const gint LENGTH = 1;
+    guint tvb_length = tvb_reported_length(tvb);
+    gboolean iversion_available = header && tvb_length >= OFFSET + LENGTH;
+
+    if(iversion_available)
     {
-        header->inverse_proto_version = tvb_get_guint8(tvb, offset);
+        header->inverse_proto_version = tvb_get_guint8(tvb, OFFSET);
     }
-    return header != NULL;
+    return iversion_available;
 }
 
 
 static inline gboolean
 insert_payload_type(doip_header *header, tvbuff_t *tvb)
 {
-    const gint BIT_OFFSET = 2 * 8;
-    const gint WORD_LENGTH = 16;
+    const gint BYTE_OFFSET = 2;
+    const gint BYTE_LENGTH = 2;
+    const gint BIT_OFFSET = BYTE_OFFSET * 8;
+    const gint WORD_LENGTH = BYTE_LENGTH * 8;
     gint payload_type = 0;
+    guint tvb_length = tvb_reported_length(tvb);
+    gboolean type_available = header && tvb_length >= BYTE_OFFSET + BYTE_LENGTH;
     
-    if(header)
+    if(type_available)
     {
         /*
         payload_type = ((guint16)tvb_get_guint8(tvb, offset + byte_offset++)) << 8;
@@ -368,16 +383,21 @@ insert_payload_type(doip_header *header, tvbuff_t *tvb)
 
         header->payload.type = payload_type;
     }
-    return header != NULL;
+    return type_available;
 }
 
 static inline gboolean
 insert_payload_length(doip_header *header, tvbuff_t *tvb)
 {
-    const gint BIT_OFFSET = 4 * 8;
-    const gint WORD_LENGTH = 32;
+    const gint BYTE_OFFSET = 4;
+    const gint BYTE_LENGTH = 4;
+    const gint BIT_OFFSET = BYTE_OFFSET * 8;
+    const gint WORD_LENGTH = BYTE_LENGTH * 8;
     guint32 payload_length;
-    if(header)
+    guint tvb_length = tvb_reported_length(tvb);
+    gboolean length_available = tvb_length >= BYTE_OFFSET + BYTE_LENGTH;
+
+    if(length_available)
     {
         payload_length = tvb_get_bits32(
             tvb,
@@ -388,20 +408,21 @@ insert_payload_length(doip_header *header, tvbuff_t *tvb)
         
         header->payload.length = payload_length;
     }
-    return header != NULL;
+    return length_available;
 }
 
 static inline gboolean
 insert_payload_message(doip_header *header, tvbuff_t *tvb)
 {
-    const gint offset = 8;
+    const gint offset = DOIP_HEADER_LENGTH;
+    gboolean payload_msg_available = header && tvb;
 
-    if(header)
+    if(payload_msg_available)
     {
         header->payload.tvb = tvb;
         header->payload.tvb_offset = offset;
     }
-    return FALSE;
+    return payload_msg_available;
 }
 
 static inline gboolean

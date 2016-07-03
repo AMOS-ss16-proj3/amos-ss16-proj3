@@ -16,6 +16,7 @@
 */
 
 
+#include <assert.h>
 #include <epan/tvbuff.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +56,7 @@ static int
 dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *, void *);
 
 static void
-register_udp_test_equipment_messages(proto_tree *);
+register_udp_test_equipment_messages(packet_info *);
 
 static guint
 get_doip_message_len(packet_info *, tvbuff_t *, int);
@@ -145,23 +146,49 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data
 static void
 dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-	register_udp_test_equipment_messages(tree);
+	register_udp_test_equipment_messages(pinfo);
 
 	dissect_doip(tvb, pinfo, tree, NULL);
 }
 
 static void
-register_udp_test_equipment_messages(proto_tree *tree)
+register_udp_test_equipment_messages(packet_info *pinfo)
 {
-	if (tree)
+    /* According to ISO 13400-2:2012(E) page 1, Figure 5
+     * a situation may occur where there is doip-communication 
+     * using non-specified ports. In order to fetch these messages
+     * as well, we have to find these cases and instruct wireshark
+     * to call our dissector.
+     *
+     * None-specified ports-communication may occure, when external
+     * test equipment makes an UDP-request with src-port
+     * UDP_TEST_EQUIPMENT (dynamically assigned,
+     * ISO 13400-2:2012(E) page 12 table 8) and dst-port UDP_DISCOVERY
+     * (specified as port 13400 at page 12, table 8).
+     * The request can be answered by a DoIP entity using a dynamically
+     * assigned src-port and using the request's src-port as response's 
+     * dst-port.
+    */
+    guint32 srcport;
+    guint32 dstport;
+	gboolean dynamic_port_is_possible =  FALSE;
+
+    dissector_handle_t doip_dyn_udp_handle;
+
+	if (pinfo)
 	{
-		tree = NULL;
+        printf("udp on srcport: %d, destport: %d\n", pinfo->srcport, pinfo->destport);
+        srcport = pinfo->srcport;
+        dstport = pinfo->destport;
+
+        dynamic_port_is_possible = srcport != 13400 && dstport == 13400;
 	}
-	/* TODO by dust */
-	/*
-	gboolean has_non_default_port_communication;
-	proto_item *udp_package;
-	*/
+
+    if(dynamic_port_is_possible)
+    {
+        doip_dyn_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
+        dissector_add_uint("udp.dstport", srcport, doip_dyn_udp_handle);
+    }
 }
 
 void
@@ -179,7 +206,7 @@ proto_register_doip(void)
 void
 proto_reg_handoff_doip(void)
 {
-	static dissector_handle_t doip_tcp_handle;
+    static dissector_handle_t doip_tcp_handle;
 	static dissector_handle_t doip_udp_handle;
 
 #if VERSION_MAJOR == 1
@@ -187,6 +214,7 @@ proto_reg_handoff_doip(void)
 #else 
 	doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
 #endif
+
 	doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
 
 	dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_tcp_handle);
