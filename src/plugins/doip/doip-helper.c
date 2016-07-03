@@ -25,8 +25,27 @@
 #include <epan/proto.h>
 #include <epan/tvbuff.h>
 
+#ifdef NDEBUG
+
+    #define RANGE_CHECK(pos, length, tvb) {}
+
+#else
+
+    #define RANGE_CHECK_END_POS(pos,length) (pos + length)
+    #define RANGE_CHECK_TVB_LENGTH(tvb)  (tvb_reported_length(tvb))
+
+    #define RANGE_CHECK(pos, length, tvb) { \
+        /* Check for an int overflow */ \
+        assert(RANGE_CHECK_END_POS(pos,length) > pos); \
+        /* Check whether the item is within a given tvb-boundary */ \
+        assert(RANGE_CHECK_END_POS(pos,length) <= (gint) RANGE_CHECK_TVB_LENGTH(tvb)); \
+    }
+#endif /* NDEBUG */
+
+/*
 static void
 item_is_in_tvb_range(const gint pos, const gint length, tvbuff_t *tvb);
+*/
 
 void
 insert_item_to_tree(proto_tree *tree, const gint hf, tvbuff_t *tvb, gint rel_pos, gint length, const guint enc)
@@ -35,23 +54,28 @@ insert_item_to_tree(proto_tree *tree, const gint hf, tvbuff_t *tvb, gint rel_pos
 
     abs_pos = payload_offset_to_abs_offset(rel_pos);
 
+    /*
     item_is_in_tvb_range(abs_pos, length, tvb);
+    */
+    RANGE_CHECK(abs_pos, length, tvb);
         
     proto_tree_add_item(tree, hf, tvb, abs_pos, length, enc);
 }
 
+/*
 static void
 item_is_in_tvb_range(const gint pos, const gint length, tvbuff_t *tvb)
 {
-    guint tvb_len = tvb_reported_length(tvb);
-    gint end_pos = pos + length;
+    #define tvb_len tvb_reported_length(tvb);
+    #define end_pos pos + length;
 
-    /* Check for an int overflow */
+    / Check for an int overflow /
     assert(end_pos > pos);
 
-    /* check whether the item is within a given tvb-boundary */
+    / check whether the item is within a given tvb-boundary /
     assert(end_pos <= (gint) tvb_len);
 }
+*/
 
 
 

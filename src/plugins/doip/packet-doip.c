@@ -16,7 +16,6 @@
 */
 
 
-#include <assert.h>
 #include <epan/tvbuff.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,7 +72,9 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 	proto_item *ti;
 	/*proto_tree *doip_tree;*/
 
+#ifndef NDEBUG
 	printf("tvb: %p\t pinfo: %p\t tree: %p\n", tvb, pinfo, tree);
+#endif /* NDEBUG */
 
 	if (pinfo)
 	{
@@ -84,21 +85,29 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 	{
 		if (fill_doip_header(&header, tvb))
 		{
+#ifndef NDEBUG
 			print_doip_header(DEBUG_OUTPUT, &header);
+#endif /* NDEBUG */
 
 
 			/* Create sub-tree which can be used for inserting proto-items */
 			ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
 
+#ifndef NDEBUG
 			printf("before visualize doip header\n");
+#endif /* NDEBUG */
 			/* append all doip-header infos to proto-item */
 			visualize_doip_header(&header, ti);
 
 			/* find a handler suited for the given doip-type (header->payload.type) */
+#ifndef NDEBUG
 			printf("before find matching payload handler\n");
+#endif /* NDEBUG */
 			handler = find_matching_payload_handler(&header);
 
+#ifndef NDEBUG
 			printf("payload handler: %p\n", handler);
+#endif /* NDEBUG */
 			if (handler)
 			{
 				handler(&header, ti, pinfo);
@@ -177,7 +186,9 @@ register_udp_test_equipment_messages(packet_info *pinfo)
 
 	if (pinfo)
 	{
+#ifndef NDEBUG
         printf("udp on srcport: %d, destport: %d\n", pinfo->srcport, pinfo->destport);
+#endif /* NDEBUG */
         srcport = pinfo->srcport;
         dstport = pinfo->destport;
 
@@ -213,7 +224,7 @@ proto_reg_handoff_doip(void)
 	doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
 #else 
 	doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
-#endif
+#endif /* VERSION_MAJOR == 1 */
 
 	doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
 

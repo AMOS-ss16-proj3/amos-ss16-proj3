@@ -46,4 +46,5 @@ echo "configuring wireshark environment"
 cp -R ./src/plugins/Custom.* ./wireshark/plugins/
 cd ./wireshark && bash ./autogen.sh && cd ~-
 cd ./wireshark && ./configure --enable-wireshark=no && cd ~-
+#cd ./wireshark && ./configure --enable-wireshark=no CFLAGS=-DNDEBUG && cd ~-
 
