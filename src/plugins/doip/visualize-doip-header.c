@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Copyright 2016 The Open Source Research Group,
 *                University of Erlangen-Nürnberg
 *
@@ -127,7 +127,7 @@ register_proto_doip_header(gint proto_doip)
             &hf_doip_payload_type,
             {
                 "Payload Type",
-                "doip.payload.type",
+                "doip.type",
                 FT_UINT16,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(packet_type_names),
@@ -140,7 +140,8 @@ register_proto_doip_header(gint proto_doip)
         {
             &hf_doip_payload_length,
             {
-                "Payload Length", "doip.payload.length",
+                "Payload Length", 
+                "doip.payload.length",
                 FT_UINT32, BASE_DEC,
                 NULL, 0x0,
                 NULL, HFILL
