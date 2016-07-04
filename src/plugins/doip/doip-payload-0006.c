@@ -22,11 +22,15 @@
 #include "doip-helper.h"
 #include "doip-payload-0006.h"
 
-
+/** Logical address of external test equipment*/
 static gint hf_tea = -1;
+/** Logical address of DoIP entity*/
 static gint hf_ea = -1;
+/** Routing activation response code*/
 static gint hf_rc = -1;
+/** Reserved by this part of ISO 13400*/
 static gint hf_iso = -1;
+/** Reserved for OEM-specific use*/
 static gint hf_oem = -1;
 
 static gint ett_routing_activation_response = -1;
