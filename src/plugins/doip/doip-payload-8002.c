@@ -23,16 +23,16 @@
 #include "doip-payload-8002.h"
 
 /* Source address */
-static gint hf_src_addr = -1; 
+static gint hf_sa = -1; 
 
 /* Target address */
-static gint hf_target_addr = -1; 
+static gint hf_ta = -1; 
 
 /* Ack code */
-static gint hf_ack_code = -1;
+static gint hf_ac = -1;
 
 /* Previous diagnostic message data */
-static gint hf_prev_diag_msg_data = -1;
+static gint hf_pdmd = -1;
 
 static gint ett_diag_msg_pos_resp = -1;
 
@@ -60,10 +60,10 @@ register_proto_doip_payload_8002(gint proto_doip)
          * based on ISO 13400-2:2012(E) page 35, table 26
         */
         {
-            &hf_src_addr,
+            &hf_sa,
             {
                 "Source address",
-                "doip.payload.sa",
+                "doip.sa",
                 FT_UINT16,
                 BASE_HEX,
                 NULL,
@@ -75,10 +75,10 @@ register_proto_doip_payload_8002(gint proto_doip)
             }
         },
         {
-            &hf_target_addr,
+            &hf_ta,
             {
                 "Target address",
-                "doip.payload.ta",
+                "doip.ta",
                 FT_UINT16,
                 BASE_HEX,
                 NULL,
@@ -90,10 +90,10 @@ register_proto_doip_payload_8002(gint proto_doip)
             }
         },
         {
-            &hf_ack_code,
+            &hf_ac,
             {
                 "ACK code",
-                "doip.payload.ackcode",
+                "doip.ac",
                 FT_UINT8,  
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(ack_codes),
@@ -104,10 +104,10 @@ register_proto_doip_payload_8002(gint proto_doip)
             }
         },
         {
-            &hf_prev_diag_msg_data,
+            &hf_pdmd,
             {
                 "Previous diagnostic message data",
-                "doip.payload.ackcode",
+                "doip.pdmd",
                 FT_BYTES,  
                 BASE_NONE,
                 NULL,
@@ -180,14 +180,14 @@ fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
     payload_len = header->payload.length;
     has_prev_diag_msg = payload_len > REL_PREV_DIAG_MSG_POS;
 
-    insert_item_to_tree(tree, hf_src_addr, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_target_addr, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_ack_code, tvb, REL_ACK_CODE_POS, ACK_CODE_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_sa, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_ta, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_ac, tvb, REL_ACK_CODE_POS, ACK_CODE_LEN, ENC_BIG_ENDIAN);
 
     if(has_prev_diag_msg)
     {
         prev_diag_msg_len = payload_len - REL_PREV_DIAG_MSG_POS;
-        insert_item_to_tree(tree, hf_prev_diag_msg_data, tvb, REL_PREV_DIAG_MSG_POS, prev_diag_msg_len, ENC_NA);
+        insert_item_to_tree(tree, hf_pdmd, tvb, REL_PREV_DIAG_MSG_POS, prev_diag_msg_len, ENC_NA);
     }
 }
 

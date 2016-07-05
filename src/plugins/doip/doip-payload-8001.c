@@ -23,13 +23,13 @@
 #include "doip-payload-8001.h"
 
 /* Source address */
-static gint hf_src_addr = -1; 
+static gint hf_sa = -1; 
 
 /* Target address */
-static gint hf_target_addr = -1; 
+static gint hf_ta = -1; 
 
 /* User data */
-static gint hf_user_data = -1; 
+static gint hf_ud = -1; 
 
 static gint ett_diagnostic_msg = -1;
 
@@ -49,10 +49,10 @@ register_proto_doip_payload_8001(gint proto_doip)
          * based on ISO 13400-2:2012(E) page 35, table 26
         */
         {
-            &hf_src_addr,
+            &hf_sa,
             {
                 "Source address",
-                "doip.payload.sa",
+                "doip.sa",
                 FT_UINT16,
                 BASE_HEX,
                 NULL,
@@ -62,10 +62,10 @@ register_proto_doip_payload_8001(gint proto_doip)
             }
         },
         {
-            &hf_target_addr,
+            &hf_ta,
             {
                 "Target address",
-                "doip.payload.ta",
+                "doip.ta",
                 FT_UINT16,
                 BASE_HEX,
                 NULL,
@@ -75,10 +75,10 @@ register_proto_doip_payload_8001(gint proto_doip)
             }
         },
         {
-            &hf_user_data,
+            &hf_ud,
             {
                 "User data",
-                "doip.payload.ud",
+                "doip.ud",
                 FT_BYTES,  
                 BASE_NONE,
                 NULL,
@@ -146,12 +146,12 @@ fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
     payload_len = header->payload.length;
     diagnostic_msg_len = payload_len - REL_DIAGNOSTIC_MSG_POS;
 
-    insert_item_to_tree(tree, hf_src_addr, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_target_addr, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_sa, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_ta, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
     /* if(diagnostic_msg_len > 0)*/
     if(diagnostic_msg_len)
     {
-        insert_item_to_tree(tree, hf_user_data, tvb, REL_DIAGNOSTIC_MSG_POS, diagnostic_msg_len, ENC_BIG_ENDIAN);
+        insert_item_to_tree(tree, hf_ud, tvb, REL_DIAGNOSTIC_MSG_POS, diagnostic_msg_len, ENC_BIG_ENDIAN);
     }
 }
 

@@ -24,7 +24,7 @@
 #include "doip-payload-4004.h"
 
 /* Diagnostic power mode */
-static gint hf_diag_power_mode = -1;
+static gint hf_dpm = -1;
 
 static gint ett_diagnostic_power_mode = -1;
 
@@ -52,10 +52,10 @@ register_proto_doip_payload_4004(gint proto_doip)
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) table 35 */
 	{
-	    &hf_diag_power_mode,
+	    &hf_dpm,
 	    {
 	        "Diagnostic power mode",
-		"doip.payload.dpm",
+		"doip.dpm",
 		FT_UINT16,
 		BASE_HEX | BASE_RANGE_STRING,
 		RVALS(power_mode_values),
@@ -112,7 +112,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_DIAG_POWER_MODE_POS = 0;
     const gint DIAG_POWER_MODE_LEN = 1;
 
-    insert_item_to_tree(tree, hf_diag_power_mode, tvb, REL_DIAG_POWER_MODE_POS, DIAG_POWER_MODE_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_dpm, tvb, REL_DIAG_POWER_MODE_POS, DIAG_POWER_MODE_LEN, ENC_BIG_ENDIAN);
 }
 
 

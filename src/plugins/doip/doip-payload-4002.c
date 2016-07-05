@@ -65,7 +65,7 @@ register_proto_doip_payload_4002(gint proto_doip)
 	    &hf_nd,
 	    {
 		"Node type",
-		"doip.payload.nd",
+		"doip.nd",
 		FT_UINT16,
 		BASE_HEX | BASE_RANGE_STRING,
 		RVALS(node_types),
@@ -78,7 +78,7 @@ register_proto_doip_payload_4002(gint proto_doip)
 	    &hf_mcts,
 	    {
 		"Max. concurrent TCP_DATA sockets",
-		"doip.payload.mcts",
+		"doip.mcts",
 		FT_UINT8,
 		BASE_DEC,
 		NULL,
@@ -91,7 +91,7 @@ register_proto_doip_payload_4002(gint proto_doip)
 	    &hf_ncts,
 	    {
 		"Currently open TCP_DATA sockets",
-		"doip.routing.payload.ncts",
+		"doip.ncts",
 		FT_UINT8,
 		BASE_DEC,
 		NULL,
@@ -104,7 +104,7 @@ register_proto_doip_payload_4002(gint proto_doip)
 	    &hf_mds,
 	    {
 	        "Max. data size",
-	        "doip.payload.mds",
+	        "doip.mds",
 	        FT_UINT32,
 	        BASE_DEC,
 		NULL,

@@ -23,16 +23,16 @@
 #include "doip-payload-0005.h"
 
 /* Source address */
-static gint hf_doip_payload_sa = -1; 
+static gint hf_sa = -1; 
 
 /* Activation type */
-static gint hf_doip_payload_at = -1; 
+static gint hf_at = -1; 
 
 /* Reserved by this part of ISO 13400 */
-static gint hf_doip_payload_iso = -1; 
+static gint hf_iso = -1; 
 
 /* Reserved for OEM-specific use */
-static gint hf_doip_payload_oem = -1; 
+static gint hf_oem = -1; 
 
 static gint ett_routing_activation_request = -1;
 
@@ -84,10 +84,10 @@ register_proto_doip_payload_0005(gint proto_doip)
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) */
         {
-            &hf_doip_payload_sa,
+            &hf_sa,
             {
                 "Source address",
-                "doip.payload.sa",
+                "doip.sa",
                 FT_UINT16,
                 BASE_HEX | BASE_RANGE_STRING,
 		 RVALS(source_address_values),
@@ -97,10 +97,10 @@ register_proto_doip_payload_0005(gint proto_doip)
             }
         },
         {
-            &hf_doip_payload_at,
+            &hf_at,
             {
                 "Activation type",
-                "doip.payload.at",
+                "doip.at",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(activation_types),
@@ -110,10 +110,10 @@ register_proto_doip_payload_0005(gint proto_doip)
             }
         },
         {
-            &hf_doip_payload_iso,
+            &hf_iso,
             {
                 "Reserved by ISO",
-                "doip.payload.iso",
+                "doip.iso",
                 FT_BYTES,
                 BASE_NONE,
                 NULL,
@@ -123,10 +123,10 @@ register_proto_doip_payload_0005(gint proto_doip)
             }
         },
         {
-            &hf_doip_payload_oem,
+            &hf_oem,
             {
                 "Reserved for OEM",
-                "doip.payload.oem",
+                "doip.oem",
 				FT_BYTES,
                 BASE_NONE,
                 NULL,
@@ -198,12 +198,12 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 
     gboolean oemReservedIsPresent = ((gint) payloadLength) >= (REL_OEM_RESERVED_POS + OEM_RESERVED_LEN);
 
-    insert_item_to_tree(tree, hf_doip_payload_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_doip_payload_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_doip_payload_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA); /* For FT_BYTES fields the encoding is not relevant */
+    insert_item_to_tree(tree, hf_sa, tvb, REL_SOURCE_ADDR_POS, SOURCE_ADDR_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_at, tvb, REL_ACT_TYPE_POS, ACT_TYPE_LEN, ENC_BIG_ENDIAN);
+    insert_item_to_tree(tree, hf_iso, tvb, REL_ISO_RESERVED_POS, ISO_RESERVED_LEN, ENC_NA); /* For FT_BYTES fields the encoding is not relevant */
     if(oemReservedIsPresent)
     {
-        insert_item_to_tree(tree, hf_doip_payload_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
+        insert_item_to_tree(tree, hf_oem, tvb, REL_OEM_RESERVED_POS, OEM_RESERVED_LEN, ENC_NA);
     }
 }
 
