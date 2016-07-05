@@ -198,7 +198,7 @@ register_udp_test_equipment_messages(packet_info *pinfo)
     if(dynamic_port_is_possible)
     {
         doip_dyn_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
-        dissector_add_uint("udp.dstport", srcport, doip_dyn_udp_handle);
+        dissector_add_uint("udp.port", srcport, doip_dyn_udp_handle);
     }
 }
 
