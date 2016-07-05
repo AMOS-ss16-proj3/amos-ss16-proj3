@@ -28,8 +28,8 @@ static gint hf_sa = -1;
 /* Target address */
 static gint hf_ta = -1; 
 
-/* Ack code */
-static gint hf_ac = -1;
+/* ACK code */
+static gint hf_ack = -1;
 
 /* Previous diagnostic message data */
 static gint hf_pdmd = -1;
@@ -90,10 +90,10 @@ register_proto_doip_payload_8002(gint proto_doip)
             }
         },
         {
-            &hf_ac,
+            &hf_ack,
             {
                 "ACK code",
-                "doip.ac",
+                "doip.ack",
                 FT_UINT8,  
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(ack_codes),
@@ -182,8 +182,8 @@ fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 
     insert_item_to_tree(tree, hf_sa, tvb, REL_SRC_ADDR_POS, SRC_ADDR_LEN, ENC_BIG_ENDIAN);
     insert_item_to_tree(tree, hf_ta, tvb, REL_TARGET_ADDR_POS, TARGET_ADDR_LEN, ENC_BIG_ENDIAN);
-    insert_item_to_tree(tree, hf_ac, tvb, REL_ACK_CODE_POS, ACK_CODE_LEN, ENC_BIG_ENDIAN);
-
+    insert_item_to_tree(tree, hf_ack, tvb, REL_ACK_CODE_POS, ACK_CODE_LEN, ENC_BIG_ENDIAN);
+    /* only insert this item if needed, since it is optional */
     if(has_prev_diag_msg)
     {
         prev_diag_msg_len = payload_len - REL_PREV_DIAG_MSG_POS;
