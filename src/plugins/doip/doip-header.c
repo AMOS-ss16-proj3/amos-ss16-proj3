@@ -106,7 +106,7 @@ validate_doip_version(guint8 version, guint8 inverse_version);
 int 
 get_header_length(void)
 {
-	return DOIP_HEADER_LENGTH;
+    return DOIP_HEADER_LENGTH;
 }
 
 doip_header *

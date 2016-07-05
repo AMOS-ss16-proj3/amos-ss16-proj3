@@ -67,22 +67,22 @@ static const range_string routing_actvation_response_codes[] = {
 * on table 39
 */
 static const range_string address_values[] = {
-	{ 0x0000, 0x0000, "ISO/SAE reserved" },
-	{ 0x0001, 0x0DFF, "Vehicle manufacturer specific" },
-	{ 0x0E00, 0x0FFF, "Reserved for addresses of external test equipment" },
-	{ 0x0E00, 0x0E7F, "External legislated diagnostics test equipment (e.g. for emissions test scan-tool use)" },
-	{ 0x0E80, 0x0EFF, "External vehicle-manufacturer-/aftermarket-enhanced diagnostics test equipment" },
-	{ 0x0F00, 0x0F7F, "Internal data collection/on-board diagnostic equipment (for vehicle-manufacturer use only)" },
-	{ 0x0F80, 0x0FFF, "External prolonged data collection equipment (vehicle data recorders and loggers, e.g. used by insurance companies or to collect vehicle fleet data)" },
-	{ 0x1000, 0x7FFF, "Vehicle manufacturer specific" },
-	{ 0x8000, 0xCFFF, "ISO/SAE reserved" },
-	{ 0xD000, 0xDFFF, "Reserved for SAE Truck & Bus Control and Communication Committee" },
-	{ 0xE000, 0xE3FF, "ISO/SAE-reserved functional group addresses" },
-	{ 0xE000, 0xE000, "ISO 27145 WWH-OBD functional group address" },
-	{ 0xE001, 0xE3FF, "ISO/SAE reserved" },
-	{ 0xE400, 0xEFFF, "Vehicle-manufacturer-defined functional group logical addresses" },
-	{ 0xF000, 0xFFFF, "ISO/SAE reserved" },
-	{ 0x0000, 0x0000, NULL }
+    { 0x0000, 0x0000, "ISO/SAE reserved" },
+    { 0x0001, 0x0DFF, "Vehicle manufacturer specific" },
+    { 0x0E00, 0x0FFF, "Reserved for addresses of external test equipment" },
+    { 0x0E00, 0x0E7F, "External legislated diagnostics test equipment (e.g. for emissions test scan-tool use)" },
+    { 0x0E80, 0x0EFF, "External vehicle-manufacturer-/aftermarket-enhanced diagnostics test equipment" },
+    { 0x0F00, 0x0F7F, "Internal data collection/on-board diagnostic equipment (for vehicle-manufacturer use only)" },
+    { 0x0F80, 0x0FFF, "External prolonged data collection equipment (vehicle data recorders and loggers, e.g. used by insurance companies or to collect vehicle fleet data)" },
+    { 0x1000, 0x7FFF, "Vehicle manufacturer specific" },
+    { 0x8000, 0xCFFF, "ISO/SAE reserved" },
+    { 0xD000, 0xDFFF, "Reserved for SAE Truck & Bus Control and Communication Committee" },
+    { 0xE000, 0xE3FF, "ISO/SAE-reserved functional group addresses" },
+    { 0xE000, 0xE000, "ISO 27145 WWH-OBD functional group address" },
+    { 0xE001, 0xE3FF, "ISO/SAE reserved" },
+    { 0xE400, 0xEFFF, "Vehicle-manufacturer-defined functional group logical addresses" },
+    { 0xF000, 0xFFFF, "ISO/SAE reserved" },
+    { 0x0000, 0x0000, NULL }
 };
 
 /* helper function for filling the proto_tree
@@ -113,8 +113,8 @@ register_proto_doip_payload_0006(gint proto_doip)
                 "Logical address of external test equipment",
                 "doip.tea",
                 FT_UINT16,
-		 BASE_HEX | BASE_RANGE_STRING,
-		 RVALS(address_values),
+         BASE_HEX | BASE_RANGE_STRING,
+         RVALS(address_values),
                 0x0,
                 "The logical address of the external test euqipment that requested routing activation.",
                 HFILL
@@ -126,8 +126,8 @@ register_proto_doip_payload_0006(gint proto_doip)
                 "Logical address of doip entity",
                 "doip.ea",
                 FT_UINT16,
-		 BASE_HEX | BASE_RANGE_STRING,
-		 RVALS(address_values),
+         BASE_HEX | BASE_RANGE_STRING,
+         RVALS(address_values),
                 0x0,
                 "The logical address of the responding DoIP entity.",
                 HFILL

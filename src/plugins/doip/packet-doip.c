@@ -65,99 +65,99 @@ get_doip_message_len(packet_info *, tvbuff_t *, int);
 static int
 dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
 {
-	doip_header header;
-	payload_handler handler;
+    doip_header header;
+    payload_handler handler;
 
 
-	proto_item *ti;
-	/*proto_tree *doip_tree;*/
-
-#ifndef NDEBUG
-	printf("tvb: %p\t pinfo: %p\t tree: %p\n", tvb, pinfo, tree);
-#endif /* NDEBUG */
-
-	if (pinfo)
-	{
-		col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
-	}
-
-	if (tvb && tree)
-	{
-		if (fill_doip_header(&header, tvb))
-		{
-#ifndef NDEBUG
-			print_doip_header(DEBUG_OUTPUT, &header);
-#endif /* NDEBUG */
-
-
-			/* Create sub-tree which can be used for inserting proto-items */
-			ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
+    proto_item *ti;
+    /*proto_tree *doip_tree;*/
 
 #ifndef NDEBUG
-			printf("before visualize doip header\n");
+    printf("tvb: %p\t pinfo: %p\t tree: %p\n", tvb, pinfo, tree);
 #endif /* NDEBUG */
-			/* append all doip-header infos to proto-item */
-			visualize_doip_header(&header, ti);
 
-			/* find a handler suited for the given doip-type (header->payload.type) */
+    if (pinfo)
+    {
+        col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
+    }
+
+    if (tvb && tree)
+    {
+        if (fill_doip_header(&header, tvb))
+        {
 #ifndef NDEBUG
-			printf("before find matching payload handler\n");
+            print_doip_header(DEBUG_OUTPUT, &header);
 #endif /* NDEBUG */
-			handler = find_matching_payload_handler(&header);
+
+
+            /* Create sub-tree which can be used for inserting proto-items */
+            ti = proto_tree_add_item(tree, proto_doip, tvb, 0, -1, ENC_NA);
 
 #ifndef NDEBUG
-			printf("payload handler: %p\n", handler);
+            printf("before visualize doip header\n");
 #endif /* NDEBUG */
-			if (handler)
-			{
-				handler(&header, ti, pinfo);
-			}
-		}
-	}
-	return tvb_captured_length(tvb);
+            /* append all doip-header infos to proto-item */
+            visualize_doip_header(&header, ti);
+
+            /* find a handler suited for the given doip-type (header->payload.type) */
+#ifndef NDEBUG
+            printf("before find matching payload handler\n");
+#endif /* NDEBUG */
+            handler = find_matching_payload_handler(&header);
+
+#ifndef NDEBUG
+            printf("payload handler: %p\n", handler);
+#endif /* NDEBUG */
+            if (handler)
+            {
+                handler(&header, ti, pinfo);
+            }
+        }
+    }
+    return tvb_captured_length(tvb);
 }
 
 /* determine Protocol Data Unit (PDU) length of protocol doip */
 static guint get_doip_message_len(packet_info *pinfo _U_, tvbuff_t *tvb, int offset) 
 {
-	guint header_length;
-	guint payload_length;
-	doip_header header;
+    guint header_length;
+    guint payload_length;
+    doip_header header;
 
-	header_length = (guint)get_header_length();
-	tvb = tvb_new_subset_length(tvb, (gint) offset, (gint) header_length);
+    header_length = (guint)get_header_length();
+    tvb = tvb_new_subset_length(tvb, (gint) offset, (gint) header_length);
 
-	fill_doip_header(&header, tvb);
+    fill_doip_header(&header, tvb);
 
-	payload_length = (guint) header.payload.length;
+    payload_length = (guint) header.payload.length;
 
-	return header_length + payload_length;
+    return header_length + payload_length;
 }
 
 static int
 dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data) 
 {
-	gint header_length = get_header_length();
-	/*Reassembling TCP Fragments with the first three paramters handed over and additional parameters
-	as described in Wireshark Developers Guide on page 66 */
-	tcp_dissect_pdus(
+    gint header_length = get_header_length();
+    /*Reassembling TCP Fragments with the first three paramters handed over and additional parameters
+    as described in Wireshark Developers Guide on page 66 */
+    tcp_dissect_pdus(
         tvb,
         pinfo,
         tree,
         TRUE,
         header_length,
-		get_doip_message_len,
+        get_doip_message_len,
         dissect_doip, data
     );
-	return tvb_captured_length(tvb);
+    return tvb_captured_length(tvb);
 }
 
 static void
 dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-	register_udp_test_equipment_messages(pinfo);
+    register_udp_test_equipment_messages(pinfo);
 
-	dissect_doip(tvb, pinfo, tree, NULL);
+    dissect_doip(tvb, pinfo, tree, NULL);
 }
 
 static void
@@ -180,12 +180,12 @@ register_udp_test_equipment_messages(packet_info *pinfo)
     */
     guint32 srcport;
     guint32 dstport;
-	gboolean dynamic_port_is_possible =  FALSE;
+    gboolean dynamic_port_is_possible =  FALSE;
 
     dissector_handle_t doip_dyn_udp_handle;
 
-	if (pinfo)
-	{
+    if (pinfo)
+    {
 #ifndef NDEBUG
         printf("udp on srcport: %d, destport: %d\n", pinfo->srcport, pinfo->destport);
 #endif /* NDEBUG */
@@ -193,7 +193,7 @@ register_udp_test_equipment_messages(packet_info *pinfo)
         dstport = pinfo->destport;
 
         dynamic_port_is_possible = srcport != 13400 && dstport == 13400;
-	}
+    }
 
     if(dynamic_port_is_possible)
     {
@@ -205,31 +205,31 @@ register_udp_test_equipment_messages(packet_info *pinfo)
 void
 proto_register_doip(void)
 {
-	proto_doip = proto_register_protocol(
-		DOIP_FULLNAME,
-		DOIP_SHORTNAME,
-		DOIP_ABBREV
-		);
+    proto_doip = proto_register_protocol(
+        DOIP_FULLNAME,
+        DOIP_SHORTNAME,
+        DOIP_ABBREV
+        );
 
-	register_proto_doip_payload(proto_doip);
+    register_proto_doip_payload(proto_doip);
 }
 
 void
 proto_reg_handoff_doip(void)
 {
     static dissector_handle_t doip_tcp_handle;
-	static dissector_handle_t doip_udp_handle;
+    static dissector_handle_t doip_udp_handle;
 
 #if VERSION_MAJOR == 1
-	doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
+    doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
 #else 
-	doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
+    doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
 #endif /* VERSION_MAJOR == 1 */
 
-	doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
+    doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
 
-	dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_tcp_handle);
-	dissector_add_uint("udp.port", UDP_DISCOVERY_PORT, doip_udp_handle);
+    dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_tcp_handle);
+    dissector_add_uint("udp.port", UDP_DISCOVERY_PORT, doip_udp_handle);
 }
 
 

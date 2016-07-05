@@ -37,11 +37,11 @@ static const gchar *description = "Diagnostic Power Mode";
 * on table 35
 */
 static const range_string power_mode_values[] = {
-	{ 0x00, 0x00, "not ready" },
-	{ 0x01, 0x01, "ready" },
-	{ 0x02, 0x02, "not supported" },
-	{ 0x03, 0xFF, "reserved by this part of ISO 13400" },
-	{ 0x00, 0x00, NULL }
+    { 0x00, 0x00, "not ready" },
+    { 0x01, 0x01, "ready" },
+    { 0x02, 0x02, "not supported" },
+    { 0x03, 0xFF, "reserved by this part of ISO 13400" },
+    { 0x00, 0x00, NULL }
 };
 
 /* values which will be displayed for payload type 4004 in proto_tree */
@@ -51,28 +51,28 @@ register_proto_doip_payload_4004(gint proto_doip)
     static hf_register_info hf[] =
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) table 35 */
-	{
-	    &hf_dpm,
-	    {
-	        "Diagnostic power mode",
-		"doip.dpm",
-		FT_UINT16,
-		BASE_HEX | BASE_RANGE_STRING,
-		RVALS(power_mode_values),
-		0x0,
-		"Identifies whether or not the vehicle is in diagnostic power mode and ready to perform reliable diagnostics.",
-		HFILL
-	    }
-	}
+    {
+        &hf_dpm,
+        {
+            "Diagnostic power mode",
+        "doip.dpm",
+        FT_UINT16,
+        BASE_HEX | BASE_RANGE_STRING,
+        RVALS(power_mode_values),
+        0x0,
+        "Identifies whether or not the vehicle is in diagnostic power mode and ready to perform reliable diagnostics.",
+        HFILL
+        }
+    }
     };
 
 
     static gint *ett[] =
     {
-	&ett_diagnostic_power_mode
+    &ett_diagnostic_power_mode
     };
 
-	/* one-time registration after Wireshark is started */
+    /* one-time registration after Wireshark is started */
     proto_register_field_array(proto_doip, hf, array_length(hf));
     proto_register_subtree_array(ett, array_length(ett));
 }
@@ -94,7 +94,7 @@ dissect_payload_4004(doip_header *header, proto_item *pitem, packet_info *pinfo)
     /* check for a valid tvbuff_t */
     if (doip_tree && tvb)
     {
-	fill_tree(doip_tree, tvb);
+    fill_tree(doip_tree, tvb);
     }
 }
 

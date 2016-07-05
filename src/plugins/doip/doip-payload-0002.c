@@ -49,7 +49,7 @@ register_proto_doip_payload_0002(gint proto_doip)
                 BASE_NONE,
                 NULL,
                 0x0,
-				"The DoIP entity's unique ID (e.g. network interface's MAC address) \
+                "The DoIP entity's unique ID (e.g. network interface's MAC address) \
                 that shall respond to the vehicle identification request message.",
                 HFILL
             }
@@ -59,17 +59,17 @@ register_proto_doip_payload_0002(gint proto_doip)
 
     static gint *ett[] = 
     {
-		&ett_vehicle_identification_request_eid
+        &ett_vehicle_identification_request_eid
     };
 
-	/* one-time registration after Wireshark is started */
+    /* one-time registration after Wireshark is started */
     proto_register_field_array(proto_doip, hf, array_length(hf));  
     proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_0002(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
+dissect_payload_0002(doip_header *header, proto_item *pitem, packet_info *pinfo)       
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
@@ -79,7 +79,7 @@ dissect_payload_0002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
-	doip_tree = proto_item_add_subtree(pitem, ett_vehicle_identification_request_eid);
+    doip_tree = proto_item_add_subtree(pitem, ett_vehicle_identification_request_eid);
 
     /* check for a valid tvbuff_t */
     if(doip_tree && tvb)
@@ -102,7 +102,7 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb)
     const gint REL_EID_POS = 0;
     const gint EID_LEN = 6;
 
-	insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
+    insert_item_to_tree(tree, hf_eid, tvb, REL_EID_POS, EID_LEN, ENC_NA);
 }
 
 

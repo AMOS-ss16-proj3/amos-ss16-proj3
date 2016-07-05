@@ -42,7 +42,7 @@ static const range_string nack_codes[] = {
     { 0x02, 0x02, "Message too large" },
     { 0x03, 0x03, "Out of memory" },
     { 0x04, 0x04, "Invalid payload lenght" },
-    { 0x05, 0xFF, "Reserved by this part of ISO 13400"}	
+    { 0x05, 0xFF, "Reserved by this part of ISO 13400"}    
 };
 
 
@@ -54,7 +54,7 @@ register_proto_doip_payload_0000(gint proto_doip)
     {
         /* prepare info for the header field based on ISO 13400-2:2012(E) */
         {
-			&hf_nc,
+            &hf_nc,
             {
                 "Generic DoIP header NACK code",
                 "doip.nc",

@@ -125,14 +125,14 @@ register_proto_doip_payload_8002(gint proto_doip)
         &ett_diag_msg_pos_resp 
     };
 
-	/* one-time registration after Wireshark is started */
+    /* one-time registration after Wireshark is started */
     proto_register_field_array(proto_doip, hf, array_length(hf));  
     proto_register_subtree_array(ett, array_length(ett));
 }
 
 /* After a doip row is selected in Wireshark */
 void
-dissect_payload_8002(doip_header *header, proto_item *pitem, packet_info *pinfo)   	
+dissect_payload_8002(doip_header *header, proto_item *pitem, packet_info *pinfo)       
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
