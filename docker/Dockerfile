@@ -19,12 +19,14 @@
 
 FROM osrgroup/amos-downloader-base-image:1.0
 
-ENV DOIP_V1 doip_v1.so
-ENV DOIP_V2 doip_v2.so
+#ENV DOIP_V1 doip_v1.so
+#ENV DOIP_V2 doip_v2.so
+
+ADD ./index.html /var/www/html/index.html
 
 ADD ./plugins/doip_v1.so /var/www/html/doip_v1.so
 ADD ./plugins/doip_v2.so /var/www/html/doip_v2.so
-ADD ./insert_plugins.sh /assets/insert_plugins.sh
-ADD ./insert-win-link.sh /assets/insert-win-link.sh
-RUN bash /assets/insert_plugins.sh
-RUN bash /assets/insert-win-link.sh
+#ADD ./insert_plugins.sh /assets/insert_plugins.sh
+#ADD ./insert-win-link.sh /assets/insert-win-link.sh
+#RUN bash /assets/insert_plugins.sh
+#RUN bash /assets/insert-win-link.sh
