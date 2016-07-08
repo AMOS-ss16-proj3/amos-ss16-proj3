@@ -17,24 +17,22 @@ install:
 script: 
     - echo "compiling doip-dissector"
     - bash build/plugin.sh
-
     - echo "preparing unit tests"
     - build/cunit_install.sh
-    - echo "checking whether cunit has been installed properly or not"
-    - /sbin/ldconfig -p | grep cunit
     - echo "compiling tests"
     - make -C ./src/test/
     - echo "executing tests"
     - ./src/test/bin/doip-test
 
 after_success:
-    # create docker image
+    - echo "create docker image"
     - bash build/prepare_docker.sh
     - docker build -t jufuch/amos-ss16-proj3 ./docker
-    # upload image to wireshark
+    - echo "upload image to docker"
     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="$DOCKER_EMAIL"
     - docker push jufuch/amos-ss16-proj3:latest
     - docker logout
+    - echo "jenkins-deploy (if required)"
     - bash deploy/deploytrigger.sh
 
 

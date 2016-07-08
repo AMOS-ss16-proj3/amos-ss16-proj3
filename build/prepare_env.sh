@@ -22,7 +22,20 @@ set -ue
 echo "preparing build environment"
 if  ! command -v wireshark > /dev/null
 then
-    sudo apt-get -qy install wireshark-dev
+    #sudo apt-get -qy install wireshark-dev
+    sudo apt-get -qy install autoconf \
+        automake \
+        autotools-dev \
+        cdbs \
+        debhelper \
+        libglib2.0-dev \
+        libpcap0.8-dev \
+        libtool \
+        omniidl \
+        python \
+        python-ply \
+        python2.7 \
+        snacc
 fi
 
 echo "preparing latest Wireshark soucecode"
