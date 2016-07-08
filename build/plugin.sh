@@ -20,5 +20,6 @@
 set -ue
 
 echo "compiling doip-plugin"
-make -C ./wireshark/plugins/doip
+make -C ./wireshark1/plugins/doip
+make -C ./wireshark2/plugins/doip
 

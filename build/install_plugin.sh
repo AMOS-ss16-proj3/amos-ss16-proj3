@@ -20,4 +20,4 @@
 set -ue
 
 mkdir --parents ~/.wireshark/plugins
-cp ./wireshark/plugins/doip/.libs/doip.so ~/.wireshark/plugins/
+cp ./wireshark2/plugins/doip/.libs/doip*.so ~/.wireshark/plugins/

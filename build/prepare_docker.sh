@@ -23,7 +23,8 @@ echo 'preparing docker'
 mkdir -p ./docker/plugins
 
 echo 'copying plugin to docker'
-cp ./wireshark/plugins/doip/.libs/doip.so ./docker/plugins/
+cp ./wireshark1/plugins/doip/.libs/doip.so ./docker/plugins/doip_v1.so
+cp ./wireshark2/plugins/doip/.libs/doip.so ./docker/plugins/doip_v2.so
 
 
 

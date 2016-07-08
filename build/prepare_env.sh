@@ -39,25 +39,40 @@ then
 fi
 
 echo "preparing latest Wireshark soucecode"
-if [ ! -d wireshark ]
+if [ ! -d wireshark1 ]
 then
     if [ ! -f wireshark-1.12.11.tar.bz2 ]
     then
-        #URL=https://www.wireshark.org/download/src/wireshark-2.0.2.tar.bz2
         URL=https://www.wireshark.org/download/src/all-versions/wireshark-1.12.11.tar.bz2
         wget ${URL}
     fi
 
     tar xf wireshark-1.12.11.tar.bz2
-    mv wireshark-1.12.11 wireshark
+    mv wireshark-1.12.11 wireshark1
+fi
+
+if [ ! -d wireshark2 ]
+then
+    if [ ! -f wireshark-2.0.2.tar.bz2 ]
+    then
+        URL=https://www.wireshark.org/download/src/all-versions/wireshark-2.0.2.tar.bz2
+        wget ${URL}
+    fi
+
+    tar xf wireshark-2.0.2.tar.bz2
+    mv wireshark-2.0.2 wireshark2
 fi
 
 echo "copying plugin-source to wireshark directory"
-cp -R ./src/plugins/doip/ ./wireshark/plugins/
+cp -R ./src/plugins/doip/ ./wireshark1/plugins/
+cp -R ./src/plugins/doip/ ./wireshark2/plugins/
 
 echo "configuring wireshark environment"
-cp -R ./src/plugins/Custom.* ./wireshark/plugins/
-cd ./wireshark && bash ./autogen.sh && cd ~-
-cd ./wireshark && ./configure --enable-wireshark=no && cd ~-
+cp -R ./src/plugins/Custom.* ./wireshark1/plugins/
+cp -R ./src/plugins/Custom.* ./wireshark2/plugins/
+cd ./wireshark1 && bash ./autogen.sh && cd ~-
+cd ./wireshark2 && bash ./autogen.sh && cd ~-
+cd ./wireshark1 && ./configure --enable-wireshark=no && cd ~-
+cd ./wireshark2 && ./configure --enable-wireshark=no && cd ~-
 #cd ./wireshark && ./configure --enable-wireshark=no CFLAGS=-DNDEBUG && cd ~-
 
