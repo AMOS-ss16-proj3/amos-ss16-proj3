@@ -57,8 +57,16 @@ dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *, void *);
 static void
 register_udp_test_equipment_messages(packet_info *);
 
+#if VERSION_MAJOR == 1
+/** If-Endifing this declaration of code to avoid the compiler complaining
+ * about an unused function
+*/
 static guint
-get_doip_message_len(packet_info *, tvbuff_t *, int);
+get_doip_msg_len_w1(packet_info *, tvbuff_t *, int);
+#endif
+
+static guint
+get_doip_msg_len_w2(packet_info *, tvbuff_t *, int, void *);
 
 
 /* function implementation is now called from tcp_dissect_pdus */
@@ -117,8 +125,27 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
     return tvb_captured_length(tvb);
 }
 
+#if VERSION_MAJOR == 1
+/** If-Endifing this declaration of code to avoid the compiler complaining
+ * about an unused function
+*/
+static guint
+get_doip_msg_len_w1(packet_info *pinfo, tvbuff_t *tvb, int offset)
+{
+    /** Unfortunately there was an API-change between Wireshark versions 1 and 2.
+     * tcp_dissect_pdus() from "epan/dissectors/packet-tcp.h" unfortunately changed
+     * as well. We need this function to assemble split DoIP-messages.
+     * tcp_dissect_pdus() requires a function-pointer which indicates a messages length.
+     * The arguments passed to this function, however, changed. Therefore we
+     * have to introduce two different functions both for version 1 + 2.
+    */
+    return get_doip_msg_len_w2(pinfo, tvb, offset, NULL);
+}
+#endif
+
 /* determine Protocol Data Unit (PDU) length of protocol doip */
-static guint get_doip_message_len(packet_info *pinfo _U_, tvbuff_t *tvb, int offset) 
+static guint
+get_doip_msg_len_w2(packet_info *pinfo _U_, tvbuff_t *tvb, int offset, void *dissector_data _U_)
 {
     guint header_length;
     guint payload_length;
@@ -146,8 +173,13 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data
         tree,
         TRUE,
         header_length,
-        get_doip_message_len,
-        dissect_doip, data
+#if VERSION_MAJOR == 1
+        get_doip_msg_len_w1,
+#else
+        get_doip_msg_len_w2,
+#endif
+        dissect_doip,
+        data
     );
     return tvb_captured_length(tvb);
 }
@@ -222,8 +254,8 @@ proto_reg_handoff_doip(void)
 
 #if VERSION_MAJOR == 1
     doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
-#else 
-    doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
+#else
+    doip_tcp_handle = new_create_dissector_handle((new_dissector_t)dissect_doip_tcp, proto_doip);
 #endif /* VERSION_MAJOR == 1 */
 
     doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
