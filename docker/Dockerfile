@@ -19,8 +19,10 @@
 
 FROM osrgroup/amos-downloader-base-image:1.0
 
-ENV HTML_INDEX_FILE doip.so
+ENV HTML_INDEX_FILE_1 doip_v1.so
+ENV HTML_INDEX_FILE_2 doip_v2.so
 
-ADD ./plugins/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
+ADD ./plugins/$HTML_INDEX_FILE_1 /var/www/html/$HTML_INDEX_FILE_1
+ADD ./plugins/$HTML_INDEX_FILE_2 /var/www/html/$HTML_INDEX_FILE_2
 ADD ./insert-win-link.sh /assets/insert-win-link.sh
 RUN bash /assets/insert-win-link.sh
