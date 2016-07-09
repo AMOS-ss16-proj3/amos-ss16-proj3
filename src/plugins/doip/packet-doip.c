@@ -254,8 +254,10 @@ proto_reg_handoff_doip(void)
 
 #if VERSION_MAJOR == 1
     doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
-#else
+#elif VERSION_MINOR == 0
     doip_tcp_handle = new_create_dissector_handle((new_dissector_t)dissect_doip_tcp, proto_doip);
+#else
+    doip_tcp_handle = create_dissector_handle(dissect_doip_tcp, proto_doip);
 #endif /* VERSION_MAJOR == 1 */
 
     doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
