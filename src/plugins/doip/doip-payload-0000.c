@@ -57,7 +57,7 @@ register_proto_doip_payload_0000(gint proto_doip)
             &hf_nc,
             {
                 "Generic DoIP header NACK code",
-                "doip.nc",
+                "doip.nack",
                 FT_UINT8,
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(nack_codes),
