@@ -36,40 +36,79 @@ static const char *DOIP_FULLNAME = "Diagnostic over IP";
 static const char *DOIP_SHORTNAME = "DoIP";
 static const char *DOIP_ABBREV = "doip";
 
+/** Ports are defined in ISO 13400-2:2012(E)
+ * page 25, table 15
+*/
 static const guint32 TCP_DATA_PORT = 13400;
 static const guint32 UDP_DISCOVERY_PORT = 13400;
 static const guint32 UDP_TEST_EQUIPMENT = 13400;
 
-
+/** Protocol identifier
+ * This must be set only once in proto_register_doip()!
+*/
 static gint proto_doip = -1;
 
 
 /* function declaration */
+
+/** Actual implementation of dissect-function.
+ * It will be called either from dissect_doip_tcp() or dissect_doip_udp()
+*/
 static int
 dissect_doip(tvbuff_t *, packet_info *, proto_tree *, void *);
 
+/** Will be called by Wireshark if there is any UDP-communication
+ * via ports specified in proto_reg_handoff_doip()
+ * After a few checks it will call dissect_doip() for further dissecting
+*/
 static void
 dissect_doip_udp(tvbuff_t *, packet_info *, proto_tree *);
 
+/** Will be called by Wireshark if there is any TCP-communication
+ * via ports specified in proto_reg_handoff_doip()
+ * It may occure, that multiple doip-messages are within a single TCP
+ * segment or that a doip-msg is split upon multiple TCP segments.
+ * If one of these cases occures, this function will take care of re-assembling
+ * or splitting and call dissect_doip() with tvbuff_t which consist of a single
+ * doip-message.
+ * Otherwise dissect_doip() will be called normally.
+*/
 static int
 dissect_doip_tcp(tvbuff_t *, packet_info *, proto_tree *, void *);
 
+/** In rare cases it may occure that there is DoIP-communication via ports
+ * other than 13400. This function will analyze wheter there is an indicator
+ * for such behaviour and takes all required  measures.
+ * Further details are given in the functions body.
+*/
 static void
 register_udp_test_equipment_messages(packet_info *);
 
 #if VERSION_MAJOR == 1
-/** If-Endifing this declaration of code to avoid the compiler complaining
+/** If-Endif-ing this function declaration to avoid the compiler complaining
  * about an unused function
+*/
+
+/** Determine length of actual a doip-message
+ * @param[in] packet_info *;
+ * @param[in] tvbuff_t *;
+ * @param[in] int; tvb-offset.
+ *            After x bytes the actual doip-msg is expected to start
 */
 static guint
 get_doip_msg_len_w1(packet_info *, tvbuff_t *, int);
 #endif
 
+/** Determine length of actual a doip-message
+ * @param[in] packet_info *;
+ * @param[in] tvbuff_t *;
+ * @param[in] int; tvb-offset.
+ *            After x bytes the actual doip-msg is expected to start
+*/
 static guint
 get_doip_msg_len_w2(packet_info *, tvbuff_t *, int, void *);
 
 
-/* function implementation is now called from tcp_dissect_pdus */
 static int
 dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
 {
@@ -86,6 +125,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 
     if (pinfo)
     {
+        /** Set wireshark's info-column */
         col_set_str(pinfo->cinfo, COL_PROTOCOL, DOIP_SHORTNAME);
     }
 
@@ -118,6 +158,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 #endif /* NDEBUG */
             if (handler)
             {
+                /** further dissect payload */
                 handler(&header, ti, pinfo);
             }
         }
@@ -126,7 +167,7 @@ dissect_doip(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_
 }
 
 #if VERSION_MAJOR == 1
-/** If-Endifing this declaration of code to avoid the compiler complaining
+/** If-Endif-ing this function declaration to avoid the compiler complaining
  * about an unused function
 */
 static guint
@@ -143,7 +184,6 @@ get_doip_msg_len_w1(packet_info *pinfo, tvbuff_t *tvb, int offset)
 }
 #endif
 
-/* determine Protocol Data Unit (PDU) length of protocol doip */
 static guint
 get_doip_msg_len_w2(packet_info *pinfo _U_, tvbuff_t *tvb, int offset, void *dissector_data _U_)
 {
@@ -187,8 +227,12 @@ dissect_doip_tcp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data
 static void
 dissect_doip_udp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
+    /** If there is a possibility to have communication
+     * over non-specified ports, identify it and take appropriate measures.
+    */
     register_udp_test_equipment_messages(pinfo);
 
+    /** start actual dissecting of tvb. */
     dissect_doip(tvb, pinfo, tree, NULL);
 }
 
@@ -234,6 +278,10 @@ register_udp_test_equipment_messages(packet_info *pinfo)
     }
 }
 
+
+/** This function will be called by wireshark during start-up.
+ * It registers our DoIP-dissector.
+*/
 void
 proto_register_doip(void)
 {
@@ -242,16 +290,25 @@ proto_register_doip(void)
         DOIP_SHORTNAME,
         DOIP_ABBREV
         );
-
+    /* register dissector */
     register_proto_doip_payload(proto_doip);
 }
 
+/** This function will be called by wireshark during start-up.
+ * At this point we specify which kind of network traffic will be passed to our
+ * dissector for further dissecting.
+ * For details see function-body below or ISO 13400-2:2012(E)
+*/
 void
 proto_reg_handoff_doip(void)
 {
     static dissector_handle_t doip_tcp_handle;
     static dissector_handle_t doip_udp_handle;
 
+    /** Create callback which enable wireshark to call our dissector.
+     * Unfortunately there are some API-changes which cause wireshark's
+     * datatypes and functions from version 1 to differ from version 2.
+    */
 #if VERSION_MAJOR == 1
     doip_tcp_handle = new_create_dissector_handle(dissect_doip_tcp, proto_doip);
 #elif VERSION_MINOR == 0
@@ -262,6 +319,11 @@ proto_reg_handoff_doip(void)
 
     doip_udp_handle = create_dissector_handle(dissect_doip_udp, proto_doip);
 
+    /** According to ISO 13400-2:2012(E) page 25 table 15 DoIP messages
+     * will be sent either via UDP or TCP from or to port 13400.
+     * There is, however, an exception wich will be discussed at function 
+     * register_udp_test_equipment_messages().
+    */
     dissector_add_uint("tcp.port", TCP_DATA_PORT, doip_tcp_handle);
     dissector_add_uint("udp.port", UDP_DISCOVERY_PORT, doip_udp_handle);
 }
