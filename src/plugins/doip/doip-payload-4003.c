@@ -29,6 +29,12 @@ static const gchar *description = "Diagnostic power mode information request";
 void
 register_proto_doip_payload_4003(gint proto_doip)
 {
+    /** According to ISO 13400-2:2012(E) table 34 payload type 0x4003
+    * does not contain any additional message elements besides
+    * the doip-header. Therefore this payload-handler
+    * doesn't have to display anything
+    */
+
     /* suppress compiler warning */
     if(proto_doip)
     {
@@ -40,6 +46,12 @@ register_proto_doip_payload_4003(gint proto_doip)
 void
 dissect_payload_4003(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
+    /** According to ISO 13400-2:2012(E) table 34 payload type 0x4003
+    * does not contain any additional message elements besides
+    * the doip-header. Therefore this payload-handler
+    * doesn't have to display anything
+    */
+
     if(pinfo)
     {
         /* set info column to description */

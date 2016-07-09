@@ -98,7 +98,7 @@ register_proto_doip_payload_0004(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
-        /* prepare info for the header field based on ISO 13400-2:2012(E) */
+        /* prepare info for the header field based on ISO 13400-2:2012(E) table 19 */
         {
             &hf_vin,
             {

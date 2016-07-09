@@ -51,16 +51,13 @@ static const range_string node_types[] = {
     { 0x00, 0x00, NULL }
 };
 
-
+/* values which will be displayed for payload type 4002 in proto_tree */
 void
 register_proto_doip_payload_4002(gint proto_doip)
 {
-    /** All "DoIP payload 0x4002" items are described at
-    * ISO 13400-2:2012(E) Table 37
-    */
     static hf_register_info hf[] =
     {
-    /*prepare info for the header field based on ISO 13400 - 2:2012(E)*/
+    /*prepare info for the header field based on ISO 13400 - 2:2012(E) table 37 */
     {
         &hf_nd,
         {

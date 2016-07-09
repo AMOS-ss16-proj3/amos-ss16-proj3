@@ -91,16 +91,13 @@ static const range_string address_values[] = {
 static void
 fill_tree(proto_tree *, tvbuff_t *, guint32);
 
-
+/* values which will be displayed for payload type 0006 in proto_tree */
 void
 register_proto_doip_payload_0006(gint proto_doip)
 {
-    /** All "DoIP payload 0x0006" items are described at
-     * ISO 13400-2:2012(E) Table 24
-    */
     static hf_register_info hf[] = 
     {
-        /* prepare info for version */
+        /* prepare info for the header field based on ISO 13400-2:2012(E) table 24 */
         {
             /** Even though ISO 13400-2:2012(E), Table 39
              * gives a overview over logical addresses 
@@ -209,7 +206,7 @@ dissect_payload_0006(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 32
+    /* Values taken from ISO 13400-2:2012(E) table 24
      *
      * Constants starting with prefix "REL_" indicate a relative
      * offset to a doip-messages payload.

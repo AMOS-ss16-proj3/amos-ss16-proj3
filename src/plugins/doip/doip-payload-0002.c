@@ -39,7 +39,7 @@ register_proto_doip_payload_0002(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
-        /* prepare info for the header field based on ISO 13400-2:2012(E) */
+        /* prepare info for the header field based on ISO 13400-2:2012(E) table 17 */
         {
             &hf_eid,
             {
@@ -91,7 +91,7 @@ dissect_payload_0002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 32
+    /* Values taken from ISO 13400-2:2012(E) table 17
     *
     * Constants starting with prefix "REL_" indicate a relative
     * offset to a doip-messages payload.

@@ -32,6 +32,9 @@ fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Alive check response";
 
+/** Values are defined in ISO 13400-2:2012(E)
+* on table 39
+*/
 static const range_string source_address_values[] = {
     { 0x0000, 0x0000, "ISO/SAE reserved" },
     { 0x0001, 0x0DFF, "Vehicle manufacturer specific" },
@@ -60,7 +63,7 @@ register_proto_doip_payload_0008(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
-        /* prepare info for the header field based on ISO 13400-2:2012(E) */
+        /* prepare info for the header field based on ISO 13400-2:2012(E) table 33 */
         {
             &hf_sa,
             {
@@ -111,7 +114,7 @@ dissect_payload_0008(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 32
+    /* Values taken from ISO 13400-2:2012(E) table 33
     *
     * Constants starting with prefix "REL_" indicate a relative
     * offset to a doip-messages payload.

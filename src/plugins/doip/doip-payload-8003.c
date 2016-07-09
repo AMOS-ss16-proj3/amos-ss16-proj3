@@ -38,7 +38,7 @@ static gint ett_diag_msg_pos_resp = -1;
 
 /** Possible values for negative acknoledges
  * Values taken and description from ISO 13400-2:2012(E)
- * page 38 table 31.
+ * table 31.
 */
 static const range_string nack_codes[] = 
 {
@@ -60,13 +60,14 @@ fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Diagnostic message negative acknowledge";
 
+/* values which will be displayed for payload type 8003 in proto_tree */
 void
 register_proto_doip_payload_8003(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
         /* prepare info for the header field
-         * based on ISO 13400-2:2012(E) page 37, table 30
+         * based on ISO 13400-2:2012(E) table 30
         */
         {
             &hf_sa,
@@ -161,7 +162,7 @@ dissect_payload_8003(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 37 table 30
+    /* Values taken from ISO 13400-2:2012(E) table 30
     *
     * Constants starting with prefix "REL_" indicate a relative
     * offset to a doip-messages payload.

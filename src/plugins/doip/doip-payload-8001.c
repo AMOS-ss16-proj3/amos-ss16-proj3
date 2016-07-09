@@ -39,14 +39,14 @@ fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 static const gchar *description = "Diagnostic message";
 
 
-/* values which will be displayed for payload type 0005 in proto_tree */
+/* values which will be displayed for payload type 8001 in proto_tree */
 void
 register_proto_doip_payload_8001(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
         /* prepare info for the header field
-         * based on ISO 13400-2:2012(E) page 35, table 26
+         * based on ISO 13400-2:2012(E) table 26
         */
         {
             &hf_sa,
@@ -124,7 +124,7 @@ dissect_payload_8001(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 35 table 26
+    /* Values taken from ISO 13400-2:2012(E) table 26
     *
     * Constants starting with prefix "REL_" indicate a relative
     * offset to a doip-messages payload.

@@ -29,7 +29,7 @@ void
 register_proto_doip_payload_0007(gint proto_doip)
 {
 
-    /** According to ISO 13400-2:2012(E) payload type 0x0007
+    /** According to ISO 13400-2:2012(E) table 32 payload type 0x0007
      * does not contain any additional message elements besides 
      * the doip-header. Therefore this payload-handler 
      * doesn't have to display anything
@@ -45,7 +45,7 @@ register_proto_doip_payload_0007(gint proto_doip)
 void
 dissect_payload_0007(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
-    /** According to ISO 13400-2:2012(E) payload type 0x0007
+    /** According to ISO 13400-2:2012(E) table 32 payload type 0x0007
     * does not contain any additional message elements besides
     * the doip-header. Therefore this payload-handler
     * doesn't have to display anything

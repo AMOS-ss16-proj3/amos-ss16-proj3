@@ -36,7 +36,9 @@ static gint hf_pdmd = -1;
 
 static gint ett_diag_msg_pos_resp = -1;
 
-
+/** Values are defined in ISO 13400-2:2012(E)
+* on table 29
+*/
 static const range_string ack_codes[] = 
 {
     {0x00, 0x00, "Diagnostic message was correctly received, processed and put into the transmission buffer of the destination network."},
@@ -50,14 +52,14 @@ fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 static const gchar *description = "Diagnostic message positive acknowledge";
 
 
-/* values which will be displayed for payload type 0005 in proto_tree */
+/* values which will be displayed for payload type 8002 in proto_tree */
 void
 register_proto_doip_payload_8002(gint proto_doip)
 {
     static hf_register_info hf[] =
     {
         /* prepare info for the header field
-         * based on ISO 13400-2:2012(E) page 35, table 26
+         * based on ISO 13400-2:2012(E) table 28
         */
         {
             &hf_sa,
@@ -154,7 +156,7 @@ dissect_payload_8002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 static void
 fill_tree(doip_header *header, proto_tree *tree, tvbuff_t *tvb)
 {
-    /* Values taken from ISO 13400-2:2012(E) page 37 table 28
+    /* Values taken from ISO 13400-2:2012(E) table 28
     *
     * Constants starting with prefix "REL_" indicate a relative
     * offset to a doip-messages payload.

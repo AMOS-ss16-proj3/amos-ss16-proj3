@@ -29,7 +29,7 @@ void
 register_proto_doip_payload_0001(gint proto_doip)
 {
 
-    /** According to ISO 13400-2:2012(E) payload type 0x0001
+    /** According to ISO 13400-2:2012(E) table 16 payload type 0x0001
      * does not contain any other data besides the doip-header.
      * Therefore there is this payload-handler doesn't have to
      * display anything
@@ -45,7 +45,10 @@ register_proto_doip_payload_0001(gint proto_doip)
 void
 dissect_payload_0001(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
-    /** See comment at register_proto_doip_payload_0001()
+    /** According to ISO 13400-2:2012(E) table 16 payload type 0x0001
+    * does not contain any other data besides the doip-header.
+    * Therefore there is this payload-handler doesn't have to
+    * display anything
     */
 
     /* set info column to description */
