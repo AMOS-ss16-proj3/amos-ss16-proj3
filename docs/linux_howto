@@ -19,4 +19,6 @@ This is the documentation how to build the wirewhark plugin with and for Linux.
 
 - copy the wireshark/plugins/doip/.libs/doip.so to /usr/lib/x86_64-linux-gnu/wireshark/plugins/1.12.1 (or the corresponding installation directory and version of wireshark)
 - wireshark must be restarted to recognize the plugin (is there another possibility?)
-- run wireshark and check running plugin under Help - About Wireshark - Plugins 
+- run wireshark and check running plugin under Help - About Wireshark - Plugins
+
+- if you have problems with the info column: use the GTK version of Wireshark (standard in Wireshark 1.x and wireshark-gtk for Wireshark 2.0.x and above 

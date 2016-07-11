@@ -1,3 +1,12 @@
+We decided to use appveyor as our CI tool for Windows builds because it seems to be one of the most popular ones for Windows. Further on it is pretty easy to handle and it's syntax and usage is very similar to the Linux CI tool travis.
+Appveyor supports building on Git pushes and/or tags with different versions of Visual Studio. Futher on, the necessary tools as cygwin, winflexbison and so on are available or even preinstalled on the virtual machines.
+Further on, appveyor supports the packaging of artifacts and the upload to different platform (as ftp for us).
+
+Further information can be found in our appveyor.yml in the source folder.
+
+
+OUTDATED INFORMATION:
+
 This file contains information about the automatic windows build of the project via appveyor.
 
 For increasing the speed of the build we use an appveyor premium account in the test phase (which is free for two weeks).

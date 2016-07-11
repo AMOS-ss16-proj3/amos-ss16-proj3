@@ -2,14 +2,13 @@
 
 This is the documentation how to build the wirewhark plugin with and for Windows.
 
-
-
----= Windows =---
+A brief introduction how to build wireshark and our plugin is given in the following. For more detailled information please contact the wireshark development guide or the section on the bottom of this document with some more detailled debug information what can go wrong.
 
 --- build ---
 
 # Edit the files and create a packet-file.c just like in scr/plugin on github
 # In Addition you have to add your plugin name to the 'PLUGIN_SRC_DIRS' in the 'CMakeLists.txt' in the root folder of the Wireshark Sources.
+# To add the plugin to CMakeLists.txt and adjust the CMakeOptions.txt we made some shell scripts to be used with cygwin or bash in the repository in the build_win folder.
 # FOR COMPILING WIRESHARK + PLUGINS IN WINDOWS DO THE FOLLOWING:
 
 1. Install Microsoft C compliler and SDK
@@ -51,9 +50,10 @@ This is the documentation how to build the wirewhark plugin with and for Windows
 
 --- run ---
 
-- copy doip.ddl and doip.pdb (TODO: really needed?) to C:\Program Files\Wireshark\plugins\2.0.2\ (or the corresponding installation directory and version of wireshark)
+- copy doip.ddl to C:\Program Files\Wireshark\plugins\2.0.2\ (or the corresponding installation directory and version of wireshark)
 - wireshark must be restarted to recognize the plugin (is there another possibility?)
 - run wireshark and check running plugin under Help - About Wireshark - Plugins
+- Important Info: For the standard version of wireshark (QT) it is possible, that an error with the info column occures. Use the GTK version of wireshark (wireshark-gtk.exe) to avoid this problem.
 
 
 
@@ -121,4 +121,4 @@ nothing changed -> back to console
 -> github issue x7 -> missing 8001 in cmakelists.txt
 -> compiling again
 
----> Wireshark and plugin builds without errors. The resulting plugin works with the compiles wireshark version, but not with the one from the Homepage!! Therefore the upload of an portable, self-compiled wireshark is planned.
+---> Wireshark and plugin builds without errors. The resulting plugin works with the compiles wireshark version, but not with the one from the Homepage!! Therefore we uploaded some self-compiled portable versions of wireshark to doip.tk
