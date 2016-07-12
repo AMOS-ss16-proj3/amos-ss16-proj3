@@ -40,7 +40,7 @@ static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32);
 
 static const gchar *description = "Routing activation request";
-
+static const gchar *description_format = "Routing activation request [Activation Type: %#x]";
 
 /** Values are defined in ISO 13400-2:2012(E)
  * on table 23
@@ -156,8 +156,17 @@ dissect_payload_0005(doip_header *header, proto_item *pitem, packet_info *pinfo)
     proto_tree *doip_tree;
     guint32 payloadLength;
 
+    guint8 activation_type;
+
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+    if(get_guint8_from_message(header, &activation_type, 2))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, activation_type);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */

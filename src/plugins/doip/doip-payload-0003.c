@@ -30,7 +30,7 @@ static gint ett_vehicle_identification_request_vin = -1;
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
-static const gchar *description = "Vehicle identification request message with vehicle identification number (VIN)";
+static const gchar *description = "Vehicle identification request message (VIN)";
 
 
 /* values which will be displayed for payload type 0003 in proto_tree */

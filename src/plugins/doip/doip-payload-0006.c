@@ -36,6 +36,7 @@ static gint hf_oem = -1;
 static gint ett_routing_activation_response = -1;
 
 static const gchar *description = "Routing activation response";
+static const gchar *description_format = "Routing activation response [Response code: %#x]";
 
 /** Values are defined in ISO 13400-2:2012(E)
 * on table 25
@@ -186,13 +187,21 @@ dissect_payload_0006(doip_header *header, proto_item *pitem, packet_info *pinfo)
     tvbuff_t *tvb;
     proto_tree *doip_tree;
     guint32 payloadLength;
+    guint8 response_code;
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
     doip_tree = proto_item_add_subtree(pitem, ett_routing_activation_response);
 
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+    if(get_guint8_from_message(header, &response_code, 4))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, response_code);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     payloadLength = header->payload.length;
 

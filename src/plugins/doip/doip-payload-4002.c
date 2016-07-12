@@ -40,6 +40,7 @@ static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength);
 
 static const gchar *description = "DoIP status response";
+static const gchar *description_format = "DoIP status response [Node type: %#x, open TCP sockets: %#x, max. data size: %#x]";
 
 /** Values are defined in ISO 13400-2:2012(E)
 * on table 37
@@ -63,7 +64,7 @@ register_proto_doip_payload_4002(gint proto_doip)
         {
         "Node type",
         "doip.nd",
-        FT_UINT16,
+        FT_UINT8,
         BASE_HEX | BASE_RANGE_STRING,
         RVALS(node_types),
         0x0,
@@ -128,17 +129,33 @@ dissect_payload_4002(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
-        guint32 payloadLength;
+    guint32 payloadLength;
 
-        /* get the length of the payload */
-        payloadLength = header->payload.length;
+    guint8 node_type;
+    guint8 open_tcp_socks;
+    guint32 max_data_size;
+
+
+    /* get the length of the payload */
+    payloadLength = header->payload.length;
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
     doip_tree = proto_item_add_subtree(pitem, ett_doip_status_response);
 
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+//static const gchar *description_format = "DoIP status response [Node type: %#x, open TCP sockets: %#x, max. data size: %#x";
+
+    if(get_guint8_from_message(header, &node_type, 0)
+        && get_guint8_from_message(header, &open_tcp_socks, 2)
+        && get_guint32_from_message(header, &max_data_size, 3))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, node_type, open_tcp_socks, max_data_size);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     /* check for a valid tvbuff_t */
     if (doip_tree && tvb)

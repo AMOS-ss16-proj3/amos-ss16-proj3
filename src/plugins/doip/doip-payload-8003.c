@@ -81,6 +81,7 @@ static void
 fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Diagnostic message negative acknowledge";
+static const gchar *description_format = "Diagnostic message negative acknowledge [Source addr: %#x, Dest addr: %#x, Nack: %#x]";
 
 /* values which will be displayed for payload type 8003 in proto_tree */
 void
@@ -167,8 +168,26 @@ dissect_payload_8003(doip_header *header, proto_item *pitem, packet_info *pinfo)
     tvbuff_t *tvb;
     proto_tree *doip_tree;
 
+    guint16 src_addr;
+    guint16 dest_addr;
+    guint8 nack_code;
+
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+
+    if(get_guint16_from_message(header, &src_addr, 0)
+        && get_guint16_from_message(header, &dest_addr, 2)
+        && get_guint8_from_message(header, &nack_code, 4))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, src_addr, dest_addr, nack_code);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
+
+
+
+
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */

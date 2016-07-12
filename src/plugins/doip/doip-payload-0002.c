@@ -17,6 +17,7 @@
 
 #include "config.h"
 #include <epan/proto.h>
+#include <epan/column-info.h>
 
 #include "doip-header.h"
 #include "doip-helper.h"
@@ -30,7 +31,7 @@ static gint ett_vehicle_identification_request_eid = -1;
 static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
-static const gchar *description = "Vehicle identification request message with Entity Identification (EID)";
+static const gchar *description = "Vehicle identification request message (EID)";
 
 
 /* values which will be displayed for payload type 0002 in proto_tree */

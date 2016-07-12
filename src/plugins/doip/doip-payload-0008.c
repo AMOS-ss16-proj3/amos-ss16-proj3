@@ -31,6 +31,7 @@ static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Alive check response";
+static const gchar *description_format = "Alive check response [Source Addr: %#x]";
 
 /** Values are defined in ISO 13400-2:2012(E)
 * on table 39
@@ -96,9 +97,17 @@ dissect_payload_0008(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
+    guint16 source_addr;
 
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+    if(get_guint16_from_message(header, &source_addr, 0))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, source_addr);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */

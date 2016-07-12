@@ -37,6 +37,7 @@ static void
 fill_tree(doip_header *, proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Diagnostic message";
+static const gchar *description_format = "Diagnostic message [Source addr: %#x, Dest addr: %#x]";
 
 
 /* values which will be displayed for payload type 8001 in proto_tree */
@@ -107,8 +108,19 @@ dissect_payload_8001(doip_header *header, proto_item *pitem, packet_info *pinfo)
     tvbuff_t *tvb;
     proto_tree *doip_tree;
 
+    guint16 source_addr;
+    guint16 dest_addr;
+
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+    if(get_guint16_from_message(header, &source_addr, 0)
+        && get_guint16_from_message(header, &dest_addr, 2))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, source_addr, dest_addr);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */

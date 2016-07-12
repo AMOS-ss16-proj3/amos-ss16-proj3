@@ -46,6 +46,7 @@ static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb, guint32 payloadLength);
 
 static const gchar *description = "Vehicle announcement message / vehicle identification response message";
+static const gchar *description_format = "Vehicle announcement message / vehicle identification response message [LA: %#x]";
 
 
 /** Values are defined in ISO 13400-2:2012(E)
@@ -121,10 +122,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(log_addr_values),
                 0x0,
-                "The logical address that is assigned to \
-                the responding DoIP entity. It can be used, \
-                for example, to address diagnostic requests \
-                directly to the DoIP entity.",
+                "The logical address that is assigned to the responding DoIP entity. It can be used, for example, to address diagnostic requests directly to the DoIP entity.",
                 HFILL
             }
         },
@@ -137,11 +135,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_NONE,
                 NULL,
                 0x0,
-                "The unique identification of the DoIP entities \
-                in order to separate their responses even before \
-                the VIN is programmed to or recognized by the \
-                DoIP devices (e.g. during the vehicle \
-                assembly process).",
+                "The unique identification of the DoIP entities in order to separate their responses even before the VIN is programmed to or recognized by the DoIP devices (e.g. during the vehicle assembly process).",
                 HFILL
             }
         },
@@ -154,9 +148,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_NONE,
                 NULL,
                 0x0,
-                "The unique identification of a group of DoIP \
-                entities within the same vehicle in the case \
-                that a VIN is not configured for that vehicle.",
+                "The unique identification of a group of DoIP entities within the same vehicle in the case that a VIN is not configured for that vehicle.",
                 HFILL
             }
         },
@@ -169,11 +161,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(further_action_values),
                 0x0,
-                "The additional information to notify the \
-                external test equipment that there are \
-                either DoIP entities with no initial \
-                connectivity or that a centralized security \
-                approach is used.",
+                "The additional information to notify the external test equipment that there are either DoIP entities with no initial connectivity or that a centralized security approach is used.",
                 HFILL
             }
         },
@@ -186,10 +174,7 @@ register_proto_doip_payload_0004(gint proto_doip)
                 BASE_HEX | BASE_RANGE_STRING,
                 RVALS(vin_gid_sync_values),
                 0x0,
-                "The additional information to notify the \
-                external test equipment that all DoIP \
-                entities have synchronized their information \
-                about the VIN or GID of the vehicle.",
+                "The additional information to notify the external test equipment that all DoIP entities have synchronized their information about the VIN or GID of the vehicle.",
                 HFILL
             }
         }
@@ -213,14 +198,22 @@ dissect_payload_0004(doip_header *header, proto_item *pitem, packet_info *pinfo)
     tvbuff_t *tvb;
     proto_tree *doip_tree;
     guint32 payloadLength;
+    guint16 logical_addr;
 
     /* get the length of the payload */
     payloadLength = header->payload.length;
 
-    /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
-
     tvb = retrieve_tvbuff(header);
+
+    /* set info column to description */
+    if(get_guint16_from_message(header, &logical_addr, 17))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, logical_addr);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     /* attach a new tree to proto_item pitem */
     doip_tree = proto_item_add_subtree(pitem, ett_vehicle_announce_id_msg);

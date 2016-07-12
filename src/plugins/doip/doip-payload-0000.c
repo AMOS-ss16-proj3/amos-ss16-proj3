@@ -16,6 +16,7 @@
 */
 
 #include "config.h"
+#include <epan/column-utils.h>
 #include <epan/proto.h>
 
 #include "doip-header.h"
@@ -31,6 +32,7 @@ static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Generic DoIP header NACK code";
+static const gchar *description_format = "Generic DoIP header NACK code [NACK: %#x]";
 
 
 /** Values are defined in ISO 13400-2:2012(E)
@@ -85,8 +87,17 @@ dissect_payload_0000(doip_header *header, proto_item *pitem, packet_info *pinfo)
     tvbuff_t *tvb;
     proto_tree *doip_tree;
 
+    guint8 nack_code;
+
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+    if(get_guint8_from_message(header, &nack_code, 0))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, nack_code);
+    }
+    else
+    {
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */

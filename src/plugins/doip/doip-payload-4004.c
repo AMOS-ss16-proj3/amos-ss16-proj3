@@ -32,6 +32,7 @@ static void
 fill_tree(proto_tree *tree, tvbuff_t *tvb);
 
 static const gchar *description = "Diagnostic Power Mode";
+static const gchar *description_format = "Diagnostic Power Mode [Power mode: %#x]";
 
 /** Values are defined in ISO 13400-2:2012(E)
 * on table 35
@@ -83,9 +84,16 @@ dissect_payload_4004(doip_header *header, proto_item *pitem, packet_info *pinfo)
 {
     tvbuff_t *tvb;
     proto_tree *doip_tree;
+    guint8 power_mode;
 
     /* set info column to description */
-    col_set_str(pinfo->cinfo, COL_INFO, description);
+    if(get_guint8_from_message(header, &power_mode, 0))
+    {
+        col_add_fstr(pinfo->cinfo, COL_INFO, description_format, power_mode);
+    }
+    else{
+        col_set_str(pinfo->cinfo, COL_INFO, description);
+    }
 
     tvb = retrieve_tvbuff(header);
     /* attach a new tree to proto_item pitem */
